@@ -12,7 +12,6 @@ part 'library_service.g.dart';
 
 @riverpod
 class LibraryService extends _$LibraryService {
-  static const String librarySettingsFile = 'library_settings.json';
   static const String metadataFileName = 'meta.json';
 
   @override
@@ -21,43 +20,16 @@ class LibraryService extends _$LibraryService {
   }
 
   Future<LibrarySettings> _loadSettings() async {
-    try {
-      final appDir = await getApplicationDocumentsDirectory();
-      final settingsFile = File(
-        p.join(appDir.path, 'flutter_srf', librarySettingsFile),
-      );
-
-      if (await settingsFile.exists()) {
-        final content = await settingsFile.readAsString();
-        return LibrarySettings.fromJson(json.decode(content));
-      }
-    } catch (e) {
-      print('Error loading settings: $e');
-    }
-
-    // デフォルトでアプリケーションサポートディレクトリ内にライブラリを作成
+    // 常にアプリケーションサポートディレクトリを使用
     final appSupportDir = await getApplicationSupportDirectory();
-    final defaultLibraryPath = p.join(appSupportDir.path, 'library');
+    final libraryPath = p.join(appSupportDir.path, 'library');
 
-    return LibrarySettings.defaultSettings().copyWith(
-      libraryPath: defaultLibraryPath,
-    );
+    return LibrarySettings.defaultSettings().copyWith(libraryPath: libraryPath);
   }
 
   Future<void> saveSettings(LibrarySettings settings) async {
-    try {
-      final appDir = await getApplicationDocumentsDirectory();
-      final appPath = p.join(appDir.path, 'flutter_srf');
-      final settingsFile = File(p.join(appPath, librarySettingsFile));
-
-      await Directory(appPath).create(recursive: true);
-      await settingsFile.writeAsString(json.encode(settings.toJson()));
-
-      state = AsyncValue.data(settings);
-    } catch (e) {
-      print('Error saving settings: $e');
-      state = AsyncValue.error(e, StackTrace.current);
-    }
+    // 現在は設定の保存は行わない
+    state = AsyncValue.data(settings);
   }
 
   Future<void> addWatchedDirectory(String directory) async {

@@ -1,9 +1,29 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../services/library_service.dart';
 
 class SettingsScreen extends HookConsumerWidget {
   const SettingsScreen({super.key});
+
+  Future<void> _openInFinder(String path) async {
+    try {
+      // ディレクトリが存在しない場合は作成
+      final dir = Directory(path);
+      if (!await dir.exists()) {
+        await dir.create(recursive: true);
+      }
+
+      // ファイルURIを作成してシステムのファイルエクスプローラーで開く
+      final uri = Uri.file(path);
+      if (!await launchUrl(uri)) {
+        throw Exception('Could not launch $uri');
+      }
+    } catch (e) {
+      print('Error opening directory: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -18,7 +38,13 @@ class SettingsScreen extends HookConsumerWidget {
               child: ListTile(
                 title: const Text('ライブラリパス'),
                 subtitle: Text(settings.libraryPath),
-                trailing: const Icon(Icons.folder),
+                trailing: IconButton(
+                  icon: const Icon(Icons.folder_open),
+                  tooltip: 'Finderで開く',
+                  onPressed: () async {
+                    await _openInFinder(settings.libraryPath);
+                  },
+                ),
               ),
             ),
             const SizedBox(height: 16),

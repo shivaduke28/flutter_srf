@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:file_picker/file_picker.dart';
 import '../services/import_service.dart';
 import '../providers/srf_containers_provider.dart';
 
@@ -10,7 +11,7 @@ class ImportDialog extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final importProgress = ref.watch(importServiceProvider);
-    final pathController = useTextEditingController();
+    final selectedPath = useState<String?>(null);
 
     return AlertDialog(
       title: const Text('音楽をインポート'),
@@ -20,62 +21,91 @@ class ImportDialog extends HookConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (!importProgress.isImporting) ...[
-              const Text('MP3ファイルが含まれるフォルダのパスを入力してください。'),
+              const Text('MP3ファイルが含まれるフォルダを選択してください。'),
               const SizedBox(height: 16),
-              TextField(
-                controller: pathController,
-                decoration: const InputDecoration(
-                  labelText: 'フォルダパス',
-                  hintText: '/Users/username/Music',
-                  border: OutlineInputBorder(),
+              if (selectedPath.value != null) ...[
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.folder, color: Colors.blue),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            selectedPath.value!,
+                            style: Theme.of(context).textTheme.bodySmall,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton.icon(
-                onPressed: () async {
-                  final path = pathController.text.trim();
-                  if (path.isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('パスを入力してください'),
-                        backgroundColor: Colors.orange,
+                const SizedBox(height: 16),
+              ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: () async {
+                      final result = await FilePicker.platform
+                          .getDirectoryPath();
+                      if (result != null) {
+                        selectedPath.value = result;
+                      }
+                    },
+                    icon: const Icon(Icons.folder_open),
+                    label: Text(
+                      selectedPath.value == null ? 'フォルダを選択' : '別のフォルダを選択',
+                    ),
+                  ),
+                  if (selectedPath.value != null) ...[
+                    const SizedBox(width: 8),
+                    ElevatedButton.icon(
+                      onPressed: () async {
+                        try {
+                          final importService = ref.read(
+                            importServiceProvider.notifier,
+                          );
+                          final containers = await importService
+                              .importDirectory(selectedPath.value!);
+
+                          // コンテナリストを更新
+                          await ref
+                              .read(srfContainersProvider.notifier)
+                              .refresh();
+
+                          if (context.mounted) {
+                            Navigator.of(context).pop();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  '${containers.length}曲をインポートしました',
+                                ),
+                              ),
+                            );
+                          }
+                        } catch (e) {
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('エラー: $e'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
+                        }
+                      },
+                      icon: const Icon(Icons.download),
+                      label: const Text('インポート'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        foregroundColor: Colors.white,
                       ),
-                    );
-                    return;
-                  }
-
-                  try {
-                    final importService = ref.read(
-                      importServiceProvider.notifier,
-                    );
-                    final containers = await importService.importDirectory(
-                      path,
-                    );
-
-                    // コンテナリストを更新
-                    await ref.read(srfContainersProvider.notifier).refresh();
-
-                    if (context.mounted) {
-                      Navigator.of(context).pop();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('${containers.length}曲をインポートしました'),
-                        ),
-                      );
-                    }
-                  } catch (e) {
-                    if (context.mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('エラー: $e'),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                    }
-                  }
-                },
-                icon: const Icon(Icons.download),
-                label: const Text('インポート'),
+                    ),
+                  ],
+                ],
               ),
             ] else ...[
               Text(
