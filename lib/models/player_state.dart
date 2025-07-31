@@ -10,6 +10,7 @@ sealed class PlayerState with _$PlayerState {
     @Default(PlayerStatus.stopped) PlayerStatus status,
     @Default(Duration.zero) Duration position,
     @Default(Duration.zero) Duration duration,
+    @Default(1.0) double volume,
   }) = _PlayerState;
 }
 

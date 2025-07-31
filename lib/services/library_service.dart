@@ -90,7 +90,6 @@ class LibraryService extends _$LibraryService {
 
       final metadataFile = File(p.join(containerPath, metadataFileName));
       await metadataFile.writeAsString(json.encode(metadata.toJson()));
-
     } catch (e) {
       print('Error creating SRF container: $e');
       return null;

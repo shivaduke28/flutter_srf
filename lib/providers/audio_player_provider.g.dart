@@ -24,7 +24,7 @@ final audioPlayerServiceProvider = Provider<AudioPlayerService>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AudioPlayerServiceRef = ProviderRef<AudioPlayerService>;
-String _$playerStateHash() => r'fb699cb0705a7fa40a74efc4ff2d6bce00567169';
+String _$playerStateHash() => r'ac8c2865c78ac97c27dc94d889cb80a29291e051';
 
 /// See also [PlayerState].
 @ProviderFor(PlayerState)

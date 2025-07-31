@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PlayerState {
 
- SrfContainer? get currentContainer; PlayerStatus get status; Duration get position; Duration get duration;
+ SrfContainer? get currentContainer; PlayerStatus get status; Duration get position; Duration get duration; double get volume;
 /// Create a copy of PlayerState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $PlayerStateCopyWith<PlayerState> get copyWith => _$PlayerStateCopyWithImpl<Play
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PlayerState&&(identical(other.currentContainer, currentContainer) || other.currentContainer == currentContainer)&&(identical(other.status, status) || other.status == status)&&(identical(other.position, position) || other.position == position)&&(identical(other.duration, duration) || other.duration == duration));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PlayerState&&(identical(other.currentContainer, currentContainer) || other.currentContainer == currentContainer)&&(identical(other.status, status) || other.status == status)&&(identical(other.position, position) || other.position == position)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.volume, volume) || other.volume == volume));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currentContainer,status,position,duration);
+int get hashCode => Object.hash(runtimeType,currentContainer,status,position,duration,volume);
 
 @override
 String toString() {
-  return 'PlayerState(currentContainer: $currentContainer, status: $status, position: $position, duration: $duration)';
+  return 'PlayerState(currentContainer: $currentContainer, status: $status, position: $position, duration: $duration, volume: $volume)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $PlayerStateCopyWith<$Res>  {
   factory $PlayerStateCopyWith(PlayerState value, $Res Function(PlayerState) _then) = _$PlayerStateCopyWithImpl;
 @useResult
 $Res call({
- SrfContainer? currentContainer, PlayerStatus status, Duration position, Duration duration
+ SrfContainer? currentContainer, PlayerStatus status, Duration position, Duration duration, double volume
 });
 
 
@@ -62,13 +62,14 @@ class _$PlayerStateCopyWithImpl<$Res>
 
 /// Create a copy of PlayerState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? currentContainer = freezed,Object? status = null,Object? position = null,Object? duration = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? currentContainer = freezed,Object? status = null,Object? position = null,Object? duration = null,Object? volume = null,}) {
   return _then(_self.copyWith(
 currentContainer: freezed == currentContainer ? _self.currentContainer : currentContainer // ignore: cast_nullable_to_non_nullable
 as SrfContainer?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as PlayerStatus,position: null == position ? _self.position : position // ignore: cast_nullable_to_non_nullable
 as Duration,duration: null == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
-as Duration,
+as Duration,volume: null == volume ? _self.volume : volume // ignore: cast_nullable_to_non_nullable
+as double,
   ));
 }
 /// Create a copy of PlayerState
@@ -162,10 +163,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( SrfContainer? currentContainer,  PlayerStatus status,  Duration position,  Duration duration)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( SrfContainer? currentContainer,  PlayerStatus status,  Duration position,  Duration duration,  double volume)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PlayerState() when $default != null:
-return $default(_that.currentContainer,_that.status,_that.position,_that.duration);case _:
+return $default(_that.currentContainer,_that.status,_that.position,_that.duration,_that.volume);case _:
   return orElse();
 
 }
@@ -183,10 +184,10 @@ return $default(_that.currentContainer,_that.status,_that.position,_that.duratio
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( SrfContainer? currentContainer,  PlayerStatus status,  Duration position,  Duration duration)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( SrfContainer? currentContainer,  PlayerStatus status,  Duration position,  Duration duration,  double volume)  $default,) {final _that = this;
 switch (_that) {
 case _PlayerState():
-return $default(_that.currentContainer,_that.status,_that.position,_that.duration);}
+return $default(_that.currentContainer,_that.status,_that.position,_that.duration,_that.volume);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -200,10 +201,10 @@ return $default(_that.currentContainer,_that.status,_that.position,_that.duratio
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( SrfContainer? currentContainer,  PlayerStatus status,  Duration position,  Duration duration)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( SrfContainer? currentContainer,  PlayerStatus status,  Duration position,  Duration duration,  double volume)?  $default,) {final _that = this;
 switch (_that) {
 case _PlayerState() when $default != null:
-return $default(_that.currentContainer,_that.status,_that.position,_that.duration);case _:
+return $default(_that.currentContainer,_that.status,_that.position,_that.duration,_that.volume);case _:
   return null;
 
 }
@@ -215,13 +216,14 @@ return $default(_that.currentContainer,_that.status,_that.position,_that.duratio
 
 
 class _PlayerState implements PlayerState {
-  const _PlayerState({this.currentContainer, this.status = PlayerStatus.stopped, this.position = Duration.zero, this.duration = Duration.zero});
+  const _PlayerState({this.currentContainer, this.status = PlayerStatus.stopped, this.position = Duration.zero, this.duration = Duration.zero, this.volume = 1.0});
   
 
 @override final  SrfContainer? currentContainer;
 @override@JsonKey() final  PlayerStatus status;
 @override@JsonKey() final  Duration position;
 @override@JsonKey() final  Duration duration;
+@override@JsonKey() final  double volume;
 
 /// Create a copy of PlayerState
 /// with the given fields replaced by the non-null parameter values.
@@ -233,16 +235,16 @@ _$PlayerStateCopyWith<_PlayerState> get copyWith => __$PlayerStateCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PlayerState&&(identical(other.currentContainer, currentContainer) || other.currentContainer == currentContainer)&&(identical(other.status, status) || other.status == status)&&(identical(other.position, position) || other.position == position)&&(identical(other.duration, duration) || other.duration == duration));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PlayerState&&(identical(other.currentContainer, currentContainer) || other.currentContainer == currentContainer)&&(identical(other.status, status) || other.status == status)&&(identical(other.position, position) || other.position == position)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.volume, volume) || other.volume == volume));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currentContainer,status,position,duration);
+int get hashCode => Object.hash(runtimeType,currentContainer,status,position,duration,volume);
 
 @override
 String toString() {
-  return 'PlayerState(currentContainer: $currentContainer, status: $status, position: $position, duration: $duration)';
+  return 'PlayerState(currentContainer: $currentContainer, status: $status, position: $position, duration: $duration, volume: $volume)';
 }
 
 
@@ -253,7 +255,7 @@ abstract mixin class _$PlayerStateCopyWith<$Res> implements $PlayerStateCopyWith
   factory _$PlayerStateCopyWith(_PlayerState value, $Res Function(_PlayerState) _then) = __$PlayerStateCopyWithImpl;
 @override @useResult
 $Res call({
- SrfContainer? currentContainer, PlayerStatus status, Duration position, Duration duration
+ SrfContainer? currentContainer, PlayerStatus status, Duration position, Duration duration, double volume
 });
 
 
@@ -270,13 +272,14 @@ class __$PlayerStateCopyWithImpl<$Res>
 
 /// Create a copy of PlayerState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? currentContainer = freezed,Object? status = null,Object? position = null,Object? duration = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? currentContainer = freezed,Object? status = null,Object? position = null,Object? duration = null,Object? volume = null,}) {
   return _then(_PlayerState(
 currentContainer: freezed == currentContainer ? _self.currentContainer : currentContainer // ignore: cast_nullable_to_non_nullable
 as SrfContainer?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as PlayerStatus,position: null == position ? _self.position : position // ignore: cast_nullable_to_non_nullable
 as Duration,duration: null == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
-as Duration,
+as Duration,volume: null == volume ? _self.volume : volume // ignore: cast_nullable_to_non_nullable
+as double,
   ));
 }
 

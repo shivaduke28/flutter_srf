@@ -22,7 +22,7 @@ class PlayerState extends _$PlayerState {
   app_player.PlayerState build() {
     _playerService = ref.watch(audioPlayerServiceProvider);
     _setupListeners();
-    return const app_player.PlayerState();
+    return app_player.PlayerState(volume: _playerService.volume);
   }
 
   void _setupListeners() {
@@ -86,5 +86,10 @@ class PlayerState extends _$PlayerState {
         state.currentContainer != null) {
       await resume();
     }
+  }
+
+  Future<void> setVolume(double volume) async {
+    await _playerService.setVolume(volume);
+    state = state.copyWith(volume: volume);
   }
 }

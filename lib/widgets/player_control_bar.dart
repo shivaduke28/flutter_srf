@@ -65,6 +65,26 @@ class PlayerControlBar extends ConsumerWidget {
                       ],
                     ),
                   ),
+                  SizedBox(
+                    width: 120,
+                    child: Row(
+                      children: [
+                        const Icon(Icons.volume_down, size: 20),
+                        Expanded(
+                          child: Slider(
+                            value: playerState.volume,
+                            min: 0.0,
+                            max: 1.0,
+                            onChanged: (value) {
+                              ref
+                                  .read(playerStateProvider.notifier)
+                                  .setVolume(value);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   IconButton(
                     icon: Icon(
                       isPlaying ? Icons.pause : Icons.play_arrow,

@@ -34,6 +34,12 @@ class AudioPlayerService {
     await _audioPlayer.seek(position);
   }
 
+  Future<void> setVolume(double volume) async {
+    await _audioPlayer.setVolume(volume.clamp(0.0, 1.0));
+  }
+
+  double get volume => _audioPlayer.volume;
+
   void dispose() {
     _audioPlayer.dispose();
   }
