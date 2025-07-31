@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'songs_list_screen.dart';
-import 'artists_list_screen.dart';
-import 'albums_list_screen.dart';
+import 'artists_screen.dart';
+import 'albums_screen.dart';
 import 'settings_screen.dart';
 import '../widgets/player_control_bar.dart';
 
@@ -31,8 +31,8 @@ class HomeScreen extends HookConsumerWidget {
               child: TabBarView(
                 children: [
                   SongsListScreen(),
-                  ArtistsListScreen(),
-                  AlbumsListScreen(),
+                  ArtistsScreen(),
+                  AlbumsScreen(),
                   SettingsScreen(),
                 ],
               ),
