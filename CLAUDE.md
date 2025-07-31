@@ -11,7 +11,8 @@ Flutter SRFはFlutterでsrfを管理するためのアプリケーションで�
 - Riverpod + Hooks + Freezed
 
 
-## ツール
+## 開発の流れ
 
-- `dart format` でコードを整形してください
-- `dart analyze` でコードを解析してください
+- タスクが完了したら`dart analyze`を行いエラーがないか確認する
+- エラーがない場合は`dart format` でコードを整形する
+- freezedをつかう場合はclassに`sealed`をつける必要がある
