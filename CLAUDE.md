@@ -32,6 +32,7 @@ lib/
 - **path_provider**: ファイルシステムアクセス
 - **url_launcher**: システムファイルエクスプローラー連携
 - **file_picker**: ファイル・ディレクトリ選択UI
+- **just_audio**: 音楽再生機能（audioplayers より音楽アプリ向け）
 
 ## 開発の流れ
 
@@ -75,6 +76,7 @@ flutter pub get
 - `LibraryService`は`@Riverpod(keepAlive: true)`で永続化
 - `SrfContainersProvider`は`libraryServiceProvider.future`を待ってから初期化
 - 非同期プロバイダーを使用する際は、初期化完了を適切に待つ必要がある
+- **Riverpod Generatorを使用**：StateNotifierProviderは非推奨なので`@Riverpod`アノテーションを使う
 
 ### メタデータ抽出
 - `flutter_media_metadata`パッケージを使用してMP3からメタデータを自動抽出
@@ -84,6 +86,12 @@ flutter pub get
 ### macOS固有の設定
 - `macos/Runner/DebugProfile.entitlements`と`Release.entitlements`でファイルアクセス権限を設定
 - `com.apple.security.files.user-selected.read-write`が必要
+
+### 音楽再生機能
+- `just_audio`パッケージを使用（音楽アプリに適している）
+- `AudioPlayerService`で再生制御を管理
+- `PlayerState`プロバイダーで再生状態を管理（Riverpod Generator使用）
+- 再生中の楽曲はハイライト表示される
 
 ## トラブルシューティング
 
@@ -114,7 +122,7 @@ flutter pub get
    - [ ] ライブラリデータの永続化（SQLite/Hive）
 
 2. **中優先度**
-   - [ ] 楽曲再生機能の実装
+   - [x] 楽曲再生機能の実装
    - [ ] メタデータ編集機能
    - [ ] アルバムアートワークの表示
 
