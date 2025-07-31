@@ -6,7 +6,7 @@ part of 'srf_containers_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$srfContainersHash() => r'a8e3702169b126849422301fa677472bc56dee10';
+String _$srfContainersHash() => r'df4a327f6dec88d400894f122443bc83fd0ce673';
 
 /// See also [SrfContainers].
 @ProviderFor(SrfContainers)

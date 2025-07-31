@@ -4,6 +4,7 @@ import 'songs_list_screen.dart';
 import 'artists_list_screen.dart';
 import 'albums_list_screen.dart';
 import 'settings_screen.dart';
+import '../widgets/player_control_bar.dart';
 
 class HomeScreen extends HookConsumerWidget {
   const HomeScreen({super.key});
@@ -24,12 +25,19 @@ class HomeScreen extends HookConsumerWidget {
             ],
           ),
         ),
-        body: const TabBarView(
+        body: Column(
           children: [
-            SongsListScreen(),
-            ArtistsListScreen(),
-            AlbumsListScreen(),
-            SettingsScreen(),
+            const Expanded(
+              child: TabBarView(
+                children: [
+                  SongsListScreen(),
+                  ArtistsListScreen(),
+                  AlbumsListScreen(),
+                  SettingsScreen(),
+                ],
+              ),
+            ),
+            const PlayerControlBar(),
           ],
         ),
       ),
