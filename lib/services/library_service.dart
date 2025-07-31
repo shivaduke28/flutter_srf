@@ -35,7 +35,13 @@ class LibraryService extends _$LibraryService {
       print('Error loading settings: $e');
     }
 
-    return LibrarySettings.defaultSettings();
+    // デフォルトでアプリケーションサポートディレクトリ内にライブラリを作成
+    final appSupportDir = await getApplicationSupportDirectory();
+    final defaultLibraryPath = p.join(appSupportDir.path, 'library');
+
+    return LibrarySettings.defaultSettings().copyWith(
+      libraryPath: defaultLibraryPath,
+    );
   }
 
   Future<void> saveSettings(LibrarySettings settings) async {
@@ -51,14 +57,6 @@ class LibraryService extends _$LibraryService {
     } catch (e) {
       print('Error saving settings: $e');
       state = AsyncValue.error(e, StackTrace.current);
-    }
-  }
-
-  Future<void> setLibraryPath(String path) async {
-    final currentSettings = state.value;
-    if (currentSettings != null) {
-      final updatedSettings = currentSettings.copyWith(libraryPath: path);
-      await saveSettings(updatedSettings);
     }
   }
 
@@ -87,9 +85,17 @@ class LibraryService extends _$LibraryService {
     String sourceFilePath,
     SrfMetadata metadata,
   ) async {
-    final settings = state.value;
-    if (settings == null || settings.libraryPath.isEmpty) {
-      throw Exception('Library path not set');
+    var settings = state.value;
+    if (settings == null) {
+      throw Exception('Settings not loaded');
+    }
+
+    // ライブラリパスが空の場合、デフォルトパスを設定して保存
+    if (settings.libraryPath.isEmpty) {
+      final appSupportDir = await getApplicationSupportDirectory();
+      final defaultLibraryPath = p.join(appSupportDir.path, 'library');
+      settings = settings.copyWith(libraryPath: defaultLibraryPath);
+      await saveSettings(settings);
     }
 
     try {

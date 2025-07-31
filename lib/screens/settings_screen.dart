@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:file_picker/file_picker.dart';
 import '../services/library_service.dart';
 
 class SettingsScreen extends HookConsumerWidget {
@@ -18,23 +17,8 @@ class SettingsScreen extends HookConsumerWidget {
             Card(
               child: ListTile(
                 title: const Text('ライブラリパス'),
-                subtitle: Text(
-                  settings.libraryPath.isEmpty ? '未設定' : settings.libraryPath,
-                ),
+                subtitle: Text(settings.libraryPath),
                 trailing: const Icon(Icons.folder),
-                onTap: () async {
-                  final result = await FilePicker.platform.getDirectoryPath();
-                  if (result != null) {
-                    await ref
-                        .read(libraryServiceProvider.notifier)
-                        .setLibraryPath(result);
-                    if (context.mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('ライブラリパスを設定しました: $result')),
-                      );
-                    }
-                  }
-                },
               ),
             ),
             const SizedBox(height: 16),

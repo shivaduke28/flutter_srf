@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import '../providers/srf_containers_provider.dart';
 import '../widgets/song_list_tile.dart';
 import '../widgets/import_dialog.dart';
-import '../services/library_service.dart';
 
 class SongsListScreen extends HookConsumerWidget {
   const SongsListScreen({super.key});
@@ -111,23 +110,11 @@ class SongsListScreen extends HookConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final settings = await ref.read(libraryServiceProvider.future);
-          if (settings.libraryPath.isEmpty) {
-            if (context.mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('先に設定画面でライブラリパスを設定してください')),
-              );
-            }
-            return;
-          }
-
-          if (context.mounted) {
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (context) => const ImportDialog(),
-            );
-          }
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => const ImportDialog(),
+          );
         },
         child: const Icon(Icons.add),
       ),
