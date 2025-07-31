@@ -14,6 +14,9 @@ part 'library_service.g.dart';
 class LibraryService extends _$LibraryService {
   static const String metadataFileName = 'meta.json';
 
+  // キャッシュ管理
+  List<SrfContainer>? _cachedContainers;
+
   @override
   Future<LibrarySettings> build() async {
     return await _loadSettings();
@@ -88,25 +91,23 @@ class LibraryService extends _$LibraryService {
       final metadataFile = File(p.join(containerPath, metadataFileName));
       await metadataFile.writeAsString(json.encode(metadata.toJson()));
 
-      final container = SrfContainer(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        name: containerName,
-        path: containerPath,
-        metadata: metadata,
-        audioFiles: [p.basename(sourceFilePath)],
-        createdAt: DateTime.now(),
-        modifiedAt: DateTime.now(),
-      );
-
-      return container;
     } catch (e) {
       print('Error creating SRF container: $e');
       return null;
     }
+
+    // returnステートメントがなかったので追加
+    return null;
   }
 
-  Future<List<SrfContainer>> scanLibrary() async {
-    print('scanLibrary called');
+  Future<List<SrfContainer>> scanLibrary({bool forceRefresh = false}) async {
+    // キャッシュがあり、強制リフレッシュでない場合はキャッシュを返す
+    if (!forceRefresh && _cachedContainers != null) {
+      print('Returning cached containers');
+      return _cachedContainers!;
+    }
+
+    print('scanLibrary called (forceRefresh: $forceRefresh)');
     final settings = state.value;
     if (settings == null || settings.libraryPath.isEmpty) {
       print('Library path is not set: settings=$settings');
@@ -131,7 +132,15 @@ class LibraryService extends _$LibraryService {
       }
     }
 
+    // キャッシュを更新
+    _cachedContainers = containers;
+
     return containers;
+  }
+
+  // キャッシュをクリアする
+  void clearCache() {
+    _cachedContainers = null;
   }
 
   Future<SrfContainer?> _loadSrfContainer(String containerPath) async {

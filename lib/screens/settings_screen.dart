@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../services/library_service.dart';
+import '../providers/srf_containers_provider.dart';
 
 class SettingsScreen extends HookConsumerWidget {
   const SettingsScreen({super.key});
@@ -63,6 +64,47 @@ class SettingsScreen extends HookConsumerWidget {
               child: ListTile(
                 title: const Text('サポートされる拡張子'),
                 subtitle: Text(settings.supportedExtensions.join(', ')),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Card(
+              child: ListTile(
+                title: const Text('ライブラリを再スキャン'),
+                subtitle: const Text('楽曲の追加・削除後に手動でライブラリを更新'),
+                leading: const Icon(Icons.refresh),
+                onTap: () async {
+                  // 確認ダイアログを表示
+                  final confirmed = await showDialog<bool>(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: const Text('ライブラリを再スキャン'),
+                      content: const Text(
+                        'ライブラリを再スキャンしますか？\n楽曲数が多い場合は時間がかかることがあります。',
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pop(false),
+                          child: const Text('キャンセル'),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pop(true),
+                          child: const Text('再スキャン'),
+                        ),
+                      ],
+                    ),
+                  );
+
+                  if (confirmed == true) {
+                    // ライブラリを再スキャン
+                    await ref.read(srfContainersProvider.notifier).refresh();
+
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('ライブラリを再スキャンしました')),
+                      );
+                    }
+                  }
+                },
               ),
             ),
           ],

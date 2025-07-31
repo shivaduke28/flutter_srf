@@ -11,14 +11,14 @@ class SrfContainers extends _$SrfContainers {
     // libraryServiceの初期化を待つ
     await ref.watch(libraryServiceProvider.future);
     final libraryService = ref.read(libraryServiceProvider.notifier);
-    return await libraryService.scanLibrary();
+    return await libraryService.scanLibrary(forceRefresh: false);
   }
 
   Future<void> refresh() async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
       final libraryService = ref.read(libraryServiceProvider.notifier);
-      return await libraryService.scanLibrary();
+      return await libraryService.scanLibrary(forceRefresh: true);
     });
   }
 
