@@ -10,7 +10,7 @@ import 'metadata_extractor_service.dart';
 
 part 'library_service.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class LibraryService extends _$LibraryService {
   static const String metadataFileName = 'meta.json';
 
@@ -106,15 +106,19 @@ class LibraryService extends _$LibraryService {
   }
 
   Future<List<SrfContainer>> scanLibrary() async {
+    print('scanLibrary called');
     final settings = state.value;
     if (settings == null || settings.libraryPath.isEmpty) {
+      print('Library path is not set: settings=$settings');
       return [];
     }
+    print('Scanning library at: ${settings.libraryPath}');
 
     final containers = <SrfContainer>[];
     final libraryDir = Directory(settings.libraryPath);
 
     if (!await libraryDir.exists()) {
+      print('Library directory does not exist: ${libraryDir.path}');
       return [];
     }
 

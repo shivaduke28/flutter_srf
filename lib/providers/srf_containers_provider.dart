@@ -8,7 +8,9 @@ part 'srf_containers_provider.g.dart';
 class SrfContainers extends _$SrfContainers {
   @override
   Future<List<SrfContainer>> build() async {
-    final libraryService = ref.watch(libraryServiceProvider.notifier);
+    // libraryServiceの初期化を待つ
+    await ref.watch(libraryServiceProvider.future);
+    final libraryService = ref.read(libraryServiceProvider.notifier);
     return await libraryService.scanLibrary();
   }
 
