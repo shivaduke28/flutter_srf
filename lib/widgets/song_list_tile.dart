@@ -43,26 +43,7 @@ class SongListTile extends ConsumerWidget {
         '${metadata.artist} ${metadata.album != null ? '• ${metadata.album}' : ''}',
         overflow: TextOverflow.ellipsis,
       ),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(durationText),
-          IconButton(
-            icon: Icon(
-              isPlaying ? Icons.pause_circle : Icons.play_circle,
-              color: isCurrentSong ? Theme.of(context).primaryColor : null,
-            ),
-            onPressed: () async {
-              final notifier = ref.read(playerStateProvider.notifier);
-              if (isCurrentSong) {
-                await notifier.togglePlayPause();
-              } else {
-                await notifier.play(container);
-              }
-            },
-          ),
-        ],
-      ),
+      trailing: Text(durationText),
       onTap: () async {
         final notifier = ref.read(playerStateProvider.notifier);
         if (isCurrentSong) {
