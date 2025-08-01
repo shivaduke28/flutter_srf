@@ -10,6 +10,7 @@ sealed class SrfContainer with _$SrfContainer {
     required String id,
     required String name,
     required String path,
+    @JsonKey(toJson: _metadataToJson)
     required SrfMetadata metadata,
     required List<String> audioFiles,
     DateTime? createdAt,
@@ -18,4 +19,8 @@ sealed class SrfContainer with _$SrfContainer {
 
   factory SrfContainer.fromJson(Map<String, dynamic> json) =>
       _$SrfContainerFromJson(json);
+}
+
+Map<String, dynamic> _metadataToJson(SrfMetadata metadata) {
+  return metadata.toJson();
 }

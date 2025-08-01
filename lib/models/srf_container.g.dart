@@ -28,7 +28,7 @@ Map<String, dynamic> _$SrfContainerToJson(_SrfContainer instance) =>
       'id': instance.id,
       'name': instance.name,
       'path': instance.path,
-      'metadata': instance.metadata,
+      'metadata': _metadataToJson(instance.metadata),
       'audioFiles': instance.audioFiles,
       'createdAt': instance.createdAt?.toIso8601String(),
       'modifiedAt': instance.modifiedAt?.toIso8601String(),

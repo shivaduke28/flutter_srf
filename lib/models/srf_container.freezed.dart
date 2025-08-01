@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SrfContainer {
 
- String get id; String get name; String get path; SrfMetadata get metadata; List<String> get audioFiles; DateTime? get createdAt; DateTime? get modifiedAt;
+ String get id; String get name; String get path;@JsonKey(toJson: _metadataToJson) SrfMetadata get metadata; List<String> get audioFiles; DateTime? get createdAt; DateTime? get modifiedAt;
 /// Create a copy of SrfContainer
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $SrfContainerCopyWith<$Res>  {
   factory $SrfContainerCopyWith(SrfContainer value, $Res Function(SrfContainer) _then) = _$SrfContainerCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String path, SrfMetadata metadata, List<String> audioFiles, DateTime? createdAt, DateTime? modifiedAt
+ String id, String name, String path,@JsonKey(toJson: _metadataToJson) SrfMetadata metadata, List<String> audioFiles, DateTime? createdAt, DateTime? modifiedAt
 });
 
 
@@ -165,7 +165,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String path,  SrfMetadata metadata,  List<String> audioFiles,  DateTime? createdAt,  DateTime? modifiedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String path, @JsonKey(toJson: _metadataToJson)  SrfMetadata metadata,  List<String> audioFiles,  DateTime? createdAt,  DateTime? modifiedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SrfContainer() when $default != null:
 return $default(_that.id,_that.name,_that.path,_that.metadata,_that.audioFiles,_that.createdAt,_that.modifiedAt);case _:
@@ -186,7 +186,7 @@ return $default(_that.id,_that.name,_that.path,_that.metadata,_that.audioFiles,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String path,  SrfMetadata metadata,  List<String> audioFiles,  DateTime? createdAt,  DateTime? modifiedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String path, @JsonKey(toJson: _metadataToJson)  SrfMetadata metadata,  List<String> audioFiles,  DateTime? createdAt,  DateTime? modifiedAt)  $default,) {final _that = this;
 switch (_that) {
 case _SrfContainer():
 return $default(_that.id,_that.name,_that.path,_that.metadata,_that.audioFiles,_that.createdAt,_that.modifiedAt);}
@@ -203,7 +203,7 @@ return $default(_that.id,_that.name,_that.path,_that.metadata,_that.audioFiles,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String path,  SrfMetadata metadata,  List<String> audioFiles,  DateTime? createdAt,  DateTime? modifiedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String path, @JsonKey(toJson: _metadataToJson)  SrfMetadata metadata,  List<String> audioFiles,  DateTime? createdAt,  DateTime? modifiedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _SrfContainer() when $default != null:
 return $default(_that.id,_that.name,_that.path,_that.metadata,_that.audioFiles,_that.createdAt,_that.modifiedAt);case _:
@@ -218,13 +218,13 @@ return $default(_that.id,_that.name,_that.path,_that.metadata,_that.audioFiles,_
 @JsonSerializable()
 
 class _SrfContainer implements SrfContainer {
-  const _SrfContainer({required this.id, required this.name, required this.path, required this.metadata, required final  List<String> audioFiles, this.createdAt, this.modifiedAt}): _audioFiles = audioFiles;
+  const _SrfContainer({required this.id, required this.name, required this.path, @JsonKey(toJson: _metadataToJson) required this.metadata, required final  List<String> audioFiles, this.createdAt, this.modifiedAt}): _audioFiles = audioFiles;
   factory _SrfContainer.fromJson(Map<String, dynamic> json) => _$SrfContainerFromJson(json);
 
 @override final  String id;
 @override final  String name;
 @override final  String path;
-@override final  SrfMetadata metadata;
+@override@JsonKey(toJson: _metadataToJson) final  SrfMetadata metadata;
  final  List<String> _audioFiles;
 @override List<String> get audioFiles {
   if (_audioFiles is EqualUnmodifiableListView) return _audioFiles;
@@ -268,7 +268,7 @@ abstract mixin class _$SrfContainerCopyWith<$Res> implements $SrfContainerCopyWi
   factory _$SrfContainerCopyWith(_SrfContainer value, $Res Function(_SrfContainer) _then) = __$SrfContainerCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String path, SrfMetadata metadata, List<String> audioFiles, DateTime? createdAt, DateTime? modifiedAt
+ String id, String name, String path,@JsonKey(toJson: _metadataToJson) SrfMetadata metadata, List<String> audioFiles, DateTime? createdAt, DateTime? modifiedAt
 });
 
 
