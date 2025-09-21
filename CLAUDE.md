@@ -15,11 +15,21 @@ Flutter SRFはFlutterでsrfを管理するためのアプリケーションで�
 
 ```
 lib/
+├── audio_player/    # 音楽再生機能
 ├── models/          # データモデル（Freezed）
 ├── providers/       # Riverpodプロバイダー
-├── screens/         # 画面UI
-├── widgets/         # 再利用可能なウィジェット
 ├── services/        # ビジネスロジック・外部連携
+├── widgets/         # UI コンポーネント
+│   ├── albums/      # アルバム関連画面
+│   │   └── providers/ # アルバム画面用プロバイダー
+│   ├── artists/     # アーティスト関連画面
+│   │   └── providers/ # アーティスト画面用プロバイダー
+│   ├── audio_player/# プレイヤーUI
+│   ├── common/      # 共通ウィジェット
+│   ├── home/        # ホーム画面（タブベース）
+│   ├── settings/    # 設定画面
+│   └── tracks/      # 楽曲関連画面
+│       └── providers/ # 楽曲画面用プロバイダー
 └── main.dart        # エントリーポイント
 ```
 
@@ -28,7 +38,7 @@ lib/
 - **flutter_riverpod**: 状態管理
 - **hooks_riverpod**: Flutter Hooksとの統合
 - **freezed**: イミュータブルなデータクラス生成
-- **flutter_media_metadata**: MP3等のメタデータ抽出
+- **audio_metadata_reader**: MP3等のメタデータ抽出
 - **path_provider**: ファイルシステムアクセス
 - **url_launcher**: システムファイルエクスプローラー連携
 - **file_picker**: ファイル・ディレクトリ選択UI
@@ -80,7 +90,7 @@ flutter pub get
 - **Riverpod 3.0対応**：`XxxRef`型は廃止され、すべて`Ref`型を使用するように変更
 
 ### メタデータ抽出
-- `flutter_media_metadata`パッケージを使用してMP3からメタデータを自動抽出
+- `audio_metadata_reader`パッケージを使用してMP3からメタデータを自動抽出
 - 抽出できない場合はデフォルト値を使用
 - 現在サポートされているのはMP3のみ（`.mp3`）
 
@@ -90,10 +100,11 @@ flutter pub get
 
 ### 音楽再生機能
 - `just_audio`パッケージを使用（音楽アプリに適している）
-- `AudioPlayerService`で再生制御を管理
-- `PlayerState`プロバイダーで再生状態を管理（Riverpod Generator使用）
+- `AudioPlayerService`で再生制御を管理（Riverpod Generator使用、keepAlive: true）
+- `AudioPlayerState`で再生状態を管理
 - 再生中の楽曲はハイライト表示される
 - 音量調整機能実装済み（0.0〜1.0の範囲でスライダーで調整可能）
+- 再生位置シークバーあり
 
 ### アルバム・アーティスト機能
 - `AlbumsProvider`でアルバム単位のグルーピングと情報を管理
@@ -101,6 +112,7 @@ flutter pub get
 - アルバム一覧画面：グリッド表示でアルバムを視覚的に表示
 - アーティスト一覧画面：リスト表示でアーティストと楽曲数・アルバム数を表示
 - 各詳細画面から楽曲の再生が可能
+- 検索・ソート機能（名前、楽曲数、アルバム数）付き
 
 ## トラブルシューティング
 
@@ -128,14 +140,19 @@ flutter pub get
 1. **高優先度**
    - [x] アーティスト一覧画面の実装
    - [x] アルバム一覧画面の実装
+   - [x] 楽曲インポート機能の実装
+   - [x] ライブラリ再スキャン機能の実装
    - [ ] ライブラリデータの永続化（SQLite/Hive）
 
 2. **中優先度**
    - [x] 楽曲再生機能の実装
    - [x] 音量調整機能の実装
+   - [x] 楽曲・アルバム・アーティスト検索機能
+   - [x] ソート機能（各画面）
    - [ ] メタデータ編集機能
    - [ ] アルバムアートワークの表示
    - [ ] 音量設定の永続化（SharedPreferences）
+   - [ ] 再生履歴
 
 3. **低優先度**
    - [ ] プレイリスト機能
