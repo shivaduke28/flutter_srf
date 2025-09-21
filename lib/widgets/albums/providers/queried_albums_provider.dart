@@ -8,23 +8,9 @@ part 'queried_albums_provider.g.dart';
 
 @riverpod
 Future<List<AlbumInfo>> queriedAlbums(Ref ref) async {
-  final albumMap = await ref.watch(albumsProvider.future);
+  var albumInfoList = await ref.watch(albumListProvider.future);
   final sortType = ref.watch(albumSortTypeNotifierProvider);
   final query = ref.watch(albumQueryNotifierProvider);
-
-  var albumInfoList = albumMap.entries.map((entry) {
-    final albumName = entry.key;
-    final tracks = entry.value;
-    final firstTrack = tracks.first;
-
-    return AlbumInfo(
-      name: albumName,
-      artist: firstTrack.metadata.albumArtist ?? firstTrack.metadata.artist,
-      year: firstTrack.metadata.year,
-      trackCount: tracks.length,
-      tracks: tracks,
-    );
-  }).toList();
 
   // フィルタリング
   if (query.isNotEmpty) {

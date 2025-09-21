@@ -6,7 +6,7 @@ import 'srf_containers_provider.dart';
 part 'albums_provider.g.dart';
 
 @riverpod
-Future<Map<String, List<SrfContainer>>> albums(Ref ref) async {
+Future<List<AlbumInfo>> albumList(Ref ref) async {
   final containers = await ref.watch(srfContainersProvider.future);
 
   final albumMap = <String, List<SrfContainer>>{};
@@ -24,13 +24,6 @@ Future<Map<String, List<SrfContainer>>> albums(Ref ref) async {
       return aTrack.compareTo(bTrack);
     });
   }
-
-  return albumMap;
-}
-
-@riverpod
-Future<List<AlbumInfo>> albumsList(Ref ref) async {
-  final albumMap = await ref.watch(albumsProvider.future);
 
   return albumMap.entries.map((entry) {
     final albumName = entry.key;
