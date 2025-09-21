@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../songs/songs_list_screen.dart';
+import '../tracks/track_list_screen.dart';
 import '../artists/artists_screen.dart';
 import '../albums/albums_screen.dart';
 import '../settings/settings_screen.dart';
