@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'providers/queried_albums_provider.dart';
 import 'providers/album_query_provider.dart';
 import 'providers/album_sort_type_provider.dart';
-import 'album_detail_screen.dart';
+import 'album_list_item_view.dart';
 
-class AlbumListView extends ConsumerWidget {
+class AlbumListView extends HookConsumerWidget {
   const AlbumListView({super.key});
 
   @override
@@ -13,6 +14,15 @@ class AlbumListView extends ConsumerWidget {
     final albumsAsync = ref.watch(queriedAlbumsProvider);
     final sortType = ref.watch(albumSortTypeNotifierProvider);
     final query = ref.watch(albumQueryNotifierProvider);
+    final searchController = useTextEditingController();
+
+    // providerの値が変わったらcontrollerも更新
+    useEffect(() {
+      if (searchController.text != query) {
+        searchController.text = query;
+      }
+      return null;
+    }, [query]);
 
     return Scaffold(
       appBar: AppBar(
@@ -87,6 +97,7 @@ class AlbumListView extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextField(
+              controller: searchController,
               decoration: InputDecoration(
                 hintText: 'アルバムを検索...',
                 prefixIcon: const Icon(Icons.search),
@@ -115,13 +126,7 @@ class AlbumListView extends ConsumerWidget {
             child: albumsAsync.when(
               data: (albums) {
                 if (albums.isEmpty) {
-                  return Center(
-                    child: Text(
-                      query.isNotEmpty
-                          ? '「$query」に一致するアルバムが見つかりません'
-                          : 'アルバムが見つかりません',
-                    ),
-                  );
+                  return const Center(child: Text('アルバムが見つかりません'));
                 }
 
                 return GridView.builder(
@@ -135,86 +140,7 @@ class AlbumListView extends ConsumerWidget {
                   itemCount: albums.length,
                   itemBuilder: (context, index) {
                     final album = albums[index];
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                AlbumDetailScreen(album: album),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.surfaceContainerHighest,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.primary.withValues(alpha: 0.1),
-                                  borderRadius: const BorderRadius.vertical(
-                                    top: Radius.circular(12),
-                                  ),
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.album,
-                                    size: 64,
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.primary,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(12),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    album.name,
-                                    style: Theme.of(
-                                      context,
-                                    ).textTheme.titleMedium,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    album.artist,
-                                    style: Theme.of(
-                                      context,
-                                    ).textTheme.bodySmall,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    '${album.trackCount}曲${album.year != null ? ' • ${album.year}' : ''}',
-                                    style: Theme.of(context).textTheme.bodySmall
-                                        ?.copyWith(
-                                          color: Theme.of(
-                                            context,
-                                          ).colorScheme.onSurfaceVariant,
-                                        ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
+                    return AlbumListItemView(album: album);
                   },
                 );
               },
