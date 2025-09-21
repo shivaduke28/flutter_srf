@@ -4,10 +4,10 @@ import '../../models/srf_container.dart';
 import '../../models/player_state.dart';
 import '../../providers/audio_player_provider.dart';
 
-class SongListTile extends ConsumerWidget {
+class TrackListItemView extends ConsumerWidget {
   final SrfContainer container;
 
-  const SongListTile({super.key, required this.container});
+  const TrackListItemView({super.key, required this.container});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
