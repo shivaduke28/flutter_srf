@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:flutter_media_metadata/flutter_media_metadata.dart';
+import 'package:audio_metadata_reader/audio_metadata_reader.dart';
 import 'package:path/path.dart' as p;
 import '../models/srf_metadata.dart';
 
@@ -11,18 +11,27 @@ class MetadataExtractorService {
         return null;
       }
 
-      final metadata = await MetadataRetriever.fromFile(file);
+      final metadata = readMetadata(file, getImage: false);
+
+      // アーティスト名を取得（複数アーティストの場合は結合）
+      final artistNames = <String>[];
+      if (metadata.artist != null && metadata.artist!.isNotEmpty) {
+        artistNames.add(metadata.artist!);
+      }
+
+      // duration を秒単位に変換（audio_metadata_readerはミリ秒で返す）
+      final durationInSeconds = metadata.duration?.inSeconds.toDouble() ?? 0;
 
       return SrfMetadata(
-        title: metadata.trackName ?? p.basenameWithoutExtension(filePath),
-        artist: metadata.trackArtistNames?.join(', ') ?? 'Unknown Artist',
-        duration: (metadata.trackDuration ?? 0) / 1000.0,
+        title: metadata.title ?? p.basenameWithoutExtension(filePath),
+        artist: metadata.artist ?? 'Unknown Artist',
+        duration: durationInSeconds,
         trackNumber: metadata.trackNumber,
-        artists: metadata.trackArtistNames,
-        album: metadata.albumName,
-        albumArtist: metadata.albumArtistName,
-        year: metadata.year,
-        genre: metadata.genre,
+        artists: artistNames.isNotEmpty ? artistNames : null,
+        album: metadata.album,
+        albumArtist: null, // audio_metadata_reader doesn't provide albumArtist
+        year: metadata.year?.year,
+        genre: metadata.genres.isNotEmpty ? metadata.genres.join(', ') : null,
         dateAdded: DateTime.now(),
         lastModified: DateTime.now(),
       );
