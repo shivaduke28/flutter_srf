@@ -6,8 +6,23 @@ import 'providers/album_sort_type_provider.dart';
 import 'providers/album_query_provider.dart';
 import 'album_list_view.dart';
 
-class AlbumsScreen extends HookConsumerWidget {
+class AlbumsScreen extends StatelessWidget {
   const AlbumsScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Navigator(
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(
+          builder: (context) => const AlbumsMainScreen(),
+        );
+      },
+    );
+  }
+}
+
+class AlbumsMainScreen extends HookConsumerWidget {
+  const AlbumsMainScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
