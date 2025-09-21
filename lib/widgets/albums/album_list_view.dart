@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../common/sort_popup_menu_button.dart';
 import 'providers/queried_albums_provider.dart';
 import 'providers/album_query_provider.dart';
 import 'providers/album_sort_type_provider.dart';
@@ -28,67 +29,19 @@ class AlbumListView extends HookConsumerWidget {
       appBar: AppBar(
         title: const Text('アルバム'),
         actions: [
-          PopupMenuButton<AlbumSortType>(
-            icon: const Icon(Icons.sort),
+          SortPopupMenuButton<AlbumSortType>(
+            currentValue: sortType,
+            items: const [
+              SortMenuItem(value: AlbumSortType.name, label: '名前順'),
+              SortMenuItem(value: AlbumSortType.artist, label: 'アーティスト順'),
+              SortMenuItem(value: AlbumSortType.year, label: '年代順'),
+              SortMenuItem(value: AlbumSortType.trackCount, label: '曲数順'),
+            ],
             onSelected: (AlbumSortType type) {
               ref
                   .read(albumSortTypeNotifierProvider.notifier)
                   .setSortType(type);
             },
-            itemBuilder: (BuildContext context) => [
-              PopupMenuItem(
-                value: AlbumSortType.name,
-                child: Row(
-                  children: [
-                    if (sortType == AlbumSortType.name)
-                      const Icon(Icons.check, size: 20)
-                    else
-                      const SizedBox(width: 20),
-                    const SizedBox(width: 8),
-                    const Text('名前順'),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                value: AlbumSortType.artist,
-                child: Row(
-                  children: [
-                    if (sortType == AlbumSortType.artist)
-                      const Icon(Icons.check, size: 20)
-                    else
-                      const SizedBox(width: 20),
-                    const SizedBox(width: 8),
-                    const Text('アーティスト順'),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                value: AlbumSortType.year,
-                child: Row(
-                  children: [
-                    if (sortType == AlbumSortType.year)
-                      const Icon(Icons.check, size: 20)
-                    else
-                      const SizedBox(width: 20),
-                    const SizedBox(width: 8),
-                    const Text('年代順'),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                value: AlbumSortType.trackCount,
-                child: Row(
-                  children: [
-                    if (sortType == AlbumSortType.trackCount)
-                      const Icon(Icons.check, size: 20)
-                    else
-                      const SizedBox(width: 20),
-                    const SizedBox(width: 8),
-                    const Text('曲数順'),
-                  ],
-                ),
-              ),
-            ],
           ),
         ],
       ),
