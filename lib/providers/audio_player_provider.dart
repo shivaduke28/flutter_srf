@@ -51,8 +51,22 @@ class PlayerState extends _$PlayerState {
 
   Future<void> play(SrfContainer container) async {
     try {
+      // まず先にcurrentContainerを更新
+      state = state.copyWith(
+        currentContainer: container,
+        position: Duration.zero,
+      );
+
       await _playerService.play(container);
-      state = state.copyWith(currentContainer: container);
+
+      // durationが取得できるまで少し待つ
+      final duration = _playerService.player.duration ?? Duration.zero;
+
+      // durationとstatusを更新
+      state = state.copyWith(
+        duration: duration,
+        status: app_player.PlayerStatus.playing,
+      );
     } catch (e) {
       print('Error playing audio: $e');
     }
@@ -72,6 +86,7 @@ class PlayerState extends _$PlayerState {
       currentContainer: null,
       position: Duration.zero,
       duration: Duration.zero,
+      status: app_player.PlayerStatus.stopped,
     );
   }
 
