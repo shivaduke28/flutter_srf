@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../common/sort_popup_menu_button.dart';
-import '../common/import_dialog.dart';
 import 'providers/track_sort_type_provider.dart';
 import 'providers/track_query_provider.dart';
 import 'track_list_view.dart';
@@ -89,16 +88,6 @@ class TracksMainScreen extends HookConsumerWidget {
         ],
       ),
       body: const TrackListView(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) => const ImportDialog(),
-          );
-        },
-        child: const Icon(Icons.add),
-      ),
     );
   }
 }

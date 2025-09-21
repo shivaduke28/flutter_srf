@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../services/library_service.dart';
 import '../../providers/srf_containers_provider.dart';
+import 'import_dialog.dart';
 
 class SettingsScreen extends HookConsumerWidget {
   const SettingsScreen({super.key});
@@ -50,20 +51,24 @@ class SettingsScreen extends HookConsumerWidget {
             ),
             const SizedBox(height: 16),
             Card(
-              child: SwitchListTile(
-                title: const Text('自動インポート'),
-                subtitle: const Text('監視ディレクトリに追加されたファイルを自動的にインポート'),
-                value: settings.autoImport,
-                onChanged: (value) {
-                  // TODO: 設定変更の実装
-                },
+              child: ListTile(
+                title: const Text('サポートされる拡張子'),
+                subtitle: Text(settings.supportedExtensions.join(', ')),
               ),
             ),
             const SizedBox(height: 16),
             Card(
               child: ListTile(
-                title: const Text('サポートされる拡張子'),
-                subtitle: Text(settings.supportedExtensions.join(', ')),
+                title: const Text('楽曲をインポート'),
+                subtitle: const Text('フォルダから楽曲をインポート'),
+                leading: const Icon(Icons.folder_open),
+                trailing: const Icon(Icons.arrow_forward_ios),
+                onTap: () async {
+                  await showDialog(
+                    context: context,
+                    builder: (context) => const ImportDialog(),
+                  );
+                },
               ),
             ),
             const SizedBox(height: 16),
