@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../models/srf_container.dart';
-import '../models/player_state.dart';
-import '../providers/audio_player_provider.dart';
+import '../../models/srf_container.dart';
+import '../../models/player_state.dart';
+import '../../providers/audio_player_provider.dart';
 
 class SongListTile extends ConsumerWidget {
   final SrfContainer container;

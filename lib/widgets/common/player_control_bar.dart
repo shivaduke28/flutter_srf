@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../models/player_state.dart';
-import '../providers/audio_player_provider.dart';
+import '../../models/player_state.dart';
+import '../../providers/audio_player_provider.dart';
 
 class PlayerControlBar extends ConsumerWidget {
   const PlayerControlBar({super.key});

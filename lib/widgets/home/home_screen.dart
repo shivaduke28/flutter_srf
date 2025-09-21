@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'songs_list_screen.dart';
-import 'artists_screen.dart';
-import 'albums_screen.dart';
-import 'settings_screen.dart';
-import '../widgets/player_control_bar.dart';
+import '../songs/songs_list_screen.dart';
+import '../artists/artists_screen.dart';
+import '../albums/albums_screen.dart';
+import '../settings/settings_screen.dart';
+import '../common/player_control_bar.dart';
 
 class HomeScreen extends HookConsumerWidget {
   const HomeScreen({super.key});

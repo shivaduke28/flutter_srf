@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../providers/artists_provider.dart';
-import '../providers/audio_player_provider.dart';
-import '../models/player_state.dart';
-import '../models/srf_container.dart';
+import '../../providers/artists_provider.dart';
+import '../../providers/audio_player_provider.dart';
+import '../../models/player_state.dart';
+import '../../models/srf_container.dart';
 
 class ArtistsScreen extends ConsumerWidget {
   const ArtistsScreen({super.key});

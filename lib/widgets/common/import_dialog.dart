@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:file_picker/file_picker.dart';
-import '../services/import_service.dart';
-import '../providers/srf_containers_provider.dart';
+import '../../services/import_service.dart';
+import '../../providers/srf_containers_provider.dart';
 
 class ImportDialog extends HookConsumerWidget {
   const ImportDialog({super.key});

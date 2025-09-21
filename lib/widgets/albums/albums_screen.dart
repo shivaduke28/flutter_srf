@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../providers/albums_provider.dart';
-import '../providers/audio_player_provider.dart';
-import '../models/player_state.dart';
+import '../../providers/albums_provider.dart';
+import '../../providers/audio_player_provider.dart';
+import '../../models/player_state.dart';
 
 class AlbumsScreen extends ConsumerWidget {
   const AlbumsScreen({super.key});
