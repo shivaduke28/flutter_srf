@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../models/player_state.dart';
-import '../../providers/audio_player_provider.dart';
+import '../../audio_player/audio_player_state.dart';
+import '../../audio_player/audio_player_service.dart';
 
-class PlayerControlBar extends ConsumerWidget {
-  const PlayerControlBar({super.key});
+class AudioPlayerView extends ConsumerWidget {
+  const AudioPlayerView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final playerState = ref.watch(playerStateProvider);
+    final playerState = ref.watch(audioPlayerServiceProvider);
     final currentContainer = playerState.currentContainer;
 
     return Container(
@@ -81,7 +81,9 @@ class PlayerControlBar extends ConsumerWidget {
                                   max: 1.0,
                                   onChanged: (value) {
                                     ref
-                                        .read(playerStateProvider.notifier)
+                                        .read(
+                                          audioPlayerServiceProvider.notifier,
+                                        )
                                         .setVolume(value);
                                   },
                                 ),
@@ -98,14 +100,16 @@ class PlayerControlBar extends ConsumerWidget {
                           ),
                           onPressed: () {
                             ref
-                                .read(playerStateProvider.notifier)
+                                .read(audioPlayerServiceProvider.notifier)
                                 .togglePlayPause();
                           },
                         ),
                         IconButton(
                           icon: const Icon(Icons.stop),
                           onPressed: () {
-                            ref.read(playerStateProvider.notifier).stop();
+                            ref
+                                .read(audioPlayerServiceProvider.notifier)
+                                .stop();
                           },
                         ),
                       ],

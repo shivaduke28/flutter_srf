@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../models/srf_container.dart';
-import '../../models/player_state.dart';
-import '../../providers/audio_player_provider.dart';
+import '../../audio_player/audio_player_state.dart';
+import '../../audio_player/audio_player_service.dart';
 
 class TrackListItemView extends ConsumerWidget {
   final SrfContainer container;
@@ -16,7 +16,7 @@ class TrackListItemView extends ConsumerWidget {
     final durationText =
         '${duration.inMinutes}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
 
-    final playerState = ref.watch(playerStateProvider);
+    final playerState = ref.watch(audioPlayerServiceProvider);
     final isCurrentSong = playerState.currentContainer?.path == container.path;
     final isPlaying =
         isCurrentSong && playerState.status == PlayerStatus.playing;
@@ -45,7 +45,7 @@ class TrackListItemView extends ConsumerWidget {
       ),
       trailing: Text(durationText),
       onTap: () async {
-        final notifier = ref.read(playerStateProvider.notifier);
+        final notifier = ref.read(audioPlayerServiceProvider.notifier);
         if (isCurrentSong) {
           await notifier.togglePlayPause();
         } else {

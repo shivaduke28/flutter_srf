@@ -1,17 +1,17 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter_srf/models/srf_container.dart';
 
-part 'player_state.freezed.dart';
+part 'audio_player_state.freezed.dart';
 
 @freezed
-sealed class PlayerState with _$PlayerState {
-  const factory PlayerState({
+sealed class AudioPlayerState with _$AudioPlayerState {
+  const factory AudioPlayerState({
     SrfContainer? currentContainer,
     @Default(PlayerStatus.stopped) PlayerStatus status,
     @Default(Duration.zero) Duration position,
     @Default(Duration.zero) Duration duration,
     @Default(1.0) double volume,
-  }) = _PlayerState;
+  }) = _AudioPlayerState;
 }
 
 enum PlayerStatus { playing, paused, stopped }

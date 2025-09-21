@@ -4,7 +4,7 @@ import '../tracks/tracks_screen.dart';
 import '../artists/artists_screen.dart';
 import '../albums/albums_screen.dart';
 import '../settings/settings_screen.dart';
-import '../common/player_control_bar.dart';
+import '../audio_player/audio_player_view.dart';
 
 class HomeScreen extends HookConsumerWidget {
   const HomeScreen({super.key});
@@ -37,7 +37,7 @@ class HomeScreen extends HookConsumerWidget {
                 ],
               ),
             ),
-            const PlayerControlBar(),
+            const AudioPlayerView(),
           ],
         ),
       ),
