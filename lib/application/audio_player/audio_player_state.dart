@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import '../../tracks/track.dart';
+import '../tracks/track.dart';
 
 part 'audio_player_state.freezed.dart';
 
