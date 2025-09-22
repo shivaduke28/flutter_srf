@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:file_picker/file_picker.dart';
 import '../../../application/library/services/import_service.dart';
-import '../../../application/tracks/tracks_provider.dart';
+import '../../../application/tracks/track_repository.dart';
 
 class ImportDialog extends HookConsumerWidget {
   const ImportDialog({super.key});
@@ -68,18 +68,19 @@ class ImportDialog extends HookConsumerWidget {
                           final importService = ref.read(
                             importServiceProvider.notifier,
                           );
-                          final containers = await importService
+                          final tracks = await importService
                               .importDirectory(selectedPath.value!);
 
-                          // コンテナリストを更新
-                          await ref.read(tracksProvider.notifier).refresh();
+                          // TrackRepositoryに追加
+                          final repository = ref.read(trackRepositoryProvider.notifier);
+                          repository.addTracks(tracks);
 
                           if (context.mounted) {
                             Navigator.of(context).pop();
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                  '${containers.length}曲をインポートしました',
+                                  '${tracks.length}曲をインポートしました',
                                 ),
                               ),
                             );

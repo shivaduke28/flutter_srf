@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../widgets/sort_popup_menu_button.dart';
-import '../../../application/tracks/track_sort_type_provider.dart';
-import '../../../application/tracks/track_query_provider.dart';
-import 'track_list_view.dart';
+import '../widgets/sort_popup_menu_button.dart';
+import '../../application/artists/artist_sort_type_provider.dart';
+import '../../application/artists/artist_query_provider.dart';
+import 'artist_list_view.dart';
 
-class TracksScreen extends StatelessWidget {
-  const TracksScreen({super.key});
+class ArtistsScreen extends StatelessWidget {
+  const ArtistsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Navigator(
       onGenerateRoute: (settings) {
         return MaterialPageRoute(
-          builder: (context) => const TracksMainScreen(),
+          builder: (context) => const ArtistsMainScreen(),
         );
       },
     );
   }
 }
 
-class TracksMainScreen extends HookConsumerWidget {
-  const TracksMainScreen({super.key});
+class ArtistsMainScreen extends HookConsumerWidget {
+  const ArtistsMainScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sortType = ref.watch(trackSortTypeNotifierProvider);
-    final query = ref.watch(trackQueryNotifierProvider);
+    final sortType = ref.watch(artistSortTypeNotifierProvider);
+    final query = ref.watch(artistQueryNotifierProvider);
     final searchController = useTextEditingController();
 
     // providerの値が変わったらcontrollerも更新
@@ -49,7 +49,7 @@ class TracksMainScreen extends HookConsumerWidget {
           child: TextField(
             controller: searchController,
             decoration: InputDecoration(
-              hintText: '楽曲を検索...',
+              hintText: 'アーティストを検索...',
               prefixIcon: const Icon(Icons.search, size: 20),
               suffixIcon: query.isNotEmpty
                   ? IconButton(
@@ -57,7 +57,7 @@ class TracksMainScreen extends HookConsumerWidget {
                       onPressed: () {
                         searchController.clear();
                         ref
-                            .read(trackQueryNotifierProvider.notifier)
+                            .read(artistQueryNotifierProvider.notifier)
                             .clearQuery();
                       },
                     )
@@ -66,28 +66,27 @@ class TracksMainScreen extends HookConsumerWidget {
               contentPadding: const EdgeInsets.symmetric(vertical: 8),
             ),
             onChanged: (value) {
-              ref.read(trackQueryNotifierProvider.notifier).updateQuery(value);
+              ref.read(artistQueryNotifierProvider.notifier).updateQuery(value);
             },
           ),
         ),
         actions: [
-          SortPopupMenuButton<TrackSortType>(
+          SortPopupMenuButton<ArtistSortType>(
             currentValue: sortType,
             items: const [
-              SortMenuItem(value: TrackSortType.title, label: 'タイトル順'),
-              SortMenuItem(value: TrackSortType.artist, label: 'アーティスト順'),
-              SortMenuItem(value: TrackSortType.album, label: 'アルバム順'),
-              SortMenuItem(value: TrackSortType.dateAdded, label: '追加日順'),
+              SortMenuItem(value: ArtistSortType.name, label: '名前順'),
+              SortMenuItem(value: ArtistSortType.trackCount, label: '曲数順'),
+              SortMenuItem(value: ArtistSortType.albumCount, label: 'アルバム数順'),
             ],
-            onSelected: (TrackSortType type) {
+            onSelected: (ArtistSortType type) {
               ref
-                  .read(trackSortTypeNotifierProvider.notifier)
+                  .read(artistSortTypeNotifierProvider.notifier)
                   .setSortType(type);
             },
           ),
         ],
       ),
-      body: const TrackListView(),
+      body: const ArtistListView(),
     );
   }
 }

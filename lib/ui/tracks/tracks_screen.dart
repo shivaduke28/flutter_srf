@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../widgets/sort_popup_menu_button.dart';
-import '../../../application/albums/album_sort_type_provider.dart';
-import '../../../application/albums/album_query_provider.dart';
-import 'album_list_view.dart';
+import '../widgets/sort_popup_menu_button.dart';
+import '../../application/tracks/track_sort_type_provider.dart';
+import '../../application/tracks/track_query_provider.dart';
+import '../tracks/track_list_view.dart';
 
-class AlbumsScreen extends StatelessWidget {
-  const AlbumsScreen({super.key});
+class TracksScreen extends StatelessWidget {
+  const TracksScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Navigator(
       onGenerateRoute: (settings) {
         return MaterialPageRoute(
-          builder: (context) => const AlbumsMainScreen(),
+          builder: (context) => const TracksMainScreen(),
         );
       },
     );
   }
 }
 
-class AlbumsMainScreen extends HookConsumerWidget {
-  const AlbumsMainScreen({super.key});
+class TracksMainScreen extends HookConsumerWidget {
+  const TracksMainScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sortType = ref.watch(albumSortTypeNotifierProvider);
-    final query = ref.watch(albumQueryNotifierProvider);
+    final sortType = ref.watch(trackSortTypeNotifierProvider);
+    final query = ref.watch(trackQueryNotifierProvider);
     final searchController = useTextEditingController();
 
     // providerの値が変わったらcontrollerも更新
@@ -49,7 +49,7 @@ class AlbumsMainScreen extends HookConsumerWidget {
           child: TextField(
             controller: searchController,
             decoration: InputDecoration(
-              hintText: 'アルバムを検索...',
+              hintText: '楽曲を検索...',
               prefixIcon: const Icon(Icons.search, size: 20),
               suffixIcon: query.isNotEmpty
                   ? IconButton(
@@ -57,7 +57,7 @@ class AlbumsMainScreen extends HookConsumerWidget {
                       onPressed: () {
                         searchController.clear();
                         ref
-                            .read(albumQueryNotifierProvider.notifier)
+                            .read(trackQueryNotifierProvider.notifier)
                             .clearQuery();
                       },
                     )
@@ -66,28 +66,28 @@ class AlbumsMainScreen extends HookConsumerWidget {
               contentPadding: const EdgeInsets.symmetric(vertical: 8),
             ),
             onChanged: (value) {
-              ref.read(albumQueryNotifierProvider.notifier).updateQuery(value);
+              ref.read(trackQueryNotifierProvider.notifier).updateQuery(value);
             },
           ),
         ),
         actions: [
-          SortPopupMenuButton<AlbumSortType>(
+          SortPopupMenuButton<TrackSortType>(
             currentValue: sortType,
             items: const [
-              SortMenuItem(value: AlbumSortType.name, label: '名前順'),
-              SortMenuItem(value: AlbumSortType.artist, label: 'アーティスト順'),
-              SortMenuItem(value: AlbumSortType.year, label: '年代順'),
-              SortMenuItem(value: AlbumSortType.trackCount, label: '曲数順'),
+              SortMenuItem(value: TrackSortType.title, label: 'タイトル順'),
+              SortMenuItem(value: TrackSortType.artist, label: 'アーティスト順'),
+              SortMenuItem(value: TrackSortType.album, label: 'アルバム順'),
+              SortMenuItem(value: TrackSortType.dateAdded, label: '追加日順'),
             ],
-            onSelected: (AlbumSortType type) {
+            onSelected: (TrackSortType type) {
               ref
-                  .read(albumSortTypeNotifierProvider.notifier)
+                  .read(trackSortTypeNotifierProvider.notifier)
                   .setSortType(type);
             },
           ),
         ],
       ),
-      body: const AlbumListView(),
+      body: const TrackListView(),
     );
   }
 }

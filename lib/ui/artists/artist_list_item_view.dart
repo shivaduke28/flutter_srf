@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../application/artists/artists_provider.dart';
-import 'artist_detail_screen.dart';
+import '../../application/artists/artists_provider.dart';
+import '../artists/artist_detail_screen.dart';
 
 class ArtistListItemView extends StatelessWidget {
   final ArtistInfo artist;

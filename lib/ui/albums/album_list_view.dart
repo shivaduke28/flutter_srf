@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../application/albums/queried_albums_provider.dart';
+import '../../application/albums/queried_albums_provider.dart';
 import 'album_list_item_view.dart';
 
 class AlbumListView extends ConsumerWidget {

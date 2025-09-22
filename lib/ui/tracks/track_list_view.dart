@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../application/tracks/tracks_provider.dart';
 import '../../../application/tracks/queried_tracks_provider.dart';
+import '../../../application/library/services/library_initialization_service.dart';
 import 'track_list_item_view.dart';
 
 class TrackListView extends ConsumerWidget {
@@ -37,7 +37,7 @@ class TrackListView extends ConsumerWidget {
 
         return RefreshIndicator(
           onRefresh: () async {
-            await ref.read(tracksProvider.notifier).refresh();
+            await ref.read(libraryInitializationServiceProvider.notifier).refreshLibrary();
           },
           child: ListView.builder(
             itemCount: tracks.length,
@@ -58,8 +58,8 @@ class TrackListView extends ConsumerWidget {
             Text('エラー: $error'),
             const SizedBox(height: 8),
             ElevatedButton(
-              onPressed: () {
-                ref.read(tracksProvider.notifier).refresh();
+              onPressed: () async {
+                await ref.read(libraryInitializationServiceProvider.notifier).refreshLibrary();
               },
               child: const Text('再読み込み'),
             ),

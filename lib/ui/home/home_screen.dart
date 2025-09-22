@@ -4,13 +4,17 @@ import '../tracks/tracks_screen.dart';
 import '../artists/artists_screen.dart';
 import '../albums/albums_screen.dart';
 import '../settings/settings_screen.dart';
-import '../../widgets/audio_player_view.dart';
+import '../widgets/audio_player_view.dart';
+import '../../application/library/services/library_initialization_service.dart';
 
-class HomeScreen extends HookConsumerWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Watch library initialization service to trigger initialization
+    ref.watch(libraryInitializationServiceProvider);
+
     return DefaultTabController(
       length: 4,
       child: Scaffold(
