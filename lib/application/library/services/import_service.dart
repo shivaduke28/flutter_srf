@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:path/path.dart' as p;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../models/track.dart';
+import '../../tracks/track.dart';
 import '../repositories/library_service.dart';
 
 part 'import_service.g.dart';

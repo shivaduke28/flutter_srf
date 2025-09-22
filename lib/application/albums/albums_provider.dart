@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../library/models/track.dart';
-import '../library/providers/tracks_provider.dart';
+import '../tracks/track.dart';
+import '../tracks/tracks_provider.dart';
 
 part 'albums_provider.g.dart';
 

@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../application/artists/artists_provider.dart';
 import '../../../application/audio_player/services/audio_player_service.dart';
 import '../../../application/audio_player/models/audio_player_state.dart';
-import '../../../application/library/models/track.dart';
+import '../../../application/tracks/track.dart';
 
 class ArtistDetailScreen extends ConsumerWidget {
   final ArtistInfo artist;

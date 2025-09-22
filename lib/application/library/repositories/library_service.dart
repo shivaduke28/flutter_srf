@@ -4,7 +4,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../models/library_settings.dart';
-import '../models/track.dart';
+import '../../tracks/track.dart';
 import '../models/srf_metadata.dart';
 import '../../../system/metadata/metadata_extractor_service.dart';
 

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../application/library/providers/tracks_provider.dart';
-import '../../../application/tracks/track_sort_type_provider.dart';
-import '../../../application/tracks/track_query_provider.dart';
+import '../../../application/tracks/tracks_provider.dart';
+import '../../../application/tracks/queried_tracks_provider.dart';
 import 'track_list_item_view.dart';
 
 class TrackListView extends ConsumerWidget {
@@ -10,30 +9,11 @@ class TrackListView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final containersAsync = ref.watch(tracksProvider);
-    final sortType = ref.watch(trackSortTypeNotifierProvider);
-    final query = ref.watch(trackQueryNotifierProvider);
+    final tracksAsync = ref.watch(queriedTracksProvider);
 
-    return containersAsync.when(
-      data: (containers) {
-        final notifier = ref.read(tracksProvider.notifier);
-
-        // 検索フィルタリング
-        var filteredContainers = query.isEmpty
-            ? containers
-            : notifier.searchTracks(query);
-
-        // ソート
-        filteredContainers = notifier.sortTracks(
-          filteredContainers,
-          sortType == TrackSortType.title
-              ? SortType.title
-              : sortType == TrackSortType.artist
-              ? SortType.artist
-              : SortType.dateAdded,
-        );
-
-        if (filteredContainers.isEmpty) {
+    return tracksAsync.when(
+      data: (tracks) {
+        if (tracks.isEmpty) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -45,7 +25,7 @@ class TrackListView extends ConsumerWidget {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  query.isEmpty ? '楽曲がありません' : '検索結果がありません',
+                  '楽曲がありません',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     color: Theme.of(context).colorScheme.outline,
                   ),
@@ -60,10 +40,10 @@ class TrackListView extends ConsumerWidget {
             await ref.read(tracksProvider.notifier).refresh();
           },
           child: ListView.builder(
-            itemCount: filteredContainers.length,
+            itemCount: tracks.length,
             itemBuilder: (context, index) {
-              final container = filteredContainers[index];
-              return TrackListItemView(container: container);
+              final track = tracks[index];
+              return TrackListItemView(container: track);
             },
           ),
         );

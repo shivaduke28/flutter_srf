@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:file_picker/file_picker.dart';
 import '../../../application/library/services/import_service.dart';
-import '../../../application/library/providers/tracks_provider.dart';
+import '../../../application/tracks/tracks_provider.dart';
 
 class ImportDialog extends HookConsumerWidget {
   const ImportDialog({super.key});

@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'srf_metadata.dart';
+import '../library/models/srf_metadata.dart';
 
 part 'track.freezed.dart';
 part 'track.g.dart';

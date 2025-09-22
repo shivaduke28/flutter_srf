@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../application/library/repositories/library_service.dart';
-import '../../../application/library/providers/tracks_provider.dart';
+import '../../../application/tracks/tracks_provider.dart';
 import 'import_dialog.dart';
 
 class SettingsScreen extends HookConsumerWidget {

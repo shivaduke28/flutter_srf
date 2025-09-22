@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../models/track.dart';
-import '../repositories/library_service.dart';
+import 'track.dart';
+import '../library/repositories/library_service.dart';
 
 part 'tracks_provider.g.dart';
 
