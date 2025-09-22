@@ -15,21 +15,29 @@ Flutter SRFはFlutterでsrfを管理するためのアプリケーションで�
 
 ```
 lib/
-├── audio_player/    # 音楽再生機能
-├── models/          # データモデル（Freezed）
-├── providers/       # Riverpodプロバイダー
-├── services/        # ビジネスロジック・外部連携
-├── widgets/         # UI コンポーネント
-│   ├── albums/      # アルバム関連画面
-│   │   └── providers/ # アルバム画面用プロバイダー
-│   ├── artists/     # アーティスト関連画面
-│   │   └── providers/ # アーティスト画面用プロバイダー
-│   ├── audio_player/# プレイヤーUI
-│   ├── common/      # 共通ウィジェット
-│   ├── home/        # ホーム画面（タブベース）
-│   ├── settings/    # 設定画面
-│   └── tracks/      # 楽曲関連画面
-│       └── providers/ # 楽曲画面用プロバイダー
+├── features/        # 機能別モジュール
+│   ├── albums/      # アルバム機能
+│   │   ├── models/  # アルバムデータモデル
+│   │   ├── providers/ # アルバムプロバイダー
+│   │   └── ui/      # アルバムUI
+│   ├── artists/     # アーティスト機能
+│   │   ├── providers/ # アーティストプロバイダー
+│   │   └── ui/      # アーティストUI
+│   ├── library/     # ライブラリ管理機能
+│   │   ├── models/  # ライブラリデータモデル
+│   │   └── providers/ # ライブラリプロバイダー
+│   ├── player/      # 音楽再生機能
+│   │   ├── providers/ # プレイヤープロバイダー
+│   │   └── ui/      # プレイヤーUI
+│   ├── settings/    # 設定機能
+│   │   └── ui/      # 設定UI
+│   └── tracks/      # 楽曲機能
+│       ├── models/  # 楽曲データモデル
+│       ├── providers/ # 楽曲プロバイダー
+│       └── ui/      # 楽曲UI
+├── shared/          # 共有コンポーネント
+│   ├── ui/          # 共通UI
+│   └── utils/       # ユーティリティ
 └── main.dart        # エントリーポイント
 ```
 
@@ -83,11 +91,17 @@ flutter pub get
 - 現在は固定パス（将来的にカスタマイズ可能にする予定）
 
 ### プロバイダーの注意点
-- `LibraryService`は`@Riverpod(keepAlive: true)`で永続化
-- `SrfContainersProvider`は`libraryServiceProvider.future`を待ってから初期化
-- 非同期プロバイダーを使用する際は、初期化完了を適切に待つ必要がある
-- **Riverpod Generatorを使用**：StateNotifierProviderは非推奨なので`@Riverpod`アノテーションを使う
-- **Riverpod 3.0対応**：`XxxRef`型は廃止され、すべて`Ref`型を使用するように変更
+- **Riverpod Generator使用**：`@riverpod`アノテーションで自動生成
+- **keepAlive設定**：永続化が必要なプロバイダーは`@Riverpod(keepAlive: true)`を使用
+  - 例：`libraryManagerProvider`、`audioPlayerServiceProvider`
+- **状態監視の重要ポイント**：
+  - UIでは必ず`ref.watch(xxxProvider)`でstateを監視する（再ビルドのトリガー）
+  - `ref.watch(xxxProvider.notifier)`は状態変更を検知しない
+  - アクションの実行時のみ`ref.read(xxxProvider.notifier)`を使用
+- **フィーチャー構造**：各機能モジュール（features/）内でプロバイダーを管理
+  - `TracksController`：楽曲一覧の状態管理
+  - `LibraryManager`：ライブラリ全体の管理
+  - `AudioPlayerService`：音楽再生制御
 
 ### メタデータ抽出
 - `audio_metadata_reader`パッケージを使用してMP3からメタデータを自動抽出
@@ -99,28 +113,45 @@ flutter pub get
 - `com.apple.security.files.user-selected.read-write`が必要
 
 ### 音楽再生機能
-- `just_audio`パッケージを使用（音楽アプリに適している）
-- `AudioPlayerService`で再生制御を管理（Riverpod Generator使用、keepAlive: true）
-- `AudioPlayerState`で再生状態を管理
-- 再生中の楽曲はハイライト表示される
-- 音量調整機能実装済み（0.0〜1.0の範囲でスライダーで調整可能）
-- 再生位置シークバーあり
+- **パッケージ**：`just_audio`（音楽アプリに最適化）
+- **アーキテクチャ**：
+  - `AudioPlayerService`（`features/player/providers/`）：再生制御
+  - `AudioPlayerState`：再生状態の管理（再生中トラック、再生位置、音量など）
+  - `PlayerControlsView`（`features/player/ui/`）：プレイヤーUI
+- **機能**：
+  - 再生/一時停止/停止
+  - 音量調整（0.0〜1.0、スライダー操作）
+  - シークバー（再生位置の表示と操作）
+  - 再生中トラックのハイライト表示
 
 ### アルバム・アーティスト機能
-- `AlbumsProvider`でアルバム単位のグルーピングと情報を管理
-- `ArtistsProvider`でアーティスト単位のグルーピングと情報を管理
-- アルバム一覧画面：グリッド表示でアルバムを視覚的に表示
-- アーティスト一覧画面：リスト表示でアーティストと楽曲数・アルバム数を表示
-- 各詳細画面から楽曲の再生が可能
-- 検索・ソート機能（名前、楽曲数、アルバム数）付き
+- **アルバム機能**（`features/albums/`）：
+  - `AlbumsController`：アルバムの状態管理とフィルタリング
+  - グリッド表示（`AlbumsScreen`）
+  - アルバム詳細画面（`AlbumDetailScreen`）
+- **アーティスト機能**（`features/artists/`）：
+  - `ArtistsController`：アーティストの状態管理
+  - リスト表示（`ArtistsScreen`）
+  - アーティスト詳細画面（`ArtistDetailScreen`）
+- **共通機能**：
+  - 検索機能（リアルタイムフィルタリング）
+  - ソート機能（名前順、楽曲数順、アルバム数順）
+  - 各詳細画面からの楽曲再生
 
 ## トラブルシューティング
 
 ### 楽曲が表示されない場合
-1. コンソールログを確認（`scanLibrary called`等のデバッグ出力）
-2. ライブラリディレクトリが存在するか確認
-3. SRFコンテナが正しく作成されているか確認
-4. プロバイダーの初期化順序を確認
+1. **プロバイダーの監視確認**：
+   - `ref.watch(tracksControllerProvider)`でstateを監視しているか
+   - `notifier`ではなくstateを監視しているか確認
+2. **ライブラリのスキャン**：
+   - 「ライブラリを再スキャン」ボタンを実行
+   - コンソールログで`scanLibrary`の実行を確認
+3. **ファイルパス確認**：
+   - ライブラリディレクトリ：`~/Library/Application Support/flutter_srf/library`
+   - SRFコンテナファイル（`.srf`）が存在するか確認
+4. **権限確認**：
+   - macOSのファイルアクセス権限が有効か確認
 
 ### ビルドエラーが発生した場合
 1. `flutter clean` を実行
