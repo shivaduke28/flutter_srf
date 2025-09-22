@@ -8,7 +8,7 @@ import 'import_dialog.dart';
 class SettingsScreen extends HookConsumerWidget {
   const SettingsScreen({super.key});
 
-  Future<void> _openInFinder(String path) async {
+  Future<void> _openInFinder(BuildContext context, String path) async {
     try {
       // ディレクトリが存在しない場合は作成
       final dir = Directory(path);
@@ -21,8 +21,23 @@ class SettingsScreen extends HookConsumerWidget {
       if (!await launchUrl(uri)) {
         throw Exception('Could not launch $uri');
       }
-    } catch (e) {
-      print('Error opening directory: $e');
+    } catch (e, stackTrace) {
+      // デバッグビルドではログ出力
+      assert(() {
+        debugPrint('Error opening directory: $e');
+        debugPrint('Stack trace: $stackTrace');
+        return true;
+      }());
+
+      // ユーザーにエラーを通知
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('フォルダを開けませんでした: $e'),
+            backgroundColor: Theme.of(context).colorScheme.error,
+          ),
+        );
+      }
     }
   }
 
@@ -48,7 +63,7 @@ class SettingsScreen extends HookConsumerWidget {
                   tooltip: 'Finderで開く',
                   onPressed: snapshot.hasData
                       ? () async {
-                          await _openInFinder(libraryPath);
+                          await _openInFinder(context, libraryPath);
                         }
                       : null,
                 ),

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:audio_metadata_reader/audio_metadata_reader.dart';
 import 'package:path/path.dart' as p;
 
@@ -36,8 +37,14 @@ class MetadataExtractorService {
         dateAdded: DateTime.now(),
         lastModified: DateTime.now(),
       );
-    } catch (e) {
-      print('Error extracting metadata: $e');
+    } catch (e, stackTrace) {
+      // デバッグビルドではログ出力
+      assert(() {
+        debugPrint('Error extracting metadata from $filePath: $e');
+        debugPrint('Stack trace: $stackTrace');
+        return true;
+      }());
+      // エラー時はnullを返してデフォルトメタデータを使用させる
       return null;
     }
   }

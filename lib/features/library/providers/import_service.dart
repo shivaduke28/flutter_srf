@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../tracks/models/track.dart';
@@ -58,8 +59,14 @@ class ImportService extends _$ImportService {
         if (container != null) {
           containers.add(container);
         }
-      } catch (e) {
-        print('Error importing file ${file.path}: $e');
+      } catch (e, stackTrace) {
+        // デバッグビルドではログ出力
+        assert(() {
+          debugPrint('Error importing file ${file.path}: $e');
+          debugPrint('Stack trace: $stackTrace');
+          return true;
+        }());
+        // エラーを記録して続行（他のファイルを処理するため）
       }
     }
 

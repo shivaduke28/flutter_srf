@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../tracks/models/track.dart';
 import '../models/srf_metadata.dart';
-import '../models/library_settings.dart';
 import '../../../shared/utils/metadata_extractor_service.dart';
 
 part 'library_manager.g.dart';
@@ -31,14 +31,14 @@ class LibraryManager extends _$LibraryManager {
   }
 
   Future<void> scanLibrary({bool forceRefresh = false}) async {
-    print('LibraryManager: scanLibrary called (forceRefresh: $forceRefresh)');
+    // LibraryManager: scanLibrary called
 
     final libPath = await libraryPath;
     final containers = <Track>[];
     final libraryDir = Directory(libPath);
 
     if (!await libraryDir.exists()) {
-      print('Library directory does not exist: ${libraryDir.path}');
+      // Library directory does not exist
       await libraryDir.create(recursive: true);
       state = [];
       return;
@@ -54,7 +54,7 @@ class LibraryManager extends _$LibraryManager {
     }
 
     state = containers;
-    print('LibraryManager: Loaded ${containers.length} tracks');
+    // Loaded tracks
   }
 
   Future<Track?> _loadTrack(String containerPath) async {
@@ -89,8 +89,13 @@ class LibraryManager extends _$LibraryManager {
         createdAt: null,
         modifiedAt: null,
       );
-    } catch (e) {
-      print('Error loading SRF container: $e');
+    } catch (e, stackTrace) {
+      // デバッグビルドではログ出力
+      assert(() {
+        debugPrint('Error loading SRF container from $containerPath: $e');
+        debugPrint('Stack trace: $stackTrace');
+        return true;
+      }());
       return null;
     }
   }
@@ -139,9 +144,14 @@ class LibraryManager extends _$LibraryManager {
 
       state = [...state, newTrack];
       return newTrack;
-    } catch (e) {
-      print('Error creating SRF container: $e');
-      return null;
+    } catch (e, stackTrace) {
+      // デバッグビルドではログ出力
+      assert(() {
+        debugPrint('Error creating SRF container: $e');
+        debugPrint('Stack trace: $stackTrace');
+        return true;
+      }());
+      rethrow; // エラーを再スロー
     }
   }
 
