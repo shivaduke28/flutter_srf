@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../application/artists/artist.dart';
-import '../../application/audio_player/audio_player_service.dart';
-import '../../application/audio_player/audio_player_state.dart';
+import '../../application/player/audio_player_controller.dart';
+import '../../application/player/audio_player_state.dart';
 import '../../application/tracks/track.dart';
 
 class ArtistDetailScreen extends ConsumerWidget {
@@ -12,7 +12,7 @@ class ArtistDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final playerState = ref.watch(audioPlayerServiceProvider);
+    final playerState = ref.watch(audioPlayerControllerProvider);
     final currentContainer = playerState.currentContainer;
 
     // アルバムごとにトラックをグループ化
@@ -155,15 +155,15 @@ class ArtistDetailScreen extends ConsumerWidget {
                       onTap: () async {
                         if (isPlaying) {
                           await ref
-                              .read(audioPlayerServiceProvider.notifier)
+                              .read(audioPlayerControllerProvider.notifier)
                               .pause();
                         } else if (isPaused) {
                           await ref
-                              .read(audioPlayerServiceProvider.notifier)
+                              .read(audioPlayerControllerProvider.notifier)
                               .resume();
                         } else {
                           await ref
-                              .read(audioPlayerServiceProvider.notifier)
+                              .read(audioPlayerControllerProvider.notifier)
                               .play(track);
                         }
                       },

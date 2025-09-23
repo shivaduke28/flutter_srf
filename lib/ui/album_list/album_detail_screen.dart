@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../application/albums/album.dart';
 import '../../application/tracks/track.dart';
-import '../../application/audio_player/audio_player_service.dart';
-import '../../application/audio_player/audio_player_state.dart';
+import '../../application/player/audio_player_controller.dart';
+import '../../application/player/audio_player_state.dart';
 
 class AlbumDetailScreen extends ConsumerWidget {
   final Album album;
@@ -12,7 +12,7 @@ class AlbumDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final playerState = ref.watch(audioPlayerServiceProvider);
+    final playerState = ref.watch(audioPlayerControllerProvider);
     final currentContainer = playerState.currentContainer;
 
     return Scaffold(
@@ -103,15 +103,15 @@ class AlbumDetailScreen extends ConsumerWidget {
                   onTap: () async {
                     if (isPlaying) {
                       await ref
-                          .read(audioPlayerServiceProvider.notifier)
+                          .read(audioPlayerControllerProvider.notifier)
                           .pause();
                     } else if (isPaused) {
                       await ref
-                          .read(audioPlayerServiceProvider.notifier)
+                          .read(audioPlayerControllerProvider.notifier)
                           .resume();
                     } else {
                       await ref
-                          .read(audioPlayerServiceProvider.notifier)
+                          .read(audioPlayerControllerProvider.notifier)
                           .play(track!);
                     }
                   },
