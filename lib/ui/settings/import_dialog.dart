@@ -74,9 +74,7 @@ class ImportDialog extends HookConsumerWidget {
                           if (context.mounted) {
                             Navigator.of(context).pop();
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('インポートが完了しました'),
-                              ),
+                              SnackBar(content: Text('インポートが完了しました')),
                             );
                           }
                         } catch (e) {

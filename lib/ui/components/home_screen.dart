@@ -11,7 +11,6 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     return DefaultTabController(
       length: 4,
       child: Scaffold(

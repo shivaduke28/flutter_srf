@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../components/sort_popup_menu_button.dart';
-import '../../application/albums/albums_notifier.dart';
+import '../../application/albums/album_query_controller.dart';
 import './album_list_view.dart';
 
 class AlbumsScreen extends StatelessWidget {
@@ -23,74 +23,66 @@ class AlbumsMainScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final albumsState = ref.watch(albumsControllerProvider);
-    final controller = ref.read(albumsControllerProvider.notifier);
+    final queryState = ref.watch(albumQueryControllerProvider);
+    final controller = ref.read(albumQueryControllerProvider.notifier);
     final searchController = useTextEditingController();
 
-    return albumsState.when(
-      loading: () =>
-          const Scaffold(body: Center(child: CircularProgressIndicator())),
-      error: (error, stack) =>
-          Scaffold(body: Center(child: Text('エラー: $error'))),
-      data: (state) {
-        final sortType = state.sortType;
-        final query = state.searchQuery;
+    final sortType = queryState.sortType;
+    final query = queryState.searchQuery;
 
-        // providerの値が変わったらcontrollerも更新
-        useEffect(() {
-          if (searchController.text != query) {
-            searchController.text = query;
-          }
-          return null;
-        }, [query]);
+    // providerの値が変わったらcontrollerも更新
+    useEffect(() {
+      if (searchController.text != query) {
+        searchController.text = query;
+      }
+      return null;
+    }, [query]);
 
-        return Scaffold(
-          appBar: AppBar(
-            title: Container(
-              height: 40,
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: TextField(
-                controller: searchController,
-                decoration: InputDecoration(
-                  hintText: 'アルバムを検索...',
-                  prefixIcon: const Icon(Icons.search, size: 20),
-                  suffixIcon: query.isNotEmpty
-                      ? IconButton(
-                          icon: const Icon(Icons.clear, size: 20),
-                          onPressed: () {
-                            searchController.clear();
-                            controller.clearSearchQuery();
-                          },
-                        )
-                      : null,
-                  border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 8),
-                ),
-                onChanged: (value) {
-                  controller.updateSearchQuery(value);
-                },
-              ),
-            ),
-            actions: [
-              SortPopupMenuButton<AlbumSortType>(
-                currentValue: sortType,
-                items: const [
-                  SortMenuItem(value: AlbumSortType.name, label: '名前順'),
-                  SortMenuItem(value: AlbumSortType.artist, label: 'アーティスト順'),
-                  SortMenuItem(value: AlbumSortType.trackCount, label: '曲数順'),
-                ],
-                onSelected: (AlbumSortType type) {
-                  controller.updateSortType(type);
-                },
-              ),
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Container(
+          height: 40,
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surfaceContainerHighest,
+            borderRadius: BorderRadius.circular(20),
           ),
-          body: const AlbumListView(),
-        );
-      },
+          child: TextField(
+            controller: searchController,
+            decoration: InputDecoration(
+              hintText: 'アルバムを検索...',
+              prefixIcon: const Icon(Icons.search, size: 20),
+              suffixIcon: query.isNotEmpty
+                  ? IconButton(
+                      icon: const Icon(Icons.clear, size: 20),
+                      onPressed: () {
+                        searchController.clear();
+                        controller.clearSearchQuery();
+                      },
+                    )
+                  : null,
+              border: InputBorder.none,
+              contentPadding: const EdgeInsets.symmetric(vertical: 8),
+            ),
+            onChanged: (value) {
+              controller.updateSearchQuery(value);
+            },
+          ),
+        ),
+        actions: [
+          SortPopupMenuButton<AlbumSortType>(
+            currentValue: sortType,
+            items: const [
+              SortMenuItem(value: AlbumSortType.name, label: '名前順'),
+              SortMenuItem(value: AlbumSortType.artist, label: 'アーティスト順'),
+              SortMenuItem(value: AlbumSortType.trackCount, label: '曲数順'),
+            ],
+            onSelected: (AlbumSortType type) {
+              controller.updateSortType(type);
+            },
+          ),
+        ],
+      ),
+      body: const AlbumListView(),
     );
   }
 }

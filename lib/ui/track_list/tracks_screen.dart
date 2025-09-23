@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../components/sort_popup_menu_button.dart';
-import '../../application/tracks/tracks_notifier.dart';
+import '../../application/tracks/track_query_controller.dart';
 import './track_list_view.dart';
 
 class TracksScreen extends StatelessWidget {
@@ -23,13 +23,12 @@ class TracksMainScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.read(tracksControllerProvider.notifier);
+    final queryState = ref.watch(trackQueryControllerProvider);
+    final controller = ref.read(trackQueryControllerProvider.notifier);
     final searchController = useTextEditingController();
 
-    // TracksControllerは同期的なので、直接状態を取得
-    final state = ref.watch(tracksControllerProvider);
-    final sortType = state.valueOrNull?.sortType ?? TrackSortType.title;
-    final query = state.valueOrNull?.searchQuery ?? '';
+    final sortType = queryState.sortType;
+    final query = queryState.searchQuery;
 
     // providerの値が変わったらcontrollerも更新
     useEffect(() {
@@ -73,10 +72,10 @@ class TracksMainScreen extends HookConsumerWidget {
           SortPopupMenuButton<TrackSortType>(
             currentValue: sortType,
             items: const [
-              SortMenuItem(value: TrackSortType.title, label: 'タイトル順'),
+              SortMenuItem(value: TrackSortType.name, label: 'タイトル順'),
               SortMenuItem(value: TrackSortType.artist, label: 'アーティスト順'),
               SortMenuItem(value: TrackSortType.album, label: 'アルバム順'),
-              SortMenuItem(value: TrackSortType.dateAdded, label: '追加日順'),
+              SortMenuItem(value: TrackSortType.duration, label: '再生時間順'),
             ],
             onSelected: (TrackSortType type) {
               controller.updateSortType(type);

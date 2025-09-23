@@ -49,32 +49,28 @@ class ImportNotifier extends _$ImportNotifier {
 
     try {
       // インポート実行（コールバックで進捗を受け取る）
-      await importer.importDirectory(
-        directoryPath,
-        libraryPath,
-        (event) {
-          switch (event) {
-            case ImportStarted(:final totalFiles):
-              state = state.copyWith(
-                totalFiles: totalFiles,
-                processedFiles: 0,
-                currentFile: '',
-              );
-            case ImportProgress(:final processedFiles, :final currentFile):
-              state = state.copyWith(
-                processedFiles: processedFiles,
-                currentFile: currentFile,
-              );
-            case ImportCompleted():
-              // 完了処理は下で行う
-              break;
-            case ImportError(:final filePath, :final error):
-              state = state.copyWith(
-                errors: [...state.errors, '$filePath: $error'],
-              );
-          }
-        },
-      );
+      await importer.importDirectory(directoryPath, libraryPath, (event) {
+        switch (event) {
+          case ImportStarted(:final totalFiles):
+            state = state.copyWith(
+              totalFiles: totalFiles,
+              processedFiles: 0,
+              currentFile: '',
+            );
+          case ImportProgress(:final processedFiles, :final currentFile):
+            state = state.copyWith(
+              processedFiles: processedFiles,
+              currentFile: currentFile,
+            );
+          case ImportCompleted():
+            // 完了処理は下で行う
+            break;
+          case ImportError(:final filePath, :final error):
+            state = state.copyWith(
+              errors: [...state.errors, '$filePath: $error'],
+            );
+        }
+      });
 
       // インポート完了後、TracksControllerを更新
       await ref.read(tracksControllerProvider.notifier).refresh();

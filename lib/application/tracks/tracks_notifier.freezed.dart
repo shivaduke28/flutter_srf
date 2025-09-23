@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TracksState {
 
- List<Track> get allTracks; String get searchQuery; TrackSortType get sortType;
+ List<Track> get allTracks;
 /// Create a copy of TracksState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $TracksStateCopyWith<TracksState> get copyWith => _$TracksStateCopyWithImpl<Trac
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TracksState&&const DeepCollectionEquality().equals(other.allTracks, allTracks)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&(identical(other.sortType, sortType) || other.sortType == sortType));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TracksState&&const DeepCollectionEquality().equals(other.allTracks, allTracks));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(allTracks),searchQuery,sortType);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(allTracks));
 
 @override
 String toString() {
-  return 'TracksState(allTracks: $allTracks, searchQuery: $searchQuery, sortType: $sortType)';
+  return 'TracksState(allTracks: $allTracks)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $TracksStateCopyWith<$Res>  {
   factory $TracksStateCopyWith(TracksState value, $Res Function(TracksState) _then) = _$TracksStateCopyWithImpl;
 @useResult
 $Res call({
- List<Track> allTracks, String searchQuery, TrackSortType sortType
+ List<Track> allTracks
 });
 
 
@@ -62,12 +62,10 @@ class _$TracksStateCopyWithImpl<$Res>
 
 /// Create a copy of TracksState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? allTracks = null,Object? searchQuery = null,Object? sortType = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? allTracks = null,}) {
   return _then(_self.copyWith(
 allTracks: null == allTracks ? _self.allTracks : allTracks // ignore: cast_nullable_to_non_nullable
-as List<Track>,searchQuery: null == searchQuery ? _self.searchQuery : searchQuery // ignore: cast_nullable_to_non_nullable
-as String,sortType: null == sortType ? _self.sortType : sortType // ignore: cast_nullable_to_non_nullable
-as TrackSortType,
+as List<Track>,
   ));
 }
 
@@ -149,10 +147,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Track> allTracks,  String searchQuery,  TrackSortType sortType)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Track> allTracks)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TracksState() when $default != null:
-return $default(_that.allTracks,_that.searchQuery,_that.sortType);case _:
+return $default(_that.allTracks);case _:
   return orElse();
 
 }
@@ -170,10 +168,10 @@ return $default(_that.allTracks,_that.searchQuery,_that.sortType);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Track> allTracks,  String searchQuery,  TrackSortType sortType)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Track> allTracks)  $default,) {final _that = this;
 switch (_that) {
 case _TracksState():
-return $default(_that.allTracks,_that.searchQuery,_that.sortType);}
+return $default(_that.allTracks);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -187,10 +185,10 @@ return $default(_that.allTracks,_that.searchQuery,_that.sortType);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Track> allTracks,  String searchQuery,  TrackSortType sortType)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Track> allTracks)?  $default,) {final _that = this;
 switch (_that) {
 case _TracksState() when $default != null:
-return $default(_that.allTracks,_that.searchQuery,_that.sortType);case _:
+return $default(_that.allTracks);case _:
   return null;
 
 }
@@ -202,7 +200,7 @@ return $default(_that.allTracks,_that.searchQuery,_that.sortType);case _:
 
 
 class _TracksState implements TracksState {
-  const _TracksState({required final  List<Track> allTracks, required this.searchQuery, required this.sortType}): _allTracks = allTracks;
+  const _TracksState({required final  List<Track> allTracks}): _allTracks = allTracks;
   
 
  final  List<Track> _allTracks;
@@ -212,8 +210,6 @@ class _TracksState implements TracksState {
   return EqualUnmodifiableListView(_allTracks);
 }
 
-@override final  String searchQuery;
-@override final  TrackSortType sortType;
 
 /// Create a copy of TracksState
 /// with the given fields replaced by the non-null parameter values.
@@ -225,16 +221,16 @@ _$TracksStateCopyWith<_TracksState> get copyWith => __$TracksStateCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TracksState&&const DeepCollectionEquality().equals(other._allTracks, _allTracks)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&(identical(other.sortType, sortType) || other.sortType == sortType));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TracksState&&const DeepCollectionEquality().equals(other._allTracks, _allTracks));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_allTracks),searchQuery,sortType);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_allTracks));
 
 @override
 String toString() {
-  return 'TracksState(allTracks: $allTracks, searchQuery: $searchQuery, sortType: $sortType)';
+  return 'TracksState(allTracks: $allTracks)';
 }
 
 
@@ -245,7 +241,7 @@ abstract mixin class _$TracksStateCopyWith<$Res> implements $TracksStateCopyWith
   factory _$TracksStateCopyWith(_TracksState value, $Res Function(_TracksState) _then) = __$TracksStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<Track> allTracks, String searchQuery, TrackSortType sortType
+ List<Track> allTracks
 });
 
 
@@ -262,12 +258,10 @@ class __$TracksStateCopyWithImpl<$Res>
 
 /// Create a copy of TracksState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? allTracks = null,Object? searchQuery = null,Object? sortType = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? allTracks = null,}) {
   return _then(_TracksState(
 allTracks: null == allTracks ? _self._allTracks : allTracks // ignore: cast_nullable_to_non_nullable
-as List<Track>,searchQuery: null == searchQuery ? _self.searchQuery : searchQuery // ignore: cast_nullable_to_non_nullable
-as String,sortType: null == sortType ? _self.sortType : sortType // ignore: cast_nullable_to_non_nullable
-as TrackSortType,
+as List<Track>,
   ));
 }
 

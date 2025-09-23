@@ -28,7 +28,7 @@ class TrackRepository {
             artist: track.artist,
             album: track.album,
             duration: track.duration,
-            filePath: track.path,  // 実際のファイルパス
+            filePath: track.path, // 実際のファイルパス
             createdAt: null,
             modifiedAt: null,
           ),
@@ -38,5 +38,4 @@ class TrackRepository {
 
     return tracks;
   }
-
 }

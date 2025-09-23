@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../metadata/metadata_extractor_service.dart';
+import 'metadata_extractor_service.dart';
 
 part 'track_importer.g.dart';
 
@@ -43,10 +43,7 @@ class ImportError extends ImportEvent {
   final String filePath;
   final String error;
 
-  const ImportError({
-    required this.filePath,
-    required this.error,
-  });
+  const ImportError({required this.filePath, required this.error});
 }
 
 class TrackImporter {
@@ -82,24 +79,17 @@ class TrackImporter {
     for (var i = 0; i < audioFiles.length; i++) {
       final file = audioFiles[i];
 
-      onProgress?.call(ImportProgress(
-        processedFiles: i,
-        currentFile: p.basename(file.path),
-      ));
+      onProgress?.call(
+        ImportProgress(processedFiles: i, currentFile: p.basename(file.path)),
+      );
 
       try {
-        final containerPath = await _importSingleFile(
-          file.path,
-          libraryPath,
-        );
+        final containerPath = await _importSingleFile(file.path, libraryPath);
         if (containerPath != null) {
           importedContainerPaths.add(containerPath);
         }
       } catch (e) {
-        onProgress?.call(ImportError(
-          filePath: file.path,
-          error: e.toString(),
-        ));
+        onProgress?.call(ImportError(filePath: file.path, error: e.toString()));
 
         // デバッグビルドではログ出力
         assert(() {
@@ -109,9 +99,9 @@ class TrackImporter {
       }
     }
 
-    onProgress?.call(ImportCompleted(
-      importedContainerPaths: importedContainerPaths,
-    ));
+    onProgress?.call(
+      ImportCompleted(importedContainerPaths: importedContainerPaths),
+    );
 
     return importedContainerPaths;
   }
@@ -132,7 +122,8 @@ class TrackImporter {
 
     // SRFコンテナを作成
     final fileName = p.basenameWithoutExtension(sourceFilePath);
-    final containerName = '${fileName}_${DateTime.now().millisecondsSinceEpoch}.srf';
+    final containerName =
+        '${fileName}_${DateTime.now().millisecondsSinceEpoch}.srf';
     final containerPath = p.join(libraryPath, containerName);
 
     await Directory(containerPath).create(recursive: true);

@@ -1,26 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'albums_notifier.dart';
+part of 'album_query_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$albumsControllerHash() => r'4e35094b2727f704dfec4df1ef9884b714baff9e';
+String _$albumQueryControllerHash() =>
+    r'650ac48ad465a36b5245770194982af13e22a896';
 
-/// See also [AlbumsController].
-@ProviderFor(AlbumsController)
-final albumsControllerProvider =
-    AsyncNotifierProvider<AlbumsController, AlbumsState>.internal(
-      AlbumsController.new,
-      name: r'albumsControllerProvider',
+/// See also [AlbumQueryController].
+@ProviderFor(AlbumQueryController)
+final albumQueryControllerProvider =
+    AutoDisposeNotifierProvider<AlbumQueryController, AlbumQueryState>.internal(
+      AlbumQueryController.new,
+      name: r'albumQueryControllerProvider',
       debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$albumsControllerHash,
+          : _$albumQueryControllerHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
 
-typedef _$AlbumsController = AsyncNotifier<AlbumsState>;
+typedef _$AlbumQueryController = AutoDisposeNotifier<AlbumQueryState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

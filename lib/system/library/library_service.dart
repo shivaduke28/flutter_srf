@@ -17,9 +17,7 @@ LibraryService libraryService(Ref ref) {
 class LibraryService {
   Future<String> get libraryPath async {
     final appSupport = await getApplicationSupportDirectory();
-    final libraryDir = Directory(
-      path.join(appSupport.path, 'library'),
-    );
+    final libraryDir = Directory(path.join(appSupport.path, 'library'));
 
     if (!await libraryDir.exists()) {
       await libraryDir.create(recursive: true);
@@ -79,7 +77,9 @@ class LibraryService {
           tracks.add(
             SrfTrack(
               path: entity.path,
-              title: metadata?['title'] ?? path.basenameWithoutExtension(entity.path),
+              title:
+                  metadata?['title'] ??
+                  path.basenameWithoutExtension(entity.path),
               artist: metadata?['artist'] ?? 'Unknown Artist',
               album: metadata?['album'] ?? 'Unknown Album',
               duration: (metadata?['duration'] ?? 0.0).toDouble(),
@@ -91,5 +91,4 @@ class LibraryService {
 
     return tracks;
   }
-
 }

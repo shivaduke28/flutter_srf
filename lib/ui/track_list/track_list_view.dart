@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../application/tracks/queried_tracks_provider.dart';
 import '../../application/tracks/tracks_notifier.dart';
 import 'track_list_item_view.dart';
 
@@ -8,52 +9,55 @@ class TrackListView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // stateを監視して変更があったら再ビルド
-    ref.watch(tracksControllerProvider);
-    final controller = ref.read(tracksControllerProvider.notifier);
-    final tracks = controller.filteredAndSortedTracks;
+    final tracksAsync = ref.watch(queriedTracksProvider);
 
-    if (tracks.isEmpty) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.music_note,
-              size: 64,
-              color: Theme.of(context).colorScheme.outline,
+    return tracksAsync.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, stack) => Center(child: Text('エラー: $error')),
+      data: (tracks) {
+        if (tracks.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.music_note,
+                  size: 64,
+                  color: Theme.of(context).colorScheme.outline,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  '楽曲がありません',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.outline,
+                  ),
+                ),
+                const SizedBox(height: 32),
+                ElevatedButton.icon(
+                  onPressed: () async {
+                    await ref.read(tracksControllerProvider.notifier).refresh();
+                  },
+                  icon: const Icon(Icons.refresh),
+                  label: const Text('ライブラリを再スキャン'),
+                ),
+              ],
             ),
-            const SizedBox(height: 16),
-            Text(
-              '楽曲がありません',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: Theme.of(context).colorScheme.outline,
-              ),
-            ),
-            const SizedBox(height: 32),
-            ElevatedButton.icon(
-              onPressed: () async {
-                await ref.read(tracksControllerProvider.notifier).refresh();
-              },
-              icon: const Icon(Icons.refresh),
-              label: const Text('ライブラリを再スキャン'),
-            ),
-          ],
-        ),
-      );
-    }
+          );
+        }
 
-    return RefreshIndicator(
-      onRefresh: () async {
-        await ref.read(tracksControllerProvider.notifier).refresh();
+        return RefreshIndicator(
+          onRefresh: () async {
+            await ref.read(tracksControllerProvider.notifier).refresh();
+          },
+          child: ListView.builder(
+            itemCount: tracks.length,
+            itemBuilder: (context, index) {
+              final track = tracks[index];
+              return TrackListItemView(container: track);
+            },
+          ),
+        );
       },
-      child: ListView.builder(
-        itemCount: tracks.length,
-        itemBuilder: (context, index) {
-          final track = tracks[index];
-          return TrackListItemView(container: track);
-        },
-      ),
     );
   }
 }
