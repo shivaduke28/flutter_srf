@@ -1,8 +1,12 @@
-# フォーマット
+# フォーマット（生成ファイルを除外）
 .PHONY: format
 format:
-	@echo "🎨 Formatting code..."
-	@dart format lib/ test/
+	@echo "🎨 Formatting code (excluding generated files)..."
+	@find lib test -name "*.dart" \
+		! -name "*.g.dart" \
+		! -name "*.freezed.dart" \
+		! -name "*.mocks.dart" \
+		-exec dart format {} +
 
 # 静的解析
 .PHONY: analyze
