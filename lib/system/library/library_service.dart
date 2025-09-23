@@ -79,7 +79,7 @@ class LibraryService {
     if (await metadataFile.exists()) {
       try {
         final content = await metadataFile.readAsString();
-        metadata = json.decode(content);
+        metadata = json.decode(content) as Map<String, dynamic>?;
       } on FormatException catch (e) {
         // JSONパースエラーはログ出力して続行
         print('メタデータのJSONパースエラー: $e');
@@ -98,10 +98,10 @@ class LibraryService {
           tracks.add(
             SrfTrack(
               path: entity.path,
-              title: metadata?['title'] ?? path.basenameWithoutExtension(entity.path),
-              artist: metadata?['artist'] ?? 'Unknown Artist',
-              album: metadata?['album'] ?? 'Unknown Album',
-              duration: (metadata?['duration'] ?? 0.0).toDouble(),
+              title: metadata?['title'] as String? ?? path.basenameWithoutExtension(entity.path),
+              artist: metadata?['artist'] as String? ?? 'Unknown Artist',
+              album: metadata?['album'] as String? ?? 'Unknown Album',
+              duration: (metadata?['duration'] as num? ?? 0.0).toDouble(),
             ),
           );
         }
