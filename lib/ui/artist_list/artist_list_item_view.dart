@@ -18,7 +18,7 @@ class ArtistListItemView extends StatelessWidget {
       subtitle: Text('${artist.albumIds.length}枚のアルバム • ${artist.trackIds.length}曲'),
       trailing: const Icon(Icons.chevron_right),
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => ArtistDetailScreen(artist: artist)));
+        Navigator.push(context, MaterialPageRoute<void>(builder: (context) => ArtistDetailScreen(artist: artist)));
       },
     );
   }

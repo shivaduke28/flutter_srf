@@ -11,7 +11,7 @@ class AlbumListItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => AlbumDetailScreen(album: album)));
+        Navigator.push(context, MaterialPageRoute<void>(builder: (context) => AlbumDetailScreen(album: album)));
       },
       child: Container(
         decoration: BoxDecoration(

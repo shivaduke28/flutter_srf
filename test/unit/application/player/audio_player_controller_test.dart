@@ -194,7 +194,7 @@ void main() {
       await controller.play(track);
       // 手動で状態を更新（ストリームイベントをシミュレート）
       statusStreamController.add(PlaybackStatus.playing);
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
 
       // Act - 再生中から一時停止へ
       await controller.togglePlayPause();
@@ -204,7 +204,7 @@ void main() {
 
       // 状態を一時停止に更新
       statusStreamController.add(PlaybackStatus.paused);
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
 
       // Act - 一時停止から再生へ
       await controller.togglePlayPause();
@@ -220,32 +220,32 @@ void main() {
 
       // Act & Assert - 再生状態
       statusStreamController.add(PlaybackStatus.playing);
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
       expect(container.read(audioPlayerControllerProvider).status, PlayerStatus.playing);
 
       // Act & Assert - 一時停止状態
       statusStreamController.add(PlaybackStatus.paused);
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
       expect(container.read(audioPlayerControllerProvider).status, PlayerStatus.paused);
 
       // Act & Assert - 停止状態
       statusStreamController.add(PlaybackStatus.stopped);
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
       expect(container.read(audioPlayerControllerProvider).status, PlayerStatus.stopped);
 
       // Act & Assert - 位置の更新
       positionStreamController.add(const Duration(seconds: 45));
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
       expect(container.read(audioPlayerControllerProvider).position, const Duration(seconds: 45));
 
       // Act & Assert - 長さの更新
       durationStreamController.add(const Duration(seconds: 180));
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
       expect(container.read(audioPlayerControllerProvider).duration, const Duration(seconds: 180));
 
       // Act & Assert - 音量の更新
       volumeStreamController.add(0.7);
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
       expect(container.read(audioPlayerControllerProvider).volume, 0.7);
     });
 
@@ -272,7 +272,7 @@ void main() {
 
       // Act - 再生完了イベントを送信
       processingStateStreamController.add(AudioProcessingState.completed);
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
 
       // Assert
       final state = container.read(audioPlayerControllerProvider);

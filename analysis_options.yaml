@@ -15,8 +15,8 @@ analyzer:
   errors:
     # freezed使用時のwarningを抑制
     invalid_annotation_target: ignore
-    # TODOコメントを警告として表示
-    todo: warning
+    # TODOコメントを無視（プロジェクトでは許可）
+    todo: ignore
     # 未使用のimportをエラーに
     unused_import: error
     # 未使用のローカル変数をエラーに
@@ -213,9 +213,6 @@ linter:
 
     # Riverpod特有の設定
     # avoid_manual_providers_as_generated_provider_dependency: true
-
-    # パフォーマンス
-    avoid_large_futures: false  # 大きなFutureも許可
 
     # ドキュメント（任意）
     public_member_api_docs: false  # パブリックメンバーのドキュメントは任意

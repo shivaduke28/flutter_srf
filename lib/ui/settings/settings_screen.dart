@@ -83,7 +83,7 @@ class SettingsScreen extends HookConsumerWidget {
                 leading: const Icon(Icons.folder_open),
                 trailing: const Icon(Icons.arrow_forward_ios),
                 onTap: () async {
-                  await showDialog(context: context, builder: (context) => const ImportDialog());
+                  await showDialog<void>(context: context, builder: (context) => const ImportDialog());
                 },
               ),
             ),

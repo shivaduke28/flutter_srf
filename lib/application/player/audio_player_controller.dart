@@ -11,7 +11,7 @@ part 'audio_player_controller.g.dart';
 @Riverpod(keepAlive: true)
 class AudioPlayerController extends _$AudioPlayerController {
   late final AudioPlayerService _audioService;
-  final _subscriptions = <StreamSubscription>[];
+  final _subscriptions = <StreamSubscription<dynamic>>[];
 
   @override
   AudioPlayerState build() {
