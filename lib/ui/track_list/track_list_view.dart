@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../application/tracks/queried_tracks_provider.dart';
 import '../../application/tracks/tracks_notifier.dart';
 import 'track_list_item_view.dart';
+import '../components/async_value_widget.dart';
 
 class TrackListView extends ConsumerWidget {
   const TrackListView({super.key});
@@ -11,9 +12,11 @@ class TrackListView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final tracksAsync = ref.watch(queriedTracksProvider);
 
-    return tracksAsync.when(
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (error, stack) => Center(child: Text('エラー: $error')),
+    return AsyncValueWidget(
+      asyncValue: tracksAsync,
+      onRetry: () {
+        ref.invalidate(queriedTracksProvider);
+      },
       data: (tracks) {
         if (tracks.isEmpty) {
           return Center(

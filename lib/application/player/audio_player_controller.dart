@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../tracks/track.dart';
 import '../../system/audio/audio_player_service.dart';
 import 'audio_player_state.dart';
+import '../../errors/exceptions.dart';
 
 part 'audio_player_controller.g.dart';
 
@@ -91,48 +92,89 @@ class AudioPlayerController extends _$AudioPlayerController {
 
   /// トラックを再生
   Future<void> play(Track track) async {
-    state = state.copyWith(currentContainer: track);
-    await _audioService.playFile(track.filePath);
+    try {
+      state = state.copyWith(currentContainer: track);
+      await _audioService.playFile(track.filePath);
+    } on AppException {
+      // エラー時は状態をリセット
+      state = state.copyWith(
+        currentContainer: null,
+        status: PlayerStatus.stopped,
+      );
+      // エラーを再スローしてUI層でキャッチできるようにする
+      rethrow;
+    }
   }
 
   /// 再生を一時停止
   Future<void> pause() async {
-    await _audioService.pause();
+    try {
+      await _audioService.pause();
+    } on AppException {
+      rethrow;
+    }
   }
 
   /// 再生を再開
   Future<void> resume() async {
-    await _audioService.resume();
+    try {
+      await _audioService.resume();
+    } on AppException {
+      rethrow;
+    }
   }
 
   /// 再生を停止
   Future<void> stop() async {
-    await _audioService.stop();
-    state = state.copyWith(
-      currentContainer: null,
-      position: Duration.zero,
-      duration: Duration.zero,
-      status: PlayerStatus.stopped,
-    );
+    try {
+      await _audioService.stop();
+      state = state.copyWith(
+        currentContainer: null,
+        position: Duration.zero,
+        duration: Duration.zero,
+        status: PlayerStatus.stopped,
+      );
+    } on AppException {
+      // エラーが発生しても状態はリセット
+      state = state.copyWith(
+        currentContainer: null,
+        position: Duration.zero,
+        duration: Duration.zero,
+        status: PlayerStatus.stopped,
+      );
+      rethrow;
+    }
   }
 
   /// 指定位置へシーク
   Future<void> seek(Duration position) async {
-    await _audioService.seek(position);
+    try {
+      await _audioService.seek(position);
+    } on AppException {
+      rethrow;
+    }
   }
 
   /// 再生/一時停止をトグル
   Future<void> togglePlayPause() async {
-    if (state.status == PlayerStatus.playing) {
-      await pause();
-    } else if (state.status == PlayerStatus.paused &&
-        state.currentContainer != null) {
-      await resume();
+    try {
+      if (state.status == PlayerStatus.playing) {
+        await pause();
+      } else if (state.status == PlayerStatus.paused &&
+          state.currentContainer != null) {
+        await resume();
+      }
+    } on AppException {
+      rethrow;
     }
   }
 
   /// 音量を設定
   Future<void> setVolume(double volume) async {
-    await _audioService.setVolume(volume);
+    try {
+      await _audioService.setVolume(volume);
+    } on AppException {
+      rethrow;
+    }
   }
 }

@@ -227,6 +227,9 @@ void main() {
 
     test('ストリームイベントで状態が更新される', () async {
       // Arrange
+      // まずControllerを初期化してリスナーを設定
+      final _ = container.read(audioPlayerControllerProvider);
+
       // Act & Assert - 再生状態
       statusStreamController.add(PlaybackStatus.playing);
       await Future.delayed(const Duration(milliseconds: 100));

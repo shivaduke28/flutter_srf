@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../application/player/audio_player_state.dart';
 import '../../application/player/audio_player_controller.dart';
+import '../components/error_view.dart';
+import '../../errors/exceptions.dart';
 
 class AudioPlayerView extends ConsumerWidget {
   const AudioPlayerView({super.key});
@@ -79,13 +81,19 @@ class AudioPlayerView extends ConsumerWidget {
                                   value: playerState.volume,
                                   min: 0.0,
                                   max: 1.0,
-                                  onChanged: (value) {
-                                    ref
-                                        .read(
-                                          audioPlayerControllerProvider
-                                              .notifier,
-                                        )
-                                        .setVolume(value);
+                                  onChanged: (value) async {
+                                    try {
+                                      await ref
+                                          .read(
+                                            audioPlayerControllerProvider
+                                                .notifier,
+                                          )
+                                          .setVolume(value);
+                                    } on AppException catch (e) {
+                                      if (context.mounted) {
+                                        showErrorSnackBar(context, e);
+                                      }
+                                    }
                                   },
                                 ),
                               ),
@@ -99,18 +107,30 @@ class AudioPlayerView extends ConsumerWidget {
                                 : Icons.play_arrow,
                             size: 32,
                           ),
-                          onPressed: () {
-                            ref
-                                .read(audioPlayerControllerProvider.notifier)
-                                .togglePlayPause();
+                          onPressed: () async {
+                            try {
+                              await ref
+                                  .read(audioPlayerControllerProvider.notifier)
+                                  .togglePlayPause();
+                            } on AppException catch (e) {
+                              if (context.mounted) {
+                                showErrorSnackBar(context, e);
+                              }
+                            }
                           },
                         ),
                         IconButton(
                           icon: const Icon(Icons.stop),
-                          onPressed: () {
-                            ref
-                                .read(audioPlayerControllerProvider.notifier)
-                                .stop();
+                          onPressed: () async {
+                            try {
+                              await ref
+                                  .read(audioPlayerControllerProvider.notifier)
+                                  .stop();
+                            } on AppException catch (e) {
+                              if (context.mounted) {
+                                showErrorSnackBar(context, e);
+                              }
+                            }
                           },
                         ),
                       ],

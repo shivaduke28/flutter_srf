@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'srf_file.dart';
 import 'srf_track.dart';
+import '../../errors/exceptions.dart';
 
 part 'library_service.g.dart';
 
@@ -16,38 +17,74 @@ LibraryService libraryService(Ref ref) {
 
 class LibraryService {
   Future<String> get libraryPath async {
-    final appSupport = await getApplicationSupportDirectory();
-    final libraryDir = Directory(path.join(appSupport.path, 'library'));
+    try {
+      final appSupport = await getApplicationSupportDirectory();
+      final libraryDir = Directory(path.join(appSupport.path, 'library'));
 
-    if (!await libraryDir.exists()) {
-      await libraryDir.create(recursive: true);
+      if (!await libraryDir.exists()) {
+        await libraryDir.create(recursive: true);
+      }
+
+      return libraryDir.path;
+    } on FileSystemException catch (e, stack) {
+      throw LibraryAccessException(
+        message: 'ライブラリディレクトリの作成に失敗しました',
+        originalError: e,
+        stackTrace: stack,
+      );
+    } catch (e, stack) {
+      throw LibraryAccessException(
+        message: 'ライブラリパスの取得に失敗しました',
+        originalError: e,
+        stackTrace: stack,
+      );
     }
-
-    return libraryDir.path;
   }
 
   Future<List<SrfFile>> loadSrfFiles() async {
-    final libPath = await libraryPath;
-    final dir = Directory(libPath);
+    try {
+      final libPath = await libraryPath;
+      final dir = Directory(libPath);
 
-    if (!await dir.exists()) {
-      return [];
-    }
-
-    final srfFiles = <SrfFile>[];
-    final entities = await dir.list().toList();
-
-    for (final entity in entities) {
-      if (entity is Directory && entity.path.endsWith('.srf')) {
-        final tracks = await _loadTracksFromContainer(entity);
-        final containerName = path.basename(entity.path);
-        srfFiles.add(
-          SrfFile(path: entity.path, name: containerName, tracks: tracks),
-        );
+      if (!await dir.exists()) {
+        return [];
       }
-    }
 
-    return srfFiles;
+      final srfFiles = <SrfFile>[];
+      final entities = await dir.list().toList();
+
+      for (final entity in entities) {
+        if (entity is Directory && entity.path.endsWith('.srf')) {
+          try {
+            final tracks = await _loadTracksFromContainer(entity);
+            final containerName = path.basename(entity.path);
+            srfFiles.add(
+              SrfFile(path: entity.path, name: containerName, tracks: tracks),
+            );
+          } catch (e) {
+            // 単一のコンテナの読み込みエラーはスキップして続行
+            print('コンテナの読み込みに失敗: ${entity.path}: $e');
+            continue;
+          }
+        }
+      }
+
+      return srfFiles;
+    } on LibraryAccessException {
+      rethrow;
+    } on FileSystemException catch (e, stack) {
+      throw LibraryAccessException(
+        message: 'ライブラリファイルの読み込みに失敗しました',
+        originalError: e,
+        stackTrace: stack,
+      );
+    } catch (e, stack) {
+      throw LibraryAccessException(
+        message: '予期しないエラーが発生しました',
+        originalError: e,
+        stackTrace: stack,
+      );
+    }
   }
 
   Future<List<SrfTrack>> _loadTracksFromContainer(
@@ -63,8 +100,12 @@ class LibraryService {
       try {
         final content = await metadataFile.readAsString();
         metadata = json.decode(content);
-      } catch (_) {
-        // メタデータ読み込みエラーは無視
+      } on FormatException catch (e) {
+        // JSONパースエラーはログ出力して続行
+        print('メタデータのJSONパースエラー: $e');
+      } catch (e) {
+        // その他のメタデータ読み込みエラーもログ出力して続行
+        print('メタデータ読み込みエラー: $e');
       }
     }
 
