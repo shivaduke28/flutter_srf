@@ -20,6 +20,5 @@ sealed class SrfMetadata with _$SrfMetadata {
     DateTime? lastModified,
   }) = _SrfMetadata;
 
-  factory SrfMetadata.fromJson(Map<String, dynamic> json) =>
-      _$SrfMetadataFromJson(json);
+  factory SrfMetadata.fromJson(Map<String, dynamic> json) => _$SrfMetadataFromJson(json);
 }

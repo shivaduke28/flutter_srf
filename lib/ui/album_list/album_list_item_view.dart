@@ -11,12 +11,7 @@ class AlbumListItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => AlbumDetailScreen(album: album),
-          ),
-        );
+        Navigator.push(context, MaterialPageRoute(builder: (context) => AlbumDetailScreen(album: album)));
       },
       child: Container(
         decoration: BoxDecoration(
@@ -29,20 +24,10 @@ class AlbumListItemView extends StatelessWidget {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.primary.withValues(alpha: 0.1),
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(12),
-                  ),
+                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
                 ),
-                child: Center(
-                  child: Icon(
-                    Icons.album,
-                    size: 64,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
+                child: Center(child: Icon(Icons.album, size: 64, color: Theme.of(context).colorScheme.primary)),
               ),
             ),
             Padding(
@@ -66,9 +51,9 @@ class AlbumListItemView extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     '${album.srfContainerIds.length}曲${album.year != null ? ' • ${album.year}' : ''}',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
                   ),
                 ],
               ),

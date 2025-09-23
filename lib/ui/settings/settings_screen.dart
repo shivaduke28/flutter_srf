@@ -34,10 +34,7 @@ class SettingsScreen extends HookConsumerWidget {
       // ユーザーにエラーを通知
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('フォルダを開けませんでした: $e'),
-            backgroundColor: Theme.of(context).colorScheme.error,
-          ),
+          SnackBar(content: Text('フォルダを開けませんでした: $e'), backgroundColor: Theme.of(context).colorScheme.error),
         );
       }
     }
@@ -76,10 +73,7 @@ class SettingsScreen extends HookConsumerWidget {
             ),
             const SizedBox(height: 16),
             Card(
-              child: ListTile(
-                title: const Text('サポートされる拡張子'),
-                subtitle: Text(supportedExtensions.join(', ')),
-              ),
+              child: ListTile(title: const Text('サポートされる拡張子'), subtitle: Text(supportedExtensions.join(', '))),
             ),
             const SizedBox(height: 16),
             Card(
@@ -89,10 +83,7 @@ class SettingsScreen extends HookConsumerWidget {
                 leading: const Icon(Icons.folder_open),
                 trailing: const Icon(Icons.arrow_forward_ios),
                 onTap: () async {
-                  await showDialog(
-                    context: context,
-                    builder: (context) => const ImportDialog(),
-                  );
+                  await showDialog(context: context, builder: (context) => const ImportDialog());
                 },
               ),
             ),
@@ -108,18 +99,10 @@ class SettingsScreen extends HookConsumerWidget {
                     context: context,
                     builder: (context) => AlertDialog(
                       title: const Text('ライブラリを再スキャン'),
-                      content: const Text(
-                        'ライブラリを再スキャンしますか？\n楽曲数が多い場合は時間がかかることがあります。',
-                      ),
+                      content: const Text('ライブラリを再スキャンしますか？\n楽曲数が多い場合は時間がかかることがあります。'),
                       actions: [
-                        TextButton(
-                          onPressed: () => Navigator.of(context).pop(false),
-                          child: const Text('キャンセル'),
-                        ),
-                        TextButton(
-                          onPressed: () => Navigator.of(context).pop(true),
-                          child: const Text('再スキャン'),
-                        ),
+                        TextButton(onPressed: () => Navigator.of(context).pop(false), child: const Text('キャンセル')),
+                        TextButton(onPressed: () => Navigator.of(context).pop(true), child: const Text('再スキャン')),
                       ],
                     ),
                   );
@@ -129,9 +112,7 @@ class SettingsScreen extends HookConsumerWidget {
                     await ref.read(tracksControllerProvider.notifier).refresh();
 
                     if (context.mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('ライブラリを再スキャンしました')),
-                      );
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('ライブラリを再スキャンしました')));
                     }
                   }
                 },

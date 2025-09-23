@@ -24,13 +24,7 @@ class AsyncValueWidget<T> extends StatelessWidget {
     return asyncValue.when(
       data: data,
       loading: () => loading?.call() ?? const _DefaultLoadingWidget(),
-      error: (err, stack) =>
-          error?.call(err, stack) ??
-          ErrorView(
-            error: err,
-            stackTrace: stack,
-            onRetry: onRetry,
-          ),
+      error: (err, stack) => error?.call(err, stack) ?? ErrorView(error: err, stackTrace: stack, onRetry: onRetry),
     );
   }
 }
@@ -41,19 +35,14 @@ class _DefaultLoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: CircularProgressIndicator(),
-    );
+    return const Center(child: CircularProgressIndicator());
   }
 }
 
 /// AsyncValueの状態に応じて異なる処理を実行するためのExtension
 extension AsyncValueX<T> on AsyncValue<T> {
   /// エラーの場合はスナックバーを表示し、データの場合は指定の処理を実行
-  void whenOrNull({
-    void Function(T data)? data,
-    void Function(Object error, StackTrace? stackTrace)? error,
-  }) {
+  void whenOrNull({void Function(T data)? data, void Function(Object error, StackTrace? stackTrace)? error}) {
     if (hasError && error != null) {
       error(this.error!, stackTrace);
     } else if (hasValue && data != null) {

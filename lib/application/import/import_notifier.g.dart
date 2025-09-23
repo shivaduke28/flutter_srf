@@ -10,16 +10,13 @@ String _$importNotifierHash() => r'17e5bb4ba230cbcabbbd0e5971892c84f2077361';
 
 /// See also [ImportNotifier].
 @ProviderFor(ImportNotifier)
-final importNotifierProvider =
-    AutoDisposeNotifierProvider<ImportNotifier, ImportState>.internal(
-      ImportNotifier.new,
-      name: r'importNotifierProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$importNotifierHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+final importNotifierProvider = AutoDisposeNotifierProvider<ImportNotifier, ImportState>.internal(
+  ImportNotifier.new,
+  name: r'importNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product') ? null : _$importNotifierHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$ImportNotifier = AutoDisposeNotifier<ImportState>;
 // ignore_for_file: type=lint

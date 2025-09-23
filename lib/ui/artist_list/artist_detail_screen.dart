@@ -37,24 +37,15 @@ class ArtistDetailScreen extends ConsumerWidget {
                 children: [
                   CircleAvatar(
                     radius: 60,
-                    backgroundColor: Theme.of(
-                      context,
-                    ).colorScheme.primary.withValues(alpha: 0.1),
-                    child: Icon(
-                      Icons.person,
-                      size: 64,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                    backgroundColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+                    child: Icon(Icons.person, size: 64, color: Theme.of(context).colorScheme.primary),
                   ),
                   const SizedBox(width: 24),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          artist.name,
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        ),
+                        Text(artist.name, style: Theme.of(context).textTheme.headlineSmall),
                         const SizedBox(height: 8),
                         Text(
                           '${artist.albumIds.length}枚のアルバム • ${artist.trackIds.length}曲',
@@ -82,25 +73,17 @@ class ArtistDetailScreen extends ConsumerWidget {
                           width: 48,
                           height: 48,
                           decoration: BoxDecoration(
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.secondary.withValues(alpha: 0.1),
+                            color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: Icon(
-                            Icons.album,
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
+                          child: Icon(Icons.album, color: Theme.of(context).colorScheme.secondary),
                         ),
                         const SizedBox(width: 12),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                albumName,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
+                              Text(albumName, style: Theme.of(context).textTheme.titleMedium),
                               // TODO: Add year support
                               // if (firstTrack.year != null)
                               //   Text(
@@ -118,32 +101,19 @@ class ArtistDetailScreen extends ConsumerWidget {
                   delegate: SliverChildBuilderDelegate((context, index) {
                     final track = tracks[index];
                     final isPlaying =
-                        currentContainer?.filePath == track.filePath &&
-                        playerState.status == PlayerStatus.playing;
+                        currentContainer?.filePath == track.filePath && playerState.status == PlayerStatus.playing;
                     final isPaused =
-                        currentContainer?.filePath == track.filePath &&
-                        playerState.status == PlayerStatus.paused;
+                        currentContainer?.filePath == track.filePath && playerState.status == PlayerStatus.paused;
 
                     return ListTile(
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                       leading: SizedBox(
                         width: 32,
-                        child: Center(
-                          child: Text(
-                            '${index + 1}',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ),
+                        child: Center(child: Text('${index + 1}', style: Theme.of(context).textTheme.bodyMedium)),
                       ),
                       title: Text(
                         track.title,
-                        style: TextStyle(
-                          fontWeight: isPlaying || isPaused
-                              ? FontWeight.bold
-                              : null,
-                        ),
+                        style: TextStyle(fontWeight: isPlaying || isPaused ? FontWeight.bold : null),
                       ),
                       trailing: isPlaying || isPaused
                           ? Icon(
@@ -154,17 +124,11 @@ class ArtistDetailScreen extends ConsumerWidget {
                       selected: isPlaying || isPaused,
                       onTap: () async {
                         if (isPlaying) {
-                          await ref
-                              .read(audioPlayerControllerProvider.notifier)
-                              .pause();
+                          await ref.read(audioPlayerControllerProvider.notifier).pause();
                         } else if (isPaused) {
-                          await ref
-                              .read(audioPlayerControllerProvider.notifier)
-                              .resume();
+                          await ref.read(audioPlayerControllerProvider.notifier).resume();
                         } else {
-                          await ref
-                              .read(audioPlayerControllerProvider.notifier)
-                              .play(track);
+                          await ref.read(audioPlayerControllerProvider.notifier).play(track);
                         }
                       },
                     );

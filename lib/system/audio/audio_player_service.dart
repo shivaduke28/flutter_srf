@@ -26,17 +26,15 @@ class AudioPlayerService {
   final AudioPlayer _audioPlayer = AudioPlayer();
 
   // Streams for external listening
-  Stream<PlaybackStatus> get statusStream =>
-      _audioPlayer.playerStateStream.map((state) {
-        if (state.playing) {
-          return PlaybackStatus.playing;
-        } else if (state.processingState == ProcessingState.idle ||
-            state.processingState == ProcessingState.completed) {
-          return PlaybackStatus.stopped;
-        } else {
-          return PlaybackStatus.paused;
-        }
-      });
+  Stream<PlaybackStatus> get statusStream => _audioPlayer.playerStateStream.map((state) {
+    if (state.playing) {
+      return PlaybackStatus.playing;
+    } else if (state.processingState == ProcessingState.idle || state.processingState == ProcessingState.completed) {
+      return PlaybackStatus.stopped;
+    } else {
+      return PlaybackStatus.paused;
+    }
+  });
 
   Stream<Duration> get positionStream => _audioPlayer.positionStream;
 
@@ -44,9 +42,8 @@ class AudioPlayerService {
 
   Stream<double> get volumeStream => _audioPlayer.volumeStream;
 
-  Stream<AudioProcessingState> get processingStateStream => _audioPlayer
-      .playerStateStream
-      .map((state) => _mapProcessingState(state.processingState));
+  Stream<AudioProcessingState> get processingStateStream =>
+      _audioPlayer.playerStateStream.map((state) => _mapProcessingState(state.processingState));
 
   double get volume => _audioPlayer.volume;
 
@@ -64,17 +61,9 @@ class AudioPlayerService {
     } on FileNotFoundException {
       rethrow;
     } on PlayerException catch (e, stack) {
-      throw AudioPlaybackException(
-        message: '音楽ファイルの再生に失敗しました: ${e.message}',
-        originalError: e,
-        stackTrace: stack,
-      );
+      throw AudioPlaybackException(message: '音楽ファイルの再生に失敗しました: ${e.message}', originalError: e, stackTrace: stack);
     } catch (e, stack) {
-      throw AudioPlaybackException(
-        message: '予期しないエラーが発生しました',
-        originalError: e,
-        stackTrace: stack,
-      );
+      throw AudioPlaybackException(message: '予期しないエラーが発生しました', originalError: e, stackTrace: stack);
     }
   }
 
@@ -83,11 +72,7 @@ class AudioPlayerService {
     try {
       await _audioPlayer.pause();
     } on PlayerException catch (e, stack) {
-      throw AudioPlaybackException(
-        message: '一時停止に失敗しました: ${e.message}',
-        originalError: e,
-        stackTrace: stack,
-      );
+      throw AudioPlaybackException(message: '一時停止に失敗しました: ${e.message}', originalError: e, stackTrace: stack);
     }
   }
 
@@ -96,11 +81,7 @@ class AudioPlayerService {
     try {
       await _audioPlayer.play();
     } on PlayerException catch (e, stack) {
-      throw AudioPlaybackException(
-        message: '再生の再開に失敗しました: ${e.message}',
-        originalError: e,
-        stackTrace: stack,
-      );
+      throw AudioPlaybackException(message: '再生の再開に失敗しました: ${e.message}', originalError: e, stackTrace: stack);
     }
   }
 
@@ -109,11 +90,7 @@ class AudioPlayerService {
     try {
       await _audioPlayer.stop();
     } on PlayerException catch (e, stack) {
-      throw AudioPlaybackException(
-        message: '停止に失敗しました: ${e.message}',
-        originalError: e,
-        stackTrace: stack,
-      );
+      throw AudioPlaybackException(message: '停止に失敗しました: ${e.message}', originalError: e, stackTrace: stack);
     }
   }
 
@@ -122,28 +99,20 @@ class AudioPlayerService {
     try {
       // 負の値チェック
       if (position.isNegative) {
-        throw ValidationException(
-          message: 'シーク位置は0以上である必要があります',
-        );
+        throw ValidationException(message: 'シーク位置は0以上である必要があります');
       }
 
       // 長さを超えていないかチェック（可能な場合）
       final duration = _audioPlayer.duration;
       if (duration != null && position > duration) {
-        throw ValidationException(
-          message: 'シーク位置が楽曲の長さを超えています',
-        );
+        throw ValidationException(message: 'シーク位置が楽曲の長さを超えています');
       }
 
       await _audioPlayer.seek(position);
     } on ValidationException {
       rethrow;
     } on PlayerException catch (e, stack) {
-      throw AudioPlaybackException(
-        message: 'シークに失敗しました: ${e.message}',
-        originalError: e,
-        stackTrace: stack,
-      );
+      throw AudioPlaybackException(message: 'シークに失敗しました: ${e.message}', originalError: e, stackTrace: stack);
     }
   }
 
@@ -151,19 +120,13 @@ class AudioPlayerService {
   Future<void> setVolume(double volume) async {
     try {
       if (volume < 0.0 || volume > 1.0) {
-        throw ValidationException(
-          message: '音量は0.0から1.0の範囲で指定してください',
-        );
+        throw ValidationException(message: '音量は0.0から1.0の範囲で指定してください');
       }
       await _audioPlayer.setVolume(volume);
     } on ValidationException {
       rethrow;
     } on PlayerException catch (e, stack) {
-      throw AudioPlaybackException(
-        message: '音量設定に失敗しました: ${e.message}',
-        originalError: e,
-        stackTrace: stack,
-      );
+      throw AudioPlaybackException(message: '音量設定に失敗しました: ${e.message}', originalError: e, stackTrace: stack);
     }
   }
 

@@ -27,14 +27,10 @@ Future<List<Artist>> queriedArtists(Ref ref) async {
       filteredArtists.sort((a, b) => a.name.compareTo(b.name));
       break;
     case ArtistSortType.albumCount:
-      filteredArtists.sort(
-        (a, b) => b.albumIds.length.compareTo(a.albumIds.length),
-      );
+      filteredArtists.sort((a, b) => b.albumIds.length.compareTo(a.albumIds.length));
       break;
     case ArtistSortType.trackCount:
-      filteredArtists.sort(
-        (a, b) => b.trackIds.length.compareTo(a.trackIds.length),
-      );
+      filteredArtists.sort((a, b) => b.trackIds.length.compareTo(a.trackIds.length));
       break;
   }
 

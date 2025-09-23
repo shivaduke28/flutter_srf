@@ -23,17 +23,13 @@ class TrackListView extends ConsumerWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.music_note,
-                  size: 64,
-                  color: Theme.of(context).colorScheme.outline,
-                ),
+                Icon(Icons.music_note, size: 64, color: Theme.of(context).colorScheme.outline),
                 const SizedBox(height: 16),
                 Text(
                   '楽曲がありません',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.outline,
-                  ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.outline),
                 ),
                 const SizedBox(height: 32),
                 ElevatedButton.icon(

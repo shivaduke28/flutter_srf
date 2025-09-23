@@ -17,8 +17,7 @@ Future<List<Album>> queriedAlbums(Ref ref) async {
   if (queryState.searchQuery.isNotEmpty) {
     final lowerQuery = queryState.searchQuery.toLowerCase();
     filteredAlbums = albums.where((album) {
-      return album.name.toLowerCase().contains(lowerQuery) ||
-          (album.artist?.toLowerCase() ?? '').contains(lowerQuery);
+      return album.name.toLowerCase().contains(lowerQuery) || (album.artist?.toLowerCase() ?? '').contains(lowerQuery);
     }).toList();
   }
 
@@ -31,9 +30,7 @@ Future<List<Album>> queriedAlbums(Ref ref) async {
       filteredAlbums.sort((a, b) => (a.artist ?? '').compareTo(b.artist ?? ''));
       break;
     case AlbumSortType.trackCount:
-      filteredAlbums.sort(
-        (a, b) => b.srfContainerIds.length.compareTo(a.srfContainerIds.length),
-      );
+      filteredAlbums.sort((a, b) => b.srfContainerIds.length.compareTo(a.srfContainerIds.length));
       break;
   }
 

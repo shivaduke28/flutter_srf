@@ -8,10 +8,7 @@ enum TrackSortType { name, artist, album, duration }
 
 @freezed
 sealed class TrackQueryState with _$TrackQueryState {
-  const factory TrackQueryState({
-    required String searchQuery,
-    required TrackSortType sortType,
-  }) = _TrackQueryState;
+  const factory TrackQueryState({required String searchQuery, required TrackSortType sortType}) = _TrackQueryState;
 }
 
 @riverpod

@@ -7,12 +7,7 @@ class ErrorView extends StatelessWidget {
   final StackTrace? stackTrace;
   final VoidCallback? onRetry;
 
-  const ErrorView({
-    super.key,
-    required this.error,
-    this.stackTrace,
-    this.onRetry,
-  });
+  const ErrorView({super.key, required this.error, this.stackTrace, this.onRetry});
 
   @override
   Widget build(BuildContext context) {
@@ -27,31 +22,14 @@ class ErrorView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              size: 64,
-              color: colorScheme.error.withAlpha(128),
-            ),
+            Icon(icon, size: 64, color: colorScheme.error.withAlpha(128)),
             const SizedBox(height: 16),
-            Text(
-              'エラーが発生しました',
-              style: theme.textTheme.headlineSmall?.copyWith(
-                color: colorScheme.error,
-              ),
-            ),
+            Text('エラーが発生しました', style: theme.textTheme.headlineSmall?.copyWith(color: colorScheme.error)),
             const SizedBox(height: 8),
-            Text(
-              message,
-              style: theme.textTheme.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
+            Text(message, style: theme.textTheme.bodyMedium, textAlign: TextAlign.center),
             if (onRetry != null) ...[
               const SizedBox(height: 24),
-              FilledButton.icon(
-                onPressed: onRetry,
-                icon: const Icon(Icons.refresh),
-                label: const Text('再試行'),
-              ),
+              FilledButton.icon(onPressed: onRetry, icon: const Icon(Icons.refresh), label: const Text('再試行')),
             ],
           ],
         ),
@@ -84,9 +62,7 @@ class ErrorView extends StatelessWidget {
 
 /// エラーメッセージを表示するためのヘルパー関数
 void showErrorSnackBar(BuildContext context, Object error) {
-  final message = error is AppException
-      ? error.message
-      : 'エラーが発生しました: ${error.toString()}';
+  final message = error is AppException ? error.message : 'エラーが発生しました: ${error.toString()}';
 
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(

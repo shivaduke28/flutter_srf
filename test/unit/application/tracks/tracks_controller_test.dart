@@ -41,18 +41,12 @@ void main() {
         ),
       ];
 
-      when(mockLibraryService.loadSrfFiles())
-          .thenAnswer((_) async => mockSrfFiles);
+      when(mockLibraryService.loadSrfFiles()).thenAnswer((_) async => mockSrfFiles);
 
-      container = ProviderContainer(
-        overrides: [
-          libraryServiceProvider.overrideWithValue(mockLibraryService),
-        ],
-      );
+      container = ProviderContainer(overrides: [libraryServiceProvider.overrideWithValue(mockLibraryService)]);
 
       // Act
-      final tracksState = await container
-          .read(tracksControllerProvider.future);
+      final tracksState = await container.read(tracksControllerProvider.future);
 
       // Assert
       expect(tracksState.allTracks.length, 1);
@@ -95,30 +89,22 @@ void main() {
         ),
       ];
 
-      when(mockLibraryService.loadSrfFiles())
-          .thenAnswer((_) async => initialSrfFiles);
+      when(mockLibraryService.loadSrfFiles()).thenAnswer((_) async => initialSrfFiles);
 
-      container = ProviderContainer(
-        overrides: [
-          libraryServiceProvider.overrideWithValue(mockLibraryService),
-        ],
-      );
+      container = ProviderContainer(overrides: [libraryServiceProvider.overrideWithValue(mockLibraryService)]);
 
       // Act - 初期読み込み
-      final initialState = await container
-          .read(tracksControllerProvider.future);
+      final initialState = await container.read(tracksControllerProvider.future);
       expect(initialState.allTracks.first.title, 'Initial Track');
 
       // 更新されたデータを返すように設定
-      when(mockLibraryService.loadSrfFiles())
-          .thenAnswer((_) async => updatedSrfFiles);
+      when(mockLibraryService.loadSrfFiles()).thenAnswer((_) async => updatedSrfFiles);
 
       // Act - リフレッシュ
       await container.read(tracksControllerProvider.notifier).refresh();
 
       // 状態が更新されるまで待つ
-      final updatedState = await container
-          .read(tracksControllerProvider.future);
+      final updatedState = await container.read(tracksControllerProvider.future);
 
       // Assert
       expect(updatedState.allTracks.length, 1);
@@ -128,18 +114,12 @@ void main() {
 
     test('空のライブラリの場合、空のトラックリストを返す', () async {
       // Arrange
-      when(mockLibraryService.loadSrfFiles())
-          .thenAnswer((_) async => []);
+      when(mockLibraryService.loadSrfFiles()).thenAnswer((_) async => []);
 
-      container = ProviderContainer(
-        overrides: [
-          libraryServiceProvider.overrideWithValue(mockLibraryService),
-        ],
-      );
+      container = ProviderContainer(overrides: [libraryServiceProvider.overrideWithValue(mockLibraryService)]);
 
       // Act
-      final tracksState = await container
-          .read(tracksControllerProvider.future);
+      final tracksState = await container.read(tracksControllerProvider.future);
 
       // Assert
       expect(tracksState.allTracks.isEmpty, true);
@@ -152,49 +132,25 @@ void main() {
           name: 'album1.srf',
           path: '/test/album1.srf',
           tracks: [
-            SrfTrack(
-              title: 'Track 1',
-              artist: 'Artist 1',
-              album: 'Album 1',
-              path: '/test/track1.mp3',
-              duration: 180,
-            ),
-            SrfTrack(
-              title: 'Track 2',
-              artist: 'Artist 1',
-              album: 'Album 1',
-              path: '/test/track2.mp3',
-              duration: 200,
-            ),
+            SrfTrack(title: 'Track 1', artist: 'Artist 1', album: 'Album 1', path: '/test/track1.mp3', duration: 180),
+            SrfTrack(title: 'Track 2', artist: 'Artist 1', album: 'Album 1', path: '/test/track2.mp3', duration: 200),
           ],
         ),
         SrfFile(
           name: 'album2.srf',
           path: '/test/album2.srf',
           tracks: [
-            SrfTrack(
-              title: 'Track 3',
-              artist: 'Artist 2',
-              album: 'Album 2',
-              path: '/test/track3.mp3',
-              duration: 220,
-            ),
+            SrfTrack(title: 'Track 3', artist: 'Artist 2', album: 'Album 2', path: '/test/track3.mp3', duration: 220),
           ],
         ),
       ];
 
-      when(mockLibraryService.loadSrfFiles())
-          .thenAnswer((_) async => mockSrfFiles);
+      when(mockLibraryService.loadSrfFiles()).thenAnswer((_) async => mockSrfFiles);
 
-      container = ProviderContainer(
-        overrides: [
-          libraryServiceProvider.overrideWithValue(mockLibraryService),
-        ],
-      );
+      container = ProviderContainer(overrides: [libraryServiceProvider.overrideWithValue(mockLibraryService)]);
 
       // Act
-      final tracksState = await container
-          .read(tracksControllerProvider.future);
+      final tracksState = await container.read(tracksControllerProvider.future);
 
       // Assert
       expect(tracksState.allTracks.length, 3);

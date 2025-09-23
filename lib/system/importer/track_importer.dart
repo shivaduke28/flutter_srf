@@ -27,10 +27,7 @@ class ImportProgress extends ImportEvent {
   final int processedFiles;
   final String currentFile;
 
-  const ImportProgress({
-    required this.processedFiles,
-    required this.currentFile,
-  });
+  const ImportProgress({required this.processedFiles, required this.currentFile});
 }
 
 class ImportCompleted extends ImportEvent {
@@ -79,9 +76,7 @@ class TrackImporter {
     for (var i = 0; i < audioFiles.length; i++) {
       final file = audioFiles[i];
 
-      onProgress?.call(
-        ImportProgress(processedFiles: i, currentFile: p.basename(file.path)),
-      );
+      onProgress?.call(ImportProgress(processedFiles: i, currentFile: p.basename(file.path)));
 
       try {
         final containerPath = await _importSingleFile(file.path, libraryPath);
@@ -99,17 +94,12 @@ class TrackImporter {
       }
     }
 
-    onProgress?.call(
-      ImportCompleted(importedContainerPaths: importedContainerPaths),
-    );
+    onProgress?.call(ImportCompleted(importedContainerPaths: importedContainerPaths));
 
     return importedContainerPaths;
   }
 
-  Future<String?> _importSingleFile(
-    String sourceFilePath,
-    String libraryPath,
-  ) async {
+  Future<String?> _importSingleFile(String sourceFilePath, String libraryPath) async {
     final sourceFile = File(sourceFilePath);
     if (!await sourceFile.exists()) {
       return null;
@@ -122,8 +112,7 @@ class TrackImporter {
 
     // SRFコンテナを作成
     final fileName = p.basenameWithoutExtension(sourceFilePath);
-    final containerName =
-        '${fileName}_${DateTime.now().millisecondsSinceEpoch}.srf';
+    final containerName = '${fileName}_${DateTime.now().millisecondsSinceEpoch}.srf';
     final containerPath = p.join(libraryPath, containerName);
 
     await Directory(containerPath).create(recursive: true);

@@ -13,13 +13,8 @@ sealed class LibrarySettings with _$LibrarySettings {
     DateTime? lastScanDate,
   }) = _LibrarySettings;
 
-  factory LibrarySettings.fromJson(Map<String, dynamic> json) =>
-      _$LibrarySettingsFromJson(json);
+  factory LibrarySettings.fromJson(Map<String, dynamic> json) => _$LibrarySettingsFromJson(json);
 
-  factory LibrarySettings.defaultSettings() => const LibrarySettings(
-    libraryPath: '',
-    watchedDirectories: [],
-    autoImport: false,
-    supportedExtensions: ['.mp3'],
-  );
+  factory LibrarySettings.defaultSettings() =>
+      const LibrarySettings(libraryPath: '', watchedDirectories: [], autoImport: false, supportedExtensions: ['.mp3']);
 }

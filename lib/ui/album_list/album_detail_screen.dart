@@ -27,31 +27,19 @@ class AlbumDetailScreen extends ConsumerWidget {
                   width: 120,
                   height: 120,
                   decoration: BoxDecoration(
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.primary.withValues(alpha: 0.1),
+                    color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Icon(
-                    Icons.album,
-                    size: 64,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+                  child: Icon(Icons.album, size: 64, color: Theme.of(context).colorScheme.primary),
                 ),
                 const SizedBox(width: 24),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        album.name,
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
+                      Text(album.name, style: Theme.of(context).textTheme.headlineSmall),
                       const SizedBox(height: 8),
-                      Text(
-                        album.artist ?? 'Unknown Artist',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
+                      Text(album.artist ?? 'Unknown Artist', style: Theme.of(context).textTheme.titleMedium),
                       const SizedBox(height: 8),
                       Text(
                         '${album.srfContainerIds.length}曲${album.year != null ? ' • ${album.year}年' : ''}',
@@ -80,39 +68,23 @@ class AlbumDetailScreen extends ConsumerWidget {
                     playerState.status == PlayerStatus.paused;
 
                 return ListTile(
-                  leading: Text(
-                    '${index + 1}',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
+                  leading: Text('${index + 1}', style: Theme.of(context).textTheme.bodyMedium),
                   title: Text(
                     track?.title ?? 'Unknown Track',
-                    style: TextStyle(
-                      fontWeight: isPlaying || isPaused
-                          ? FontWeight.bold
-                          : null,
-                    ),
+                    style: TextStyle(fontWeight: isPlaying || isPaused ? FontWeight.bold : null),
                   ),
                   subtitle: Text(track?.artist ?? 'Unknown Artist'),
                   trailing: isPlaying || isPaused
-                      ? Icon(
-                          isPlaying ? Icons.volume_up : Icons.pause,
-                          color: Theme.of(context).colorScheme.primary,
-                        )
+                      ? Icon(isPlaying ? Icons.volume_up : Icons.pause, color: Theme.of(context).colorScheme.primary)
                       : const Icon(Icons.play_arrow),
                   selected: isPlaying || isPaused,
                   onTap: () async {
                     if (isPlaying) {
-                      await ref
-                          .read(audioPlayerControllerProvider.notifier)
-                          .pause();
+                      await ref.read(audioPlayerControllerProvider.notifier).pause();
                     } else if (isPaused) {
-                      await ref
-                          .read(audioPlayerControllerProvider.notifier)
-                          .resume();
+                      await ref.read(audioPlayerControllerProvider.notifier).resume();
                     } else {
-                      await ref
-                          .read(audioPlayerControllerProvider.notifier)
-                          .play(track!);
+                      await ref.read(audioPlayerControllerProvider.notifier).play(track!);
                     }
                   },
                 );

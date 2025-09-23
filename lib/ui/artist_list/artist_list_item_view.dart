@@ -11,23 +11,14 @@ class ArtistListItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(
-        backgroundColor: Theme.of(
-          context,
-        ).colorScheme.primary.withValues(alpha: 0.1),
+        backgroundColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
         child: Icon(Icons.person, color: Theme.of(context).colorScheme.primary),
       ),
       title: Text(artist.name),
-      subtitle: Text(
-        '${artist.albumIds.length}枚のアルバム • ${artist.trackIds.length}曲',
-      ),
+      subtitle: Text('${artist.albumIds.length}枚のアルバム • ${artist.trackIds.length}曲'),
       trailing: const Icon(Icons.chevron_right),
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ArtistDetailScreen(artist: artist),
-          ),
-        );
+        Navigator.push(context, MaterialPageRoute(builder: (context) => ArtistDetailScreen(artist: artist)));
       },
     );
   }

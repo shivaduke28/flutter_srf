@@ -18,13 +18,8 @@ sealed class ImportState with _$ImportState {
     @Default([]) List<String> errors,
   }) = _ImportState;
 
-  factory ImportState.initial() => const ImportState(
-    totalFiles: 0,
-    processedFiles: 0,
-    currentFile: '',
-    isImporting: false,
-    errors: [],
-  );
+  factory ImportState.initial() =>
+      const ImportState(totalFiles: 0, processedFiles: 0, currentFile: '', isImporting: false, errors: []);
 }
 
 @riverpod
@@ -52,23 +47,14 @@ class ImportNotifier extends _$ImportNotifier {
       await importer.importDirectory(directoryPath, libraryPath, (event) {
         switch (event) {
           case ImportStarted(:final totalFiles):
-            state = state.copyWith(
-              totalFiles: totalFiles,
-              processedFiles: 0,
-              currentFile: '',
-            );
+            state = state.copyWith(totalFiles: totalFiles, processedFiles: 0, currentFile: '');
           case ImportProgress(:final processedFiles, :final currentFile):
-            state = state.copyWith(
-              processedFiles: processedFiles,
-              currentFile: currentFile,
-            );
+            state = state.copyWith(processedFiles: processedFiles, currentFile: currentFile);
           case ImportCompleted():
             // 完了処理は下で行う
             break;
           case ImportError(:final filePath, :final error):
-            state = state.copyWith(
-              errors: [...state.errors, '$filePath: $error'],
-            );
+            state = state.copyWith(errors: [...state.errors, '$filePath: $error']);
         }
       });
 
@@ -76,15 +62,9 @@ class ImportNotifier extends _$ImportNotifier {
       await ref.read(tracksControllerProvider.notifier).refresh();
 
       // 状態を完了に更新
-      state = state.copyWith(
-        processedFiles: state.totalFiles,
-        isImporting: false,
-      );
+      state = state.copyWith(processedFiles: state.totalFiles, isImporting: false);
     } catch (e) {
-      state = state.copyWith(
-        isImporting: false,
-        errors: [...state.errors, e.toString()],
-      );
+      state = state.copyWith(isImporting: false, errors: [...state.errors, e.toString()]);
       rethrow;
     }
   }

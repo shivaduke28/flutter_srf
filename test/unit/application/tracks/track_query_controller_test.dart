@@ -57,18 +57,15 @@ void main() {
 
       // Act & Assert - artist
       controller.updateSortType(TrackSortType.artist);
-      expect(container.read(trackQueryControllerProvider).sortType,
-             TrackSortType.artist);
+      expect(container.read(trackQueryControllerProvider).sortType, TrackSortType.artist);
 
       // Act & Assert - album
       controller.updateSortType(TrackSortType.album);
-      expect(container.read(trackQueryControllerProvider).sortType,
-             TrackSortType.album);
+      expect(container.read(trackQueryControllerProvider).sortType, TrackSortType.album);
 
       // Act & Assert - duration
       controller.updateSortType(TrackSortType.duration);
-      expect(container.read(trackQueryControllerProvider).sortType,
-             TrackSortType.duration);
+      expect(container.read(trackQueryControllerProvider).sortType, TrackSortType.duration);
     });
   });
 

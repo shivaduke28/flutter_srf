@@ -15,9 +15,7 @@ String _$queriedTracksHash() => r'19f22f515fa88dd26b9c6118d68766d5829fe877';
 final queriedTracksProvider = AutoDisposeFutureProvider<List<Track>>.internal(
   queriedTracks,
   name: r'queriedTracksProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$queriedTracksHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product') ? null : _$queriedTracksHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

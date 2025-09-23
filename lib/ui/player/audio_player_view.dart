@@ -17,39 +17,26 @@ class AudioPlayerView extends ConsumerWidget {
       height: 80,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 8,
-            offset: const Offset(0, -2),
-          ),
-        ],
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.1), blurRadius: 8, offset: const Offset(0, -2))],
       ),
       child: Column(
         children: [
           if (currentContainer != null)
             LinearProgressIndicator(
               value: playerState.duration.inMilliseconds > 0
-                  ? playerState.position.inMilliseconds /
-                        playerState.duration.inMilliseconds
+                  ? playerState.position.inMilliseconds / playerState.duration.inMilliseconds
                   : 0,
               minHeight: 2,
             )
           else
-            Container(
-              height: 2,
-              color: Theme.of(context).colorScheme.surfaceContainerHighest,
-            ),
+            Container(height: 2, color: Theme.of(context).colorScheme.surfaceContainerHighest),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: currentContainer != null
                   ? Row(
                       children: [
-                        const CircleAvatar(
-                          radius: 24,
-                          child: Icon(Icons.music_note),
-                        ),
+                        const CircleAvatar(radius: 24, child: Icon(Icons.music_note)),
                         const SizedBox(width: 12),
                         Expanded(
                           child: Column(
@@ -58,9 +45,7 @@ class AudioPlayerView extends ConsumerWidget {
                             children: [
                               Text(
                                 currentContainer.title,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: const TextStyle(fontWeight: FontWeight.bold),
                                 overflow: TextOverflow.ellipsis,
                               ),
                               Text(
@@ -83,12 +68,7 @@ class AudioPlayerView extends ConsumerWidget {
                                   max: 1.0,
                                   onChanged: (value) async {
                                     try {
-                                      await ref
-                                          .read(
-                                            audioPlayerControllerProvider
-                                                .notifier,
-                                          )
-                                          .setVolume(value);
+                                      await ref.read(audioPlayerControllerProvider.notifier).setVolume(value);
                                     } on AppException catch (e) {
                                       if (context.mounted) {
                                         showErrorSnackBar(context, e);
@@ -102,16 +82,12 @@ class AudioPlayerView extends ConsumerWidget {
                         ),
                         IconButton(
                           icon: Icon(
-                            playerState.status == PlayerStatus.playing
-                                ? Icons.pause
-                                : Icons.play_arrow,
+                            playerState.status == PlayerStatus.playing ? Icons.pause : Icons.play_arrow,
                             size: 32,
                           ),
                           onPressed: () async {
                             try {
-                              await ref
-                                  .read(audioPlayerControllerProvider.notifier)
-                                  .togglePlayPause();
+                              await ref.read(audioPlayerControllerProvider.notifier).togglePlayPause();
                             } on AppException catch (e) {
                               if (context.mounted) {
                                 showErrorSnackBar(context, e);
@@ -123,9 +99,7 @@ class AudioPlayerView extends ConsumerWidget {
                           icon: const Icon(Icons.stop),
                           onPressed: () async {
                             try {
-                              await ref
-                                  .read(audioPlayerControllerProvider.notifier)
-                                  .stop();
+                              await ref.read(audioPlayerControllerProvider.notifier).stop();
                             } on AppException catch (e) {
                               if (context.mounted) {
                                 showErrorSnackBar(context, e);
@@ -138,18 +112,11 @@ class AudioPlayerView extends ConsumerWidget {
                   : Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
-                          Icons.music_off,
-                          size: 24,
-                          color: Theme.of(context).colorScheme.outline,
-                        ),
+                        Icon(Icons.music_off, size: 24, color: Theme.of(context).colorScheme.outline),
                         const SizedBox(width: 12),
                         Text(
                           '楽曲を選択してください',
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.outline,
-                            fontSize: 16,
-                          ),
+                          style: TextStyle(color: Theme.of(context).colorScheme.outline, fontSize: 16),
                         ),
                       ],
                     ),

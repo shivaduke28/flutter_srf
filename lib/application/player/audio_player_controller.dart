@@ -24,10 +24,7 @@ class AudioPlayerController extends _$AudioPlayerController {
       }
     });
 
-    return AudioPlayerState(
-      volume: _audioService.volume,
-      currentContainer: null,
-    );
+    return AudioPlayerState(volume: _audioService.volume, currentContainer: null);
   }
 
   void _setupListeners() {
@@ -42,11 +39,7 @@ class AudioPlayerController extends _$AudioPlayerController {
             state = state.copyWith(status: PlayerStatus.paused);
             break;
           case PlaybackStatus.stopped:
-            state = state.copyWith(
-              status: PlayerStatus.stopped,
-              position: Duration.zero,
-              duration: Duration.zero,
-            );
+            state = state.copyWith(status: PlayerStatus.stopped, position: Duration.zero, duration: Duration.zero);
             break;
         }
       }),
@@ -97,10 +90,7 @@ class AudioPlayerController extends _$AudioPlayerController {
       await _audioService.playFile(track.filePath);
     } on AppException {
       // エラー時は状態をリセット
-      state = state.copyWith(
-        currentContainer: null,
-        status: PlayerStatus.stopped,
-      );
+      state = state.copyWith(currentContainer: null, status: PlayerStatus.stopped);
       // エラーを再スローしてUI層でキャッチできるようにする
       rethrow;
     }
@@ -160,8 +150,7 @@ class AudioPlayerController extends _$AudioPlayerController {
     try {
       if (state.status == PlayerStatus.playing) {
         await pause();
-      } else if (state.status == PlayerStatus.paused &&
-          state.currentContainer != null) {
+      } else if (state.status == PlayerStatus.paused && state.currentContainer != null) {
         await resume();
       }
     } on AppException {

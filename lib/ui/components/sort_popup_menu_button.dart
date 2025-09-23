@@ -33,15 +33,9 @@ class SortPopupMenuButton<T> extends StatelessWidget {
             value: item.value,
             child: Row(
               children: [
-                if (currentValue == item.value)
-                  const Icon(Icons.check, size: 20)
-                else
-                  const SizedBox(width: 20),
+                if (currentValue == item.value) const Icon(Icons.check, size: 20) else const SizedBox(width: 20),
                 const SizedBox(width: 8),
-                if (item.icon != null) ...[
-                  Icon(item.icon, size: 20),
-                  const SizedBox(width: 8),
-                ],
+                if (item.icon != null) ...[Icon(item.icon, size: 20), const SizedBox(width: 8)],
                 Text(item.label),
               ],
             ),

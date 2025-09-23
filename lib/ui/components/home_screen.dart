@@ -28,14 +28,7 @@ class HomeScreen extends ConsumerWidget {
         body: Column(
           children: [
             const Expanded(
-              child: TabBarView(
-                children: [
-                  TracksScreen(),
-                  ArtistsScreen(),
-                  AlbumsScreen(),
-                  SettingsScreen(),
-                ],
-              ),
+              child: TabBarView(children: [TracksScreen(), ArtistsScreen(), AlbumsScreen(), SettingsScreen()]),
             ),
             const AudioPlayerView(),
           ],

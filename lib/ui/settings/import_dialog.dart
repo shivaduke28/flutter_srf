@@ -48,64 +48,45 @@ class ImportDialog extends HookConsumerWidget {
                 children: [
                   ElevatedButton.icon(
                     onPressed: () async {
-                      final result = await FilePicker.platform
-                          .getDirectoryPath();
+                      final result = await FilePicker.platform.getDirectoryPath();
                       if (result != null) {
                         selectedPath.value = result;
                       }
                     },
                     icon: const Icon(Icons.folder_open),
-                    label: Text(
-                      selectedPath.value == null ? 'フォルダを選択' : '別のフォルダを選択',
-                    ),
+                    label: Text(selectedPath.value == null ? 'フォルダを選択' : '別のフォルダを選択'),
                   ),
                   if (selectedPath.value != null) ...[
                     const SizedBox(width: 8),
                     ElevatedButton.icon(
                       onPressed: () async {
                         try {
-                          final importNotifier = ref.read(
-                            importNotifierProvider.notifier,
-                          );
-                          await importNotifier.importDirectory(
-                            selectedPath.value!,
-                          );
+                          final importNotifier = ref.read(importNotifierProvider.notifier);
+                          await importNotifier.importDirectory(selectedPath.value!);
 
                           if (context.mounted) {
                             Navigator.of(context).pop();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('インポートが完了しました')),
-                            );
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('インポートが完了しました')));
                           }
                         } catch (e) {
                           if (context.mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('エラー: $e'),
-                                backgroundColor: Colors.red,
-                              ),
-                            );
+                            ScaffoldMessenger.of(
+                              context,
+                            ).showSnackBar(SnackBar(content: Text('エラー: $e'), backgroundColor: Colors.red));
                           }
                         }
                       },
                       icon: const Icon(Icons.download),
                       label: const Text('インポート'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        foregroundColor: Colors.white,
-                      ),
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.green, foregroundColor: Colors.white),
                     ),
                   ],
                 ],
               ),
             ] else ...[
-              Text(
-                'インポート中... ${importState.processedFiles}/${importState.totalFiles}',
-              ),
+              Text('インポート中... ${importState.processedFiles}/${importState.totalFiles}'),
               const SizedBox(height: 8),
-              LinearProgressIndicator(
-                value: ref.read(importNotifierProvider.notifier).progress,
-              ),
+              LinearProgressIndicator(value: ref.read(importNotifierProvider.notifier).progress),
               const SizedBox(height: 8),
               Text(
                 importState.currentFile,

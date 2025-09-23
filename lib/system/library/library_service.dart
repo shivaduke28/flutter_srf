@@ -27,17 +27,9 @@ class LibraryService {
 
       return libraryDir.path;
     } on FileSystemException catch (e, stack) {
-      throw LibraryAccessException(
-        message: 'ライブラリディレクトリの作成に失敗しました',
-        originalError: e,
-        stackTrace: stack,
-      );
+      throw LibraryAccessException(message: 'ライブラリディレクトリの作成に失敗しました', originalError: e, stackTrace: stack);
     } catch (e, stack) {
-      throw LibraryAccessException(
-        message: 'ライブラリパスの取得に失敗しました',
-        originalError: e,
-        stackTrace: stack,
-      );
+      throw LibraryAccessException(message: 'ライブラリパスの取得に失敗しました', originalError: e, stackTrace: stack);
     }
   }
 
@@ -58,9 +50,7 @@ class LibraryService {
           try {
             final tracks = await _loadTracksFromContainer(entity);
             final containerName = path.basename(entity.path);
-            srfFiles.add(
-              SrfFile(path: entity.path, name: containerName, tracks: tracks),
-            );
+            srfFiles.add(SrfFile(path: entity.path, name: containerName, tracks: tracks));
           } catch (e) {
             // 単一のコンテナの読み込みエラーはスキップして続行
             print('コンテナの読み込みに失敗: ${entity.path}: $e');
@@ -73,23 +63,13 @@ class LibraryService {
     } on LibraryAccessException {
       rethrow;
     } on FileSystemException catch (e, stack) {
-      throw LibraryAccessException(
-        message: 'ライブラリファイルの読み込みに失敗しました',
-        originalError: e,
-        stackTrace: stack,
-      );
+      throw LibraryAccessException(message: 'ライブラリファイルの読み込みに失敗しました', originalError: e, stackTrace: stack);
     } catch (e, stack) {
-      throw LibraryAccessException(
-        message: '予期しないエラーが発生しました',
-        originalError: e,
-        stackTrace: stack,
-      );
+      throw LibraryAccessException(message: '予期しないエラーが発生しました', originalError: e, stackTrace: stack);
     }
   }
 
-  Future<List<SrfTrack>> _loadTracksFromContainer(
-    Directory containerDir,
-  ) async {
+  Future<List<SrfTrack>> _loadTracksFromContainer(Directory containerDir) async {
     final tracks = <SrfTrack>[];
 
     // メタデータファイルを読む
@@ -118,9 +98,7 @@ class LibraryService {
           tracks.add(
             SrfTrack(
               path: entity.path,
-              title:
-                  metadata?['title'] ??
-                  path.basenameWithoutExtension(entity.path),
+              title: metadata?['title'] ?? path.basenameWithoutExtension(entity.path),
               artist: metadata?['artist'] ?? 'Unknown Artist',
               album: metadata?['album'] ?? 'Unknown Album',
               duration: (metadata?['duration'] ?? 0.0).toDouble(),

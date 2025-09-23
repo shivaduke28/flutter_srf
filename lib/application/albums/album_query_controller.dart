@@ -8,10 +8,7 @@ enum AlbumSortType { name, artist, trackCount }
 
 @freezed
 sealed class AlbumQueryState with _$AlbumQueryState {
-  const factory AlbumQueryState({
-    required String searchQuery,
-    required AlbumSortType sortType,
-  }) = _AlbumQueryState;
+  const factory AlbumQueryState({required String searchQuery, required AlbumSortType sortType}) = _AlbumQueryState;
 }
 
 @riverpod
