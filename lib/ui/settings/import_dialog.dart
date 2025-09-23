@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:file_picker/file_picker.dart';
-import '../../application/library/import_service.dart';
-import '../../application/library/library_manager.dart';
+import '../../application/import/import_notifier.dart';
 
 class ImportDialog extends HookConsumerWidget {
   const ImportDialog({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final importProgress = ref.watch(importServiceProvider);
+    final importState = ref.watch(importNotifierProvider);
     final selectedPath = useState<String?>(null);
 
     return AlertDialog(
@@ -20,7 +19,7 @@ class ImportDialog extends HookConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (!importProgress.isImporting) ...[
+            if (!importState.isImporting) ...[
               const Text('MP3ファイルが含まれるフォルダを選択してください。'),
               const SizedBox(height: 16),
               if (selectedPath.value != null) ...[
@@ -65,23 +64,18 @@ class ImportDialog extends HookConsumerWidget {
                     ElevatedButton.icon(
                       onPressed: () async {
                         try {
-                          final importService = ref.read(
-                            importServiceProvider.notifier,
+                          final importNotifier = ref.read(
+                            importNotifierProvider.notifier,
                           );
-                          final tracks = await importService.importDirectory(
+                          await importNotifier.importDirectory(
                             selectedPath.value!,
                           );
-
-                          // LibraryManagerを再スキャン
-                          await ref
-                              .read(libraryManagerProvider.notifier)
-                              .scanLibrary(forceRefresh: true);
 
                           if (context.mounted) {
                             Navigator.of(context).pop();
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text('${tracks.length}曲をインポートしました'),
+                                content: Text('インポートが完了しました'),
                               ),
                             );
                           }
@@ -108,29 +102,38 @@ class ImportDialog extends HookConsumerWidget {
               ),
             ] else ...[
               Text(
-                'インポート中... ${importProgress.processedFiles}/${importProgress.totalFiles}',
+                'インポート中... ${importState.processedFiles}/${importState.totalFiles}',
               ),
               const SizedBox(height: 8),
-              LinearProgressIndicator(value: importProgress.progress),
+              LinearProgressIndicator(
+                value: ref.read(importNotifierProvider.notifier).progress,
+              ),
               const SizedBox(height: 8),
               Text(
-                importProgress.currentFile,
+                importState.currentFile,
                 style: Theme.of(context).textTheme.bodySmall,
                 overflow: TextOverflow.ellipsis,
               ),
+              if (importState.errors.isNotEmpty) ...[
+                const SizedBox(height: 8),
+                Text(
+                  'エラー: ${importState.errors.length}件',
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+                ),
+              ],
             ],
           ],
         ),
       ),
       actions: [
         TextButton(
-          onPressed: importProgress.isImporting
+          onPressed: importState.isImporting
               ? () {
-                  ref.read(importServiceProvider.notifier).cancelImport();
+                  ref.read(importNotifierProvider.notifier).cancelImport();
                   Navigator.of(context).pop();
                 }
               : () => Navigator.of(context).pop(),
-          child: Text(importProgress.isImporting ? 'キャンセル' : '閉じる'),
+          child: Text(importState.isImporting ? 'キャンセル' : '閉じる'),
         ),
       ],
     );
