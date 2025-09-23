@@ -13,8 +13,12 @@ _Track _$TrackFromJson(Map<String, dynamic> json) => _Track(
   album: json['album'] as String,
   duration: (json['duration'] as num).toDouble(),
   filePath: json['filePath'] as String,
-  createdAt: json['createdAt'] == null ? null : DateTime.parse(json['createdAt'] as String),
-  modifiedAt: json['modifiedAt'] == null ? null : DateTime.parse(json['modifiedAt'] as String),
+  createdAt: json['createdAt'] == null
+      ? null
+      : DateTime.parse(json['createdAt'] as String),
+  modifiedAt: json['modifiedAt'] == null
+      ? null
+      : DateTime.parse(json['modifiedAt'] as String),
 );
 
 Map<String, dynamic> _$TrackToJson(_Track instance) => <String, dynamic>{

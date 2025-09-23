@@ -9,11 +9,11 @@ sealed class Album with _$Album {
     required String id,
     required String name,
     required String path,
+    required List<String> srfContainerIds,
     String? artist,
     String? coverImagePath,
     int? year,
     List<String>? genres,
-    required List<String> srfContainerIds,
     DateTime? createdAt,
     DateTime? modifiedAt,
   }) = _Album;

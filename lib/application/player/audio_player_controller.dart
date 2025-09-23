@@ -1,9 +1,11 @@
 import 'dart:async';
+
+import 'package:flutter_srf/application/tracks/track.dart';
+import 'package:flutter_srf/errors/exceptions.dart';
+import 'package:flutter_srf/system/audio/audio_player_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../tracks/track.dart';
-import '../../system/audio/audio_player_service.dart';
-import 'audio_player_state.dart';
-import '../../errors/exceptions.dart';
+
+import 'package:flutter_srf/application/player/audio_player_state.dart';
 
 part 'audio_player_controller.g.dart';
 

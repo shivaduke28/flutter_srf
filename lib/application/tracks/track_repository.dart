@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'track.dart';
-import '../../system/library/library_service.dart';
+import 'package:flutter_srf/system/library/library_service.dart';
 
 part 'track_repository.g.dart';
 

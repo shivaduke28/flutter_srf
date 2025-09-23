@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_srf/application/artists/artist_query_controller.dart';
+import 'package:flutter_srf/ui/artist_list/artist_list_view.dart';
+import 'package:flutter_srf/ui/components/sort_popup_menu_button.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../components/sort_popup_menu_button.dart';
-import '../../application/artists/artist_query_controller.dart';
-import 'artist_list_view.dart';
 
 class ArtistsScreen extends StatelessWidget {
   const ArtistsScreen({super.key});

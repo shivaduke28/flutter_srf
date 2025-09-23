@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../application/player/audio_player_state.dart';
-import '../../application/player/audio_player_controller.dart';
-import '../components/error_view.dart';
-import '../../errors/exceptions.dart';
+import 'package:flutter_srf/application/player/audio_player_state.dart';
+import 'package:flutter_srf/application/player/audio_player_controller.dart';
+import 'package:flutter_srf/ui/components/error_view.dart';
+import 'package:flutter_srf/errors/exceptions.dart';
 
 class AudioPlayerView extends ConsumerWidget {
   const AudioPlayerView({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../errors/exceptions.dart';
+import 'package:flutter_srf/errors/exceptions.dart';
 
 /// エラー表示用の共通ウィジェット
 class ErrorView extends StatelessWidget {

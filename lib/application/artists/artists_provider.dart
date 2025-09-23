@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_srf/application/artists/artist.dart';
+import 'package:flutter_srf/application/tracks/tracks_notifier.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'artist.dart';
-import '../tracks/tracks_notifier.dart';
 
 part 'artists_provider.g.dart';
 

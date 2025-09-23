@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../application/albums/album.dart';
-import './album_detail_screen.dart';
+
+import 'package:flutter_srf/application/albums/album.dart';
+import 'package:flutter_srf/ui/album_list/album_detail_screen.dart';
 
 class AlbumListItemView extends StatelessWidget {
   final Album album;

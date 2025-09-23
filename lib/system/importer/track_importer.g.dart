@@ -13,7 +13,9 @@ String _$trackImporterHash() => r'4fbac028aa6e1dbbd34e07b1e27601a25a79507a';
 final trackImporterProvider = AutoDisposeProvider<TrackImporter>.internal(
   trackImporter,
   name: r'trackImporterProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product') ? null : _$trackImporterHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$trackImporterHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../application/albums/album.dart';
-import '../../application/tracks/track.dart';
-import '../../application/player/audio_player_controller.dart';
-import '../../application/player/audio_player_state.dart';
+import 'package:flutter_srf/application/albums/album.dart';
+import 'package:flutter_srf/application/tracks/track.dart';
+import 'package:flutter_srf/application/player/audio_player_controller.dart';
+import 'package:flutter_srf/application/player/audio_player_state.dart';
 
 class AlbumDetailScreen extends ConsumerWidget {
   final Album album;

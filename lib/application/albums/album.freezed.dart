@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Album {
 
- String get id; String get name; String get path; String? get artist; String? get coverImagePath; int? get year; List<String>? get genres; List<String> get srfContainerIds; DateTime? get createdAt; DateTime? get modifiedAt;
+ String get id; String get name; String get path; List<String> get srfContainerIds; String? get artist; String? get coverImagePath; int? get year; List<String>? get genres; DateTime? get createdAt; DateTime? get modifiedAt;
 /// Create a copy of Album
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $AlbumCopyWith<Album> get copyWith => _$AlbumCopyWithImpl<Album>(this as Album, 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Album&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.path, path) || other.path == path)&&(identical(other.artist, artist) || other.artist == artist)&&(identical(other.coverImagePath, coverImagePath) || other.coverImagePath == coverImagePath)&&(identical(other.year, year) || other.year == year)&&const DeepCollectionEquality().equals(other.genres, genres)&&const DeepCollectionEquality().equals(other.srfContainerIds, srfContainerIds)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.modifiedAt, modifiedAt) || other.modifiedAt == modifiedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Album&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.path, path) || other.path == path)&&const DeepCollectionEquality().equals(other.srfContainerIds, srfContainerIds)&&(identical(other.artist, artist) || other.artist == artist)&&(identical(other.coverImagePath, coverImagePath) || other.coverImagePath == coverImagePath)&&(identical(other.year, year) || other.year == year)&&const DeepCollectionEquality().equals(other.genres, genres)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.modifiedAt, modifiedAt) || other.modifiedAt == modifiedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,path,artist,coverImagePath,year,const DeepCollectionEquality().hash(genres),const DeepCollectionEquality().hash(srfContainerIds),createdAt,modifiedAt);
+int get hashCode => Object.hash(runtimeType,id,name,path,const DeepCollectionEquality().hash(srfContainerIds),artist,coverImagePath,year,const DeepCollectionEquality().hash(genres),createdAt,modifiedAt);
 
 @override
 String toString() {
-  return 'Album(id: $id, name: $name, path: $path, artist: $artist, coverImagePath: $coverImagePath, year: $year, genres: $genres, srfContainerIds: $srfContainerIds, createdAt: $createdAt, modifiedAt: $modifiedAt)';
+  return 'Album(id: $id, name: $name, path: $path, srfContainerIds: $srfContainerIds, artist: $artist, coverImagePath: $coverImagePath, year: $year, genres: $genres, createdAt: $createdAt, modifiedAt: $modifiedAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $AlbumCopyWith<$Res>  {
   factory $AlbumCopyWith(Album value, $Res Function(Album) _then) = _$AlbumCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String path, String? artist, String? coverImagePath, int? year, List<String>? genres, List<String> srfContainerIds, DateTime? createdAt, DateTime? modifiedAt
+ String id, String name, String path, List<String> srfContainerIds, String? artist, String? coverImagePath, int? year, List<String>? genres, DateTime? createdAt, DateTime? modifiedAt
 });
 
 
@@ -65,17 +65,17 @@ class _$AlbumCopyWithImpl<$Res>
 
 /// Create a copy of Album
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? path = null,Object? artist = freezed,Object? coverImagePath = freezed,Object? year = freezed,Object? genres = freezed,Object? srfContainerIds = null,Object? createdAt = freezed,Object? modifiedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? path = null,Object? srfContainerIds = null,Object? artist = freezed,Object? coverImagePath = freezed,Object? year = freezed,Object? genres = freezed,Object? createdAt = freezed,Object? modifiedAt = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,path: null == path ? _self.path : path // ignore: cast_nullable_to_non_nullable
-as String,artist: freezed == artist ? _self.artist : artist // ignore: cast_nullable_to_non_nullable
+as String,srfContainerIds: null == srfContainerIds ? _self.srfContainerIds : srfContainerIds // ignore: cast_nullable_to_non_nullable
+as List<String>,artist: freezed == artist ? _self.artist : artist // ignore: cast_nullable_to_non_nullable
 as String?,coverImagePath: freezed == coverImagePath ? _self.coverImagePath : coverImagePath // ignore: cast_nullable_to_non_nullable
 as String?,year: freezed == year ? _self.year : year // ignore: cast_nullable_to_non_nullable
 as int?,genres: freezed == genres ? _self.genres : genres // ignore: cast_nullable_to_non_nullable
-as List<String>?,srfContainerIds: null == srfContainerIds ? _self.srfContainerIds : srfContainerIds // ignore: cast_nullable_to_non_nullable
-as List<String>,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as List<String>?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,modifiedAt: freezed == modifiedAt ? _self.modifiedAt : modifiedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
@@ -159,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String path,  String? artist,  String? coverImagePath,  int? year,  List<String>? genres,  List<String> srfContainerIds,  DateTime? createdAt,  DateTime? modifiedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String path,  List<String> srfContainerIds,  String? artist,  String? coverImagePath,  int? year,  List<String>? genres,  DateTime? createdAt,  DateTime? modifiedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Album() when $default != null:
-return $default(_that.id,_that.name,_that.path,_that.artist,_that.coverImagePath,_that.year,_that.genres,_that.srfContainerIds,_that.createdAt,_that.modifiedAt);case _:
+return $default(_that.id,_that.name,_that.path,_that.srfContainerIds,_that.artist,_that.coverImagePath,_that.year,_that.genres,_that.createdAt,_that.modifiedAt);case _:
   return orElse();
 
 }
@@ -180,10 +180,10 @@ return $default(_that.id,_that.name,_that.path,_that.artist,_that.coverImagePath
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String path,  String? artist,  String? coverImagePath,  int? year,  List<String>? genres,  List<String> srfContainerIds,  DateTime? createdAt,  DateTime? modifiedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String path,  List<String> srfContainerIds,  String? artist,  String? coverImagePath,  int? year,  List<String>? genres,  DateTime? createdAt,  DateTime? modifiedAt)  $default,) {final _that = this;
 switch (_that) {
 case _Album():
-return $default(_that.id,_that.name,_that.path,_that.artist,_that.coverImagePath,_that.year,_that.genres,_that.srfContainerIds,_that.createdAt,_that.modifiedAt);}
+return $default(_that.id,_that.name,_that.path,_that.srfContainerIds,_that.artist,_that.coverImagePath,_that.year,_that.genres,_that.createdAt,_that.modifiedAt);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -197,10 +197,10 @@ return $default(_that.id,_that.name,_that.path,_that.artist,_that.coverImagePath
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String path,  String? artist,  String? coverImagePath,  int? year,  List<String>? genres,  List<String> srfContainerIds,  DateTime? createdAt,  DateTime? modifiedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String path,  List<String> srfContainerIds,  String? artist,  String? coverImagePath,  int? year,  List<String>? genres,  DateTime? createdAt,  DateTime? modifiedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _Album() when $default != null:
-return $default(_that.id,_that.name,_that.path,_that.artist,_that.coverImagePath,_that.year,_that.genres,_that.srfContainerIds,_that.createdAt,_that.modifiedAt);case _:
+return $default(_that.id,_that.name,_that.path,_that.srfContainerIds,_that.artist,_that.coverImagePath,_that.year,_that.genres,_that.createdAt,_that.modifiedAt);case _:
   return null;
 
 }
@@ -212,12 +212,19 @@ return $default(_that.id,_that.name,_that.path,_that.artist,_that.coverImagePath
 @JsonSerializable()
 
 class _Album implements Album {
-  const _Album({required this.id, required this.name, required this.path, this.artist, this.coverImagePath, this.year, final  List<String>? genres, required final  List<String> srfContainerIds, this.createdAt, this.modifiedAt}): _genres = genres,_srfContainerIds = srfContainerIds;
+  const _Album({required this.id, required this.name, required this.path, required final  List<String> srfContainerIds, this.artist, this.coverImagePath, this.year, final  List<String>? genres, this.createdAt, this.modifiedAt}): _srfContainerIds = srfContainerIds,_genres = genres;
   factory _Album.fromJson(Map<String, dynamic> json) => _$AlbumFromJson(json);
 
 @override final  String id;
 @override final  String name;
 @override final  String path;
+ final  List<String> _srfContainerIds;
+@override List<String> get srfContainerIds {
+  if (_srfContainerIds is EqualUnmodifiableListView) return _srfContainerIds;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_srfContainerIds);
+}
+
 @override final  String? artist;
 @override final  String? coverImagePath;
 @override final  int? year;
@@ -228,13 +235,6 @@ class _Album implements Album {
   if (_genres is EqualUnmodifiableListView) return _genres;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(value);
-}
-
- final  List<String> _srfContainerIds;
-@override List<String> get srfContainerIds {
-  if (_srfContainerIds is EqualUnmodifiableListView) return _srfContainerIds;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_srfContainerIds);
 }
 
 @override final  DateTime? createdAt;
@@ -253,16 +253,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Album&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.path, path) || other.path == path)&&(identical(other.artist, artist) || other.artist == artist)&&(identical(other.coverImagePath, coverImagePath) || other.coverImagePath == coverImagePath)&&(identical(other.year, year) || other.year == year)&&const DeepCollectionEquality().equals(other._genres, _genres)&&const DeepCollectionEquality().equals(other._srfContainerIds, _srfContainerIds)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.modifiedAt, modifiedAt) || other.modifiedAt == modifiedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Album&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.path, path) || other.path == path)&&const DeepCollectionEquality().equals(other._srfContainerIds, _srfContainerIds)&&(identical(other.artist, artist) || other.artist == artist)&&(identical(other.coverImagePath, coverImagePath) || other.coverImagePath == coverImagePath)&&(identical(other.year, year) || other.year == year)&&const DeepCollectionEquality().equals(other._genres, _genres)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.modifiedAt, modifiedAt) || other.modifiedAt == modifiedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,path,artist,coverImagePath,year,const DeepCollectionEquality().hash(_genres),const DeepCollectionEquality().hash(_srfContainerIds),createdAt,modifiedAt);
+int get hashCode => Object.hash(runtimeType,id,name,path,const DeepCollectionEquality().hash(_srfContainerIds),artist,coverImagePath,year,const DeepCollectionEquality().hash(_genres),createdAt,modifiedAt);
 
 @override
 String toString() {
-  return 'Album(id: $id, name: $name, path: $path, artist: $artist, coverImagePath: $coverImagePath, year: $year, genres: $genres, srfContainerIds: $srfContainerIds, createdAt: $createdAt, modifiedAt: $modifiedAt)';
+  return 'Album(id: $id, name: $name, path: $path, srfContainerIds: $srfContainerIds, artist: $artist, coverImagePath: $coverImagePath, year: $year, genres: $genres, createdAt: $createdAt, modifiedAt: $modifiedAt)';
 }
 
 
@@ -273,7 +273,7 @@ abstract mixin class _$AlbumCopyWith<$Res> implements $AlbumCopyWith<$Res> {
   factory _$AlbumCopyWith(_Album value, $Res Function(_Album) _then) = __$AlbumCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String path, String? artist, String? coverImagePath, int? year, List<String>? genres, List<String> srfContainerIds, DateTime? createdAt, DateTime? modifiedAt
+ String id, String name, String path, List<String> srfContainerIds, String? artist, String? coverImagePath, int? year, List<String>? genres, DateTime? createdAt, DateTime? modifiedAt
 });
 
 
@@ -290,17 +290,17 @@ class __$AlbumCopyWithImpl<$Res>
 
 /// Create a copy of Album
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? path = null,Object? artist = freezed,Object? coverImagePath = freezed,Object? year = freezed,Object? genres = freezed,Object? srfContainerIds = null,Object? createdAt = freezed,Object? modifiedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? path = null,Object? srfContainerIds = null,Object? artist = freezed,Object? coverImagePath = freezed,Object? year = freezed,Object? genres = freezed,Object? createdAt = freezed,Object? modifiedAt = freezed,}) {
   return _then(_Album(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,path: null == path ? _self.path : path // ignore: cast_nullable_to_non_nullable
-as String,artist: freezed == artist ? _self.artist : artist // ignore: cast_nullable_to_non_nullable
+as String,srfContainerIds: null == srfContainerIds ? _self._srfContainerIds : srfContainerIds // ignore: cast_nullable_to_non_nullable
+as List<String>,artist: freezed == artist ? _self.artist : artist // ignore: cast_nullable_to_non_nullable
 as String?,coverImagePath: freezed == coverImagePath ? _self.coverImagePath : coverImagePath // ignore: cast_nullable_to_non_nullable
 as String?,year: freezed == year ? _self.year : year // ignore: cast_nullable_to_non_nullable
 as int?,genres: freezed == genres ? _self._genres : genres // ignore: cast_nullable_to_non_nullable
-as List<String>?,srfContainerIds: null == srfContainerIds ? _self._srfContainerIds : srfContainerIds // ignore: cast_nullable_to_non_nullable
-as List<String>,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as List<String>?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,modifiedAt: freezed == modifiedAt ? _self.modifiedAt : modifiedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));

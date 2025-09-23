@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../components/sort_popup_menu_button.dart';
-import '../../application/tracks/track_query_controller.dart';
+import 'package:flutter_srf/ui/components/sort_popup_menu_button.dart';
+import 'package:flutter_srf/application/tracks/track_query_controller.dart';
 import './track_list_view.dart';
 
 class TracksScreen extends StatelessWidget {

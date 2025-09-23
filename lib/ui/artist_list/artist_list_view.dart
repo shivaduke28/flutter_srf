@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../application/artists/queried_artists_provider.dart';
+import 'package:flutter_srf/application/artists/queried_artists_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'artist_list_item_view.dart';
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../application/artists/artist.dart';
-import './artist_detail_screen.dart';
+
+import 'package:flutter_srf/application/artists/artist.dart';
+import 'package:flutter_srf/ui/artist_list/artist_detail_screen.dart';
 
 class ArtistListItemView extends StatelessWidget {
   final Artist artist;

@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:audio_metadata_reader/audio_metadata_reader.dart';
 import 'package:path/path.dart' as p;
 
-import '../library/srf_metadata.dart';
+import 'package:flutter_srf/system/library/srf_metadata.dart';
 
 class MetadataExtractorService {
   static Future<SrfMetadata?> extractMetadata(String filePath) async {
