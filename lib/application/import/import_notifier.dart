@@ -3,7 +3,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:path/path.dart' as p;
 import '../../system/importer/track_importer.dart';
-import '../library/library_manager.dart';
+import '../tracks/tracks_notifier.dart';
 
 part 'import_notifier.freezed.dart';
 part 'import_notifier.g.dart';
@@ -76,8 +76,8 @@ class ImportNotifier extends _$ImportNotifier {
         },
       );
 
-      // インポート完了後、LibraryManagerを再スキャン
-      await ref.read(libraryManagerProvider.notifier).scanLibrary(forceRefresh: true);
+      // インポート完了後、TracksControllerを更新
+      await ref.read(tracksControllerProvider.notifier).refresh();
 
       // 状態を完了に更新
       state = state.copyWith(

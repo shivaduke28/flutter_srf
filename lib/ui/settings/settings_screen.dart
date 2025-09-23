@@ -2,7 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../application/library/library_manager.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
+import '../../application/tracks/tracks_notifier.dart';
 import 'import_dialog.dart';
 
 class SettingsScreen extends HookConsumerWidget {
@@ -41,12 +43,15 @@ class SettingsScreen extends HookConsumerWidget {
     }
   }
 
+  Future<String> get _libraryPath async {
+    final appSupportDir = await getApplicationSupportDirectory();
+    return path.join(appSupportDir.path, 'library');
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final libraryManager = ref.watch(libraryManagerProvider.notifier);
-
     return FutureBuilder<String>(
-      future: libraryManager.libraryPath,
+      future: _libraryPath,
       builder: (context, snapshot) {
         final libraryPath = snapshot.data ?? '読み込み中...';
         const supportedExtensions = ['.mp3', '.m4a', '.wav', '.flac'];
@@ -121,9 +126,7 @@ class SettingsScreen extends HookConsumerWidget {
 
                   if (confirmed == true) {
                     // ライブラリを再スキャン
-                    await ref
-                        .read(libraryManagerProvider.notifier)
-                        .scanLibrary(forceRefresh: true);
+                    await ref.read(tracksControllerProvider.notifier).refresh();
 
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(

@@ -23,12 +23,14 @@ class TrackRepository {
       tracks.addAll(
         srf.tracks.map(
           (track) => Track(
-            id: '${srf.path}#${track.path}',
+            id: track.path.hashCode.toString(),
             title: track.title,
             artist: track.artist,
             album: track.album,
             duration: track.duration,
-            filePath: '${srf.path}#${track.path}',
+            filePath: track.path,  // 実際のファイルパス
+            createdAt: null,
+            modifiedAt: null,
           ),
         ),
       );
@@ -37,11 +39,4 @@ class TrackRepository {
     return tracks;
   }
 
-  Future<void> scanLibrary() async {
-    await _libraryService.scanLibrary();
-  }
-
-  Future<void> importTracks(String sourcePath) async {
-    await _libraryService.importTracks(sourcePath);
-  }
 }

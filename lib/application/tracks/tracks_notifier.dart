@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'track.dart';
-import '../library/library_manager.dart';
+import 'track_repository.dart';
 
 part 'tracks_notifier.freezed.dart';
 part 'tracks_notifier.g.dart';
@@ -21,12 +21,12 @@ sealed class TracksState with _$TracksState {
 class TracksController extends _$TracksController {
   @override
   Future<TracksState> build() async {
-    // LibraryManagerの状態を監視して、変更があったら再ビルド
-    final libraryTracks = ref.watch(libraryManagerProvider);
+    // TrackRepositoryからトラックを取得
+    final repository = ref.watch(trackRepositoryProvider);
+    final tracks = await repository.getAllTracks();
 
-    // LibraryManagerのトラックをそのまま使用
     return TracksState(
-      allTracks: libraryTracks,
+      allTracks: tracks,
       searchQuery: '',
       sortType: TrackSortType.title,
     );
@@ -89,9 +89,9 @@ class TracksController extends _$TracksController {
   }
 
   Future<void> refresh() async {
-    // LibraryManagerのscanLibraryを呼んで再スキャン
-    await ref.read(libraryManagerProvider.notifier).scanLibrary(forceRefresh: true);
-    final tracks = ref.read(libraryManagerProvider);
+    // TrackRepositoryから最新のトラックを取得
+    final repository = ref.read(trackRepositoryProvider);
+    final tracks = await repository.getAllTracks();
     final currentState = state.valueOrNull;
     if (currentState != null) {
       state = AsyncData(currentState.copyWith(allTracks: tracks));

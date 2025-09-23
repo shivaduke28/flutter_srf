@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../application/tracks/tracks_notifier.dart';
-import '../../application/library/library_manager.dart';
 import 'track_list_item_view.dart';
 
 class TrackListView extends ConsumerWidget {
@@ -34,9 +33,7 @@ class TrackListView extends ConsumerWidget {
             const SizedBox(height: 32),
             ElevatedButton.icon(
               onPressed: () async {
-                await ref
-                    .read(libraryManagerProvider.notifier)
-                    .scanLibrary(forceRefresh: true);
+                await ref.read(tracksControllerProvider.notifier).refresh();
               },
               icon: const Icon(Icons.refresh),
               label: const Text('ライブラリを再スキャン'),
@@ -48,9 +45,7 @@ class TrackListView extends ConsumerWidget {
 
     return RefreshIndicator(
       onRefresh: () async {
-        await ref
-            .read(libraryManagerProvider.notifier)
-            .scanLibrary(forceRefresh: true);
+        await ref.read(tracksControllerProvider.notifier).refresh();
       },
       child: ListView.builder(
         itemCount: tracks.length,

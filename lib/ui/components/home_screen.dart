@@ -5,15 +5,12 @@ import '../artist_list/artists_screen.dart';
 import '../album_list/albums_screen.dart';
 import '../settings/settings_screen.dart';
 import '../player/audio_player_view.dart';
-import '../../application/library/library_manager.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Watch library manager to trigger initialization
-    ref.watch(libraryManagerProvider);
 
     return DefaultTabController(
       length: 4,
