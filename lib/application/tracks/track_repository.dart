@@ -20,6 +20,7 @@ class TrackRepository {
     final tracks = <Track>[];
 
     for (final srf in srfFiles) {
+      final now = DateTime.now();
       tracks.addAll(
         srf.tracks.map(
           (track) => Track(
@@ -29,8 +30,8 @@ class TrackRepository {
             album: track.album,
             duration: track.duration,
             filePath: track.path, // 実際のファイルパス
-            createdAt: null,
-            modifiedAt: null,
+            createdAt: now,
+            modifiedAt: now,
           ),
         ),
       );

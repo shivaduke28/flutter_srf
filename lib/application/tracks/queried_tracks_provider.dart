@@ -14,7 +14,7 @@ Future<List<Track>> queriedTracks(Ref ref) async {
   final tracks = tracksState.allTracks;
 
   // フィルタリング
-  var filteredTracks = tracks;
+  List<Track> filteredTracks;
   if (queryState.searchQuery.isNotEmpty) {
     final lowerQuery = queryState.searchQuery.toLowerCase();
     filteredTracks = tracks.where((track) {
@@ -22,6 +22,8 @@ Future<List<Track>> queriedTracks(Ref ref) async {
           track.artist.toLowerCase().contains(lowerQuery) ||
           track.album.toLowerCase().contains(lowerQuery);
     }).toList();
+  } else {
+    filteredTracks = tracks.toList(); // コピーを作成してソート可能にする
   }
 
   // ソート

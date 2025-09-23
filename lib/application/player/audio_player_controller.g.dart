@@ -7,7 +7,7 @@ part of 'audio_player_controller.dart';
 // **************************************************************************
 
 String _$audioPlayerControllerHash() =>
-    r'0591c536a897a0f338c7f09ecd7a84b0166724c6';
+    r'9936bc8cc1566be11e445c2d2b7d3d303b13dddc';
 
 /// 音楽再生の状態管理とビジネスロジックを担当
 ///
