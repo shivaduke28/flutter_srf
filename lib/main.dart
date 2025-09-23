@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_srf/ui/components/home_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'shared/ui/home_screen.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home: const HomeScreen(), // 既存のUI（必要に応じて切り替え）
     );
   }
 }
