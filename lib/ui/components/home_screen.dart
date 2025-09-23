@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:flutter_srf/ui/track_list/tracks_screen.dart';
-import 'package:flutter_srf/ui/artist_list/artists_screen.dart';
 import 'package:flutter_srf/ui/album_list/albums_screen.dart';
-import 'package:flutter_srf/ui/settings/settings_screen.dart';
+import 'package:flutter_srf/ui/artist_list/artists_screen.dart';
 import 'package:flutter_srf/ui/player/audio_player_view.dart';
+import 'package:flutter_srf/ui/settings/settings_screen.dart';
+import 'package:flutter_srf/ui/track_list/tracks_screen.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});

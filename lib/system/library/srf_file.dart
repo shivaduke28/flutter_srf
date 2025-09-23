@@ -1,4 +1,4 @@
-import 'srf_track.dart';
+import 'package:flutter_srf/system/library/srf_track.dart';
 
 class SrfFile {
   final String path;

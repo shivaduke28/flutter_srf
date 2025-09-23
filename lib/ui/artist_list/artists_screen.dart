@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_srf/application/artists/artist_query_controller.dart';
 import 'package:flutter_srf/ui/artist_list/artist_list_view.dart';

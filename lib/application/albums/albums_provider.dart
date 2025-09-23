@@ -24,7 +24,8 @@ Future<List<Album>> albums(Ref ref) async {
     return Album(
       id: entry.key,
       name: entry.key,
-      path: '', // Will be set properly later
+      path: '',
+      // Will be set properly later
       artist: albumArtistMap[entry.key],
       srfContainerIds: entry.value,
     );

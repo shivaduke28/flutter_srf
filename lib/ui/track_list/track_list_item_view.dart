@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:flutter_srf/application/tracks/track.dart';
-import 'package:flutter_srf/application/player/audio_player_state.dart';
 import 'package:flutter_srf/application/player/audio_player_controller.dart';
+import 'package:flutter_srf/application/player/audio_player_state.dart';
+import 'package:flutter_srf/application/tracks/track.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class TrackListItemView extends ConsumerWidget {
   final Track container;

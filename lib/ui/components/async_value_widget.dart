@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'error_view.dart';
+import 'package:flutter_srf/ui/components/error_view.dart';
 
-/// AsyncValueの状態に応じて適切なウィジェットを表示するヘルパーウィジェット
 class AsyncValueWidget<T> extends StatelessWidget {
   final AsyncValue<T> asyncValue;
   final Widget Function(T data) data;

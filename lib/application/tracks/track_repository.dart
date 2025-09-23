@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'track.dart';
+import 'package:flutter_srf/application/tracks/track.dart';
 import 'package:flutter_srf/system/library/library_service.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'track_repository.g.dart';
 
@@ -29,7 +29,8 @@ class TrackRepository {
             artist: track.artist,
             album: track.album,
             duration: track.duration,
-            filePath: track.path, // 実際のファイルパス
+            filePath: track.path,
+            // 実際のファイルパス
             createdAt: now,
             modifiedAt: now,
           ),

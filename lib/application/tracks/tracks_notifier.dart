@@ -1,7 +1,7 @@
+import 'package:flutter_srf/application/tracks/track.dart';
+import 'package:flutter_srf/application/tracks/track_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'track.dart';
-import 'track_repository.dart';
 
 part 'tracks_notifier.freezed.dart';
 part 'tracks_notifier.g.dart';

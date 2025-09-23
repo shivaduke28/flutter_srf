@@ -1,9 +1,9 @@
 import 'dart:io';
-import 'package:flutter/foundation.dart';
-import 'package:audio_metadata_reader/audio_metadata_reader.dart';
-import 'package:path/path.dart' as p;
 
+import 'package:audio_metadata_reader/audio_metadata_reader.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_srf/system/library/srf_metadata.dart';
+import 'package:path/path.dart' as p;
 
 class MetadataExtractorService {
   static Future<SrfMetadata?> extractMetadata(String filePath) async {
@@ -31,7 +31,8 @@ class MetadataExtractorService {
         trackNumber: metadata.trackNumber,
         artists: artistNames.isNotEmpty ? artistNames : null,
         album: metadata.album,
-        albumArtist: null, // audio_metadata_reader doesn't provide albumArtist
+        albumArtist: null,
+        // audio_metadata_reader doesn't provide albumArtist
         year: metadata.year?.year,
         genre: metadata.genres.isNotEmpty ? metadata.genres.join(', ') : null,
         dateAdded: DateTime.now(),

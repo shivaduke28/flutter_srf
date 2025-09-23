@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_srf/application/albums/album.dart';
-import 'package:flutter_srf/application/tracks/track.dart';
 import 'package:flutter_srf/application/player/audio_player_controller.dart';
 import 'package:flutter_srf/application/player/audio_player_state.dart';
+import 'package:flutter_srf/application/tracks/track.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class AlbumDetailScreen extends ConsumerWidget {
   final Album album;
 
-  const AlbumDetailScreen({super.key, required this.album});
+  const AlbumDetailScreen({required this.album, super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

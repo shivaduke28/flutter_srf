@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_srf/errors/exceptions.dart';
 
-/// エラー表示用の共通ウィジェット
 class ErrorView extends StatelessWidget {
   final Object error;
   final StackTrace? stackTrace;

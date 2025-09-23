@@ -1,12 +1,14 @@
-import 'dart:io';
 import 'dart:convert';
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_srf/errors/exceptions.dart';
+import 'package:flutter_srf/system/library/srf_file.dart';
+import 'package:flutter_srf/system/library/srf_track.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'srf_file.dart';
-import 'srf_track.dart';
-import 'package:flutter_srf/errors/exceptions.dart';
 
 part 'library_service.g.dart';
 
@@ -53,7 +55,7 @@ class LibraryService {
             srfFiles.add(SrfFile(path: entity.path, name: containerName, tracks: tracks));
           } catch (e) {
             // 単一のコンテナの読み込みエラーはスキップして続行
-            print('コンテナの読み込みに失敗: ${entity.path}: $e');
+            debugPrint('コンテナの読み込みに失敗: ${entity.path}: $e');
             continue;
           }
         }
@@ -82,10 +84,10 @@ class LibraryService {
         metadata = json.decode(content) as Map<String, dynamic>?;
       } on FormatException catch (e) {
         // JSONパースエラーはログ出力して続行
-        print('メタデータのJSONパースエラー: $e');
+        debugPrint('メタデータのJSONパースエラー: $e');
       } catch (e) {
         // その他のメタデータ読み込みエラーもログ出力して続行
-        print('メタデータ読み込みエラー: $e');
+        debugPrint('メタデータ読み込みエラー: $e');
       }
     }
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_srf/application/albums/album.dart';
 import 'package:flutter_srf/ui/album_list/album_detail_screen.dart';
 

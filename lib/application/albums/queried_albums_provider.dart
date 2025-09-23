@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_srf/application/albums/album.dart';
+import 'package:flutter_srf/application/albums/album_query_controller.dart';
+import 'package:flutter_srf/application/albums/albums_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'album.dart';
-import 'albums_provider.dart';
-import 'album_query_controller.dart';
 
 part 'queried_albums_provider.g.dart';
 

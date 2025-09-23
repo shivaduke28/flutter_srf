@@ -1,9 +1,9 @@
+import 'package:flutter_srf/application/tracks/tracks_notifier.dart';
+import 'package:flutter_srf/system/importer/track_importer.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:path/path.dart' as p;
-import 'package:flutter_srf/system/importer/track_importer.dart';
-import 'package:flutter_srf/application/tracks/tracks_notifier.dart';
 
 part 'import_notifier.freezed.dart';
 part 'import_notifier.g.dart';

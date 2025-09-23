@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_srf/application/artists/artist.dart';
 import 'package:flutter_srf/ui/artist_list/artist_detail_screen.dart';
 

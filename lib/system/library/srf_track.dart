@@ -13,3 +13,4 @@ class SrfTrack {
     required this.duration,
   });
 }
+

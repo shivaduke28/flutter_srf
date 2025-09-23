@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_srf/application/tracks/queried_tracks_provider.dart';
 import 'package:flutter_srf/application/tracks/tracks_notifier.dart';
-import 'track_list_item_view.dart';
 import 'package:flutter_srf/ui/components/async_value_widget.dart';
+import 'package:flutter_srf/ui/track_list/track_list_item_view.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class TrackListView extends ConsumerWidget {
   const TrackListView({super.key});

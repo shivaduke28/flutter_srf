@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_srf/application/artists/queried_artists_provider.dart';
+import 'package:flutter_srf/ui/artist_list/artist_list_item_view.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'artist_list_item_view.dart';
 
 class ArtistListView extends ConsumerWidget {
   const ArtistListView({super.key});

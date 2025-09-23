@@ -1,8 +1,8 @@
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'artist.dart';
-import 'artists_provider.dart';
-import 'artist_query_controller.dart';
+import 'package:flutter_srf/application/artists/artist.dart';
+import 'package:flutter_srf/application/artists/artist_query_controller.dart';
+import 'package:flutter_srf/application/artists/artists_provider.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'queried_artists_provider.g.dart';
 

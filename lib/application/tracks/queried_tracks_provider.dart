@@ -1,8 +1,8 @@
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'track.dart';
-import 'tracks_notifier.dart';
-import 'track_query_controller.dart';
+import 'package:flutter_srf/application/tracks/track.dart';
+import 'package:flutter_srf/application/tracks/track_query_controller.dart';
+import 'package:flutter_srf/application/tracks/tracks_notifier.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'queried_tracks_provider.g.dart';
 
