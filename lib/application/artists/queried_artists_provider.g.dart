@@ -15,7 +15,9 @@ String _$queriedArtistsHash() => r'997682068413600572f05620e4ac5fcb4eb6a109';
 final queriedArtistsProvider = AutoDisposeFutureProvider<List<Artist>>.internal(
   queriedArtists,
   name: r'queriedArtistsProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product') ? null : _$queriedArtistsHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$queriedArtistsHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

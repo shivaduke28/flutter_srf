@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_srf/application/albums/album.dart';
+import 'package:flutter_srf/application/albums/album_detail_provider.dart';
 import 'package:flutter_srf/application/player/audio_player_controller.dart';
 import 'package:flutter_srf/application/player/audio_player_state.dart';
-import 'package:flutter_srf/application/tracks/track.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class AlbumDetailScreen extends ConsumerWidget {
@@ -14,6 +14,7 @@ class AlbumDetailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final playerState = ref.watch(audioPlayerControllerProvider);
     final currentContainer = playerState.currentContainer;
+    final albumTracksAsync = ref.watch(albumTracksProvider(album));
 
     return Scaffold(
       appBar: AppBar(title: Text(album.name)),
@@ -53,42 +54,48 @@ class AlbumDetailScreen extends ConsumerWidget {
           ),
           const Divider(),
           Expanded(
-            child: ListView.builder(
-              itemCount: album.srfContainerIds.length,
-              itemBuilder: (context, index) {
-                // TODO: Get track by index from repository
-                const Track? track = null;
-                final isPlaying =
-                    track != null &&
-                    currentContainer?.filePath == track.filePath &&
-                    playerState.status == PlayerStatus.playing;
-                final isPaused =
-                    track != null &&
-                    currentContainer?.filePath == track.filePath &&
-                    playerState.status == PlayerStatus.paused;
+            child: albumTracksAsync.when(
+              data: (albumTracks) {
+                return ListView.builder(
+                  itemCount: albumTracks.length,
+                  itemBuilder: (context, index) {
+                    final track = albumTracks[index];
+                    final isPlaying =
+                        currentContainer?.filePath == track.filePath && playerState.status == PlayerStatus.playing;
+                    final isPaused =
+                        currentContainer?.filePath == track.filePath && playerState.status == PlayerStatus.paused;
 
-                return ListTile(
-                  leading: Text('${index + 1}', style: Theme.of(context).textTheme.bodyMedium),
-                  title: Text(
-                    track?.title ?? 'Unknown Track',
-                    style: TextStyle(fontWeight: isPlaying || isPaused ? FontWeight.bold : null),
-                  ),
-                  subtitle: Text(track?.artist ?? 'Unknown Artist'),
-                  trailing: isPlaying || isPaused
-                      ? Icon(isPlaying ? Icons.volume_up : Icons.pause, color: Theme.of(context).colorScheme.primary)
-                      : const Icon(Icons.play_arrow),
-                  selected: isPlaying || isPaused,
-                  onTap: () async {
-                    if (isPlaying) {
-                      await ref.read(audioPlayerControllerProvider.notifier).pause();
-                    } else if (isPaused) {
-                      await ref.read(audioPlayerControllerProvider.notifier).resume();
-                    } else {
-                      await ref.read(audioPlayerControllerProvider.notifier).play(track!);
-                    }
+                    return ListTile(
+                      leading: Text('${index + 1}', style: Theme.of(context).textTheme.bodyMedium),
+                      title: Text(
+                        track.title,
+                        style: TextStyle(fontWeight: isPlaying || isPaused ? FontWeight.bold : null),
+                      ),
+                      subtitle: Text(track.artist),
+                      trailing: isPlaying || isPaused
+                          ? Icon(
+                              isPlaying ? Icons.volume_up : Icons.pause,
+                              color: Theme.of(context).colorScheme.primary,
+                            )
+                          : const Icon(Icons.play_arrow),
+                      selected: isPlaying || isPaused,
+                      onTap: track.filePath.isNotEmpty
+                          ? () async {
+                              if (isPlaying) {
+                                await ref.read(audioPlayerControllerProvider.notifier).pause();
+                              } else if (isPaused) {
+                                await ref.read(audioPlayerControllerProvider.notifier).resume();
+                              } else {
+                                await ref.read(audioPlayerControllerProvider.notifier).play(track);
+                              }
+                            }
+                          : null,
+                    );
                   },
                 );
               },
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (error, _) => Center(child: Text('エラー: $error')),
             ),
           ),
         ],

@@ -13,7 +13,9 @@ String _$libraryServiceHash() => r'e04ffd0394c408337d00a6bdb9e62134659eae18';
 final libraryServiceProvider = Provider<LibraryService>.internal(
   libraryService,
   name: r'libraryServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product') ? null : _$libraryServiceHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$libraryServiceHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

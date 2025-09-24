@@ -15,7 +15,9 @@ String _$queriedAlbumsHash() => r'01ce67305dcc9423eb600b9b817b34e38fd38b3f';
 final queriedAlbumsProvider = AutoDisposeFutureProvider<List<Album>>.internal(
   queriedAlbums,
   name: r'queriedAlbumsProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product') ? null : _$queriedAlbumsHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$queriedAlbumsHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

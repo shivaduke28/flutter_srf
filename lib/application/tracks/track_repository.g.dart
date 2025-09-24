@@ -13,7 +13,9 @@ String _$trackRepositoryHash() => r'1e5debd5857785b9ba705a4b296d8ec13cd98da5';
 final trackRepositoryProvider = AutoDisposeProvider<TrackRepository>.internal(
   trackRepository,
   name: r'trackRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product') ? null : _$trackRepositoryHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$trackRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
