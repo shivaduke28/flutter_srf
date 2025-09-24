@@ -63,9 +63,7 @@ class AlbumsMainScreen extends HookConsumerWidget {
               border: InputBorder.none,
               contentPadding: const EdgeInsets.symmetric(vertical: 8),
             ),
-            onChanged: (value) {
-              controller.updateSearchQuery(value);
-            },
+            onChanged: controller.updateSearchQuery,
           ),
         ),
         actions: [
@@ -76,9 +74,7 @@ class AlbumsMainScreen extends HookConsumerWidget {
               SortMenuItem(value: AlbumSortType.artist, label: 'アーティスト順'),
               SortMenuItem(value: AlbumSortType.trackCount, label: '曲数順'),
             ],
-            onSelected: (AlbumSortType type) {
-              controller.updateSortType(type);
-            },
+            onSelected: controller.updateSortType,
           ),
         ],
       ),

@@ -5,7 +5,7 @@ import 'package:flutter_srf/ui/album_list/album_detail_screen.dart';
 class AlbumListItemView extends StatelessWidget {
   final Album album;
 
-  const AlbumListItemView({super.key, required this.album});
+  const AlbumListItemView({required this.album, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class AlbumListItemView extends StatelessWidget {
       onTap: () {
         Navigator.push(context, MaterialPageRoute<void>(builder: (context) => AlbumDetailScreen(album: album)));
       },
-      child: Container(
+      child: DecoratedBox(
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(12),
@@ -22,7 +22,7 @@ class AlbumListItemView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: Container(
+              child: DecoratedBox(
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
                   borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),

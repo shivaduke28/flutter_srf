@@ -47,41 +47,39 @@ class AudioPlayerController extends _$AudioPlayerController {
     );
 
     // positionの監視
-    _subscriptions.add(
-      _audioService.positionStream.listen((position) {
-        state = state.copyWith(position: position);
-      }),
-    );
-
-    // durationの監視
-    _subscriptions.add(
-      _audioService.durationStream.listen((duration) {
-        if (duration != null) {
-          state = state.copyWith(duration: duration);
-        }
-      }),
-    );
-
-    // volumeの監視
-    _subscriptions.add(
-      _audioService.volumeStream.listen((volume) {
-        state = state.copyWith(volume: volume);
-      }),
-    );
-
-    // 処理状態の監視（再生完了時の処理）
-    _subscriptions.add(
-      _audioService.processingStateStream.listen((processingState) {
-        if (processingState == AudioProcessingState.completed) {
-          state = state.copyWith(
-            currentContainer: null,
-            status: PlayerStatus.stopped,
-            position: Duration.zero,
-            duration: Duration.zero,
-          );
-        }
-      }),
-    );
+    _subscriptions
+      ..add(
+        _audioService.positionStream.listen((position) {
+          state = state.copyWith(position: position);
+        }),
+      )
+      // durationの監視
+      ..add(
+        _audioService.durationStream.listen((duration) {
+          if (duration != null) {
+            state = state.copyWith(duration: duration);
+          }
+        }),
+      )
+      // volumeの監視
+      ..add(
+        _audioService.volumeStream.listen((volume) {
+          state = state.copyWith(volume: volume);
+        }),
+      )
+      // 処理状態の監視（再生完了時の処理）
+      ..add(
+        _audioService.processingStateStream.listen((processingState) {
+          if (processingState == AudioProcessingState.completed) {
+            state = state.copyWith(
+              currentContainer: null,
+              status: PlayerStatus.stopped,
+              position: Duration.zero,
+              duration: Duration.zero,
+            );
+          }
+        }),
+      );
   }
 
   /// トラックを再生

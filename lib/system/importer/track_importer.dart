@@ -55,7 +55,7 @@ class TrackImporter {
     final supportedExtensions = ['.mp3', '.m4a', '.wav', '.flac'];
 
     final directory = Directory(directoryPath);
-    if (!await directory.exists()) {
+    if (!directory.existsSync()) {
       throw Exception('Directory does not exist');
     }
 
@@ -84,7 +84,7 @@ class TrackImporter {
         if (containerPath != null) {
           importedContainerPaths.add(containerPath);
         }
-      } catch (e) {
+      } on Exception catch (e) {
         onProgress?.call(ImportError(filePath: file.path, error: e.toString()));
 
         // デバッグビルドではログ出力
@@ -102,7 +102,7 @@ class TrackImporter {
 
   Future<String?> _importSingleFile(String sourceFilePath, String libraryPath) async {
     final sourceFile = File(sourceFilePath);
-    if (!await sourceFile.exists()) {
+    if (!sourceFile.existsSync()) {
       return null;
     }
 

@@ -6,7 +6,7 @@ class ErrorView extends StatelessWidget {
   final StackTrace? stackTrace;
   final VoidCallback? onRetry;
 
-  const ErrorView({super.key, required this.error, this.stackTrace, this.onRetry});
+  const ErrorView({required this.error, super.key, this.stackTrace, this.onRetry});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class ErrorView extends StatelessWidget {
 
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

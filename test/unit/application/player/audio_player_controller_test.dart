@@ -1,12 +1,13 @@
 import 'dart:async';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'package:flutter_srf/application/player/audio_player_controller.dart';
 import 'package:flutter_srf/application/player/audio_player_state.dart';
 import 'package:flutter_srf/application/tracks/track.dart';
 import 'package:flutter_srf/system/audio/audio_player_service.dart';
-import 'package:mockito/mockito.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 
 import 'audio_player_controller_test.mocks.dart';
 
@@ -35,7 +36,7 @@ void main() {
       when(mockAudioService.durationStream).thenAnswer((_) => durationStreamController.stream);
       when(mockAudioService.volumeStream).thenAnswer((_) => volumeStreamController.stream);
       when(mockAudioService.processingStateStream).thenAnswer((_) => processingStateStreamController.stream);
-      when(mockAudioService.volume).thenReturn(1.0);
+      when(mockAudioService.volume).thenReturn(1);
 
       container = ProviderContainer(overrides: [audioPlayerServiceProvider.overrideWithValue(mockAudioService)]);
     });
@@ -147,7 +148,7 @@ void main() {
 
     test('seek()で指定位置にシークできる', () async {
       // Arrange
-      final position = const Duration(seconds: 30);
+      const position = Duration(seconds: 30);
       when(mockAudioService.seek(position)).thenAnswer((_) async {});
       final controller = container.read(audioPlayerControllerProvider.notifier);
 

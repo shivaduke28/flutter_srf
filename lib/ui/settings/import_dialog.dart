@@ -25,7 +25,7 @@ class ImportDialog extends HookConsumerWidget {
               if (selectedPath.value != null) ...[
                 Card(
                   child: Padding(
-                    padding: const EdgeInsets.all(12.0),
+                    padding: const EdgeInsets.all(12),
                     child: Row(
                       children: [
                         const Icon(Icons.folder, color: Colors.blue),
@@ -66,9 +66,9 @@ class ImportDialog extends HookConsumerWidget {
 
                           if (context.mounted) {
                             Navigator.of(context).pop();
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('インポートが完了しました')));
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('インポートが完了しました')));
                           }
-                        } catch (e) {
+                        } on Exception catch (e) {
                           if (context.mounted) {
                             ScaffoldMessenger.of(
                               context,

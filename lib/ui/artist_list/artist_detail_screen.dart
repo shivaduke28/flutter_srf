@@ -8,7 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class ArtistDetailScreen extends ConsumerWidget {
   final Artist artist;
 
-  const ArtistDetailScreen({super.key, required this.artist});
+  const ArtistDetailScreen({required this.artist, super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

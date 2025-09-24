@@ -63,9 +63,7 @@ class TracksMainScreen extends HookConsumerWidget {
               border: InputBorder.none,
               contentPadding: const EdgeInsets.symmetric(vertical: 8),
             ),
-            onChanged: (value) {
-              controller.updateSearchQuery(value);
-            },
+            onChanged: controller.updateSearchQuery,
           ),
         ),
         actions: [
@@ -77,9 +75,7 @@ class TracksMainScreen extends HookConsumerWidget {
               SortMenuItem(value: TrackSortType.album, label: 'アルバム順'),
               SortMenuItem(value: TrackSortType.duration, label: '再生時間順'),
             ],
-            onSelected: (TrackSortType type) {
-              controller.updateSortType(type);
-            },
+            onSelected: controller.updateSortType,
           ),
         ],
       ),

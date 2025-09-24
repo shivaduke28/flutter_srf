@@ -19,7 +19,7 @@ enum PlaybackStatus { playing, paused, stopped }
 @riverpod
 AudioPlayerService audioPlayerService(Ref ref) {
   final service = AudioPlayerService();
-  ref.onDispose(() => service.dispose());
+  ref.onDispose(service.dispose);
   return service;
 }
 
@@ -53,7 +53,7 @@ class AudioPlayerService {
     try {
       // ファイルの存在確認
       final file = File(filePath);
-      if (!await file.exists()) {
+      if (!file.existsSync()) {
         throw FileNotFoundException(filePath: filePath);
       }
 
@@ -100,13 +100,13 @@ class AudioPlayerService {
     try {
       // 負の値チェック
       if (position.isNegative) {
-        throw ValidationException(message: 'シーク位置は0以上である必要があります');
+        throw const ValidationException(message: 'シーク位置は0以上である必要があります');
       }
 
       // 長さを超えていないかチェック（可能な場合）
       final duration = _audioPlayer.duration;
       if (duration != null && position > duration) {
-        throw ValidationException(message: 'シーク位置が楽曲の長さを超えています');
+        throw const ValidationException(message: 'シーク位置が楽曲の長さを超えています');
       }
 
       await _audioPlayer.seek(position);
@@ -121,7 +121,7 @@ class AudioPlayerService {
   Future<void> setVolume(double volume) async {
     try {
       if (volume < 0.0 || volume > 1.0) {
-        throw ValidationException(message: '音量は0.0から1.0の範囲で指定してください');
+        throw const ValidationException(message: '音量は0.0から1.0の範囲で指定してください');
       }
       await _audioPlayer.setVolume(volume);
     } on ValidationException {

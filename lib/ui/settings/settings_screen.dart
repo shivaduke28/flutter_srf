@@ -15,7 +15,7 @@ class SettingsScreen extends HookConsumerWidget {
     try {
       // ディレクトリが存在しない場合は作成
       final dir = Directory(path);
-      if (!await dir.exists()) {
+      if (!dir.existsSync()) {
         await dir.create(recursive: true);
       }
 
@@ -24,7 +24,7 @@ class SettingsScreen extends HookConsumerWidget {
       if (!await launchUrl(uri)) {
         throw Exception('Could not launch $uri');
       }
-    } catch (e, stackTrace) {
+    } on Exception catch (e, stackTrace) {
       // デバッグビルドではログ出力
       assert(() {
         debugPrint('Error opening directory: $e');
@@ -108,7 +108,7 @@ class SettingsScreen extends HookConsumerWidget {
                     ),
                   );
 
-                  if (confirmed == true) {
+                  if (true == confirmed) {
                     // ライブラリを再スキャン
                     await ref.read(tracksControllerProvider.notifier).refresh();
 

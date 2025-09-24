@@ -15,10 +15,10 @@ class SortPopupMenuButton<T> extends StatelessWidget {
   final IconData icon;
 
   const SortPopupMenuButton({
-    super.key,
     required this.currentValue,
     required this.items,
     required this.onSelected,
+    super.key,
     this.icon = Icons.sort,
   });
 

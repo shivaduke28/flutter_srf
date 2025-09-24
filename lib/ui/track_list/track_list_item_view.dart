@@ -7,7 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class TrackListItemView extends ConsumerWidget {
   final Track container;
 
-  const TrackListItemView({super.key, required this.container});
+  const TrackListItemView({required this.container, super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

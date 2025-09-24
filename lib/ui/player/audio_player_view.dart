@@ -32,7 +32,7 @@ class AudioPlayerView extends ConsumerWidget {
             Container(height: 2, color: Theme.of(context).colorScheme.surfaceContainerHighest),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: currentContainer != null
                   ? Row(
                       children: [
@@ -64,8 +64,8 @@ class AudioPlayerView extends ConsumerWidget {
                               Expanded(
                                 child: Slider(
                                   value: playerState.volume,
-                                  min: 0.0,
-                                  max: 1.0,
+                                  min: 0,
+                                  max: 1,
                                   onChanged: (value) async {
                                     try {
                                       await ref.read(audioPlayerControllerProvider.notifier).setVolume(value);

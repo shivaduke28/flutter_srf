@@ -1,9 +1,9 @@
+import 'package:flutter_srf/application/tracks/queried_tracks_provider.dart';
+import 'package:flutter_srf/application/tracks/track.dart';
+import 'package:flutter_srf/application/tracks/track_query_controller.dart';
+import 'package:flutter_srf/application/tracks/tracks_notifier.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:flutter_srf/application/tracks/track_query_controller.dart';
-import 'package:flutter_srf/application/tracks/queried_tracks_provider.dart';
-import 'package:flutter_srf/application/tracks/tracks_notifier.dart';
-import 'package:flutter_srf/application/tracks/track.dart';
 
 void main() {
   group('TrackQueryController', () {
@@ -28,10 +28,9 @@ void main() {
 
     test('検索クエリを更新できる', () {
       // Arrange
-      final controller = container.read(trackQueryControllerProvider.notifier);
-
-      // Act
-      controller.updateSearchQuery('test query');
+      final _ = container.read(trackQueryControllerProvider.notifier)
+        // Act
+        ..updateSearchQuery('test query');
 
       // Assert
       final state = container.read(trackQueryControllerProvider);
@@ -40,11 +39,10 @@ void main() {
 
     test('検索クエリをクリアできる', () {
       // Arrange
-      final controller = container.read(trackQueryControllerProvider.notifier);
-      controller.updateSearchQuery('test query');
-
-      // Act
-      controller.clearSearchQuery();
+      final _ = container.read(trackQueryControllerProvider.notifier)
+        ..updateSearchQuery('test query')
+        // Act
+        ..clearSearchQuery();
 
       // Assert
       final state = container.read(trackQueryControllerProvider);
@@ -53,10 +51,9 @@ void main() {
 
     test('ソートタイプを変更できる', () {
       // Arrange
-      final controller = container.read(trackQueryControllerProvider.notifier);
-
-      // Act & Assert - artist
-      controller.updateSortType(TrackSortType.artist);
+      final controller = container.read(trackQueryControllerProvider.notifier)
+        // Act & Assert - artist
+        ..updateSortType(TrackSortType.artist);
       expect(container.read(trackQueryControllerProvider).sortType, TrackSortType.artist);
 
       // Act & Assert - album

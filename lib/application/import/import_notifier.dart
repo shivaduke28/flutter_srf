@@ -30,7 +30,9 @@ class ImportNotifier extends _$ImportNotifier {
   }
 
   Future<void> importDirectory(String directoryPath) async {
-    if (state.isImporting) return;
+    if (state.isImporting) {
+      return;
+    }
 
     // ライブラリパスを取得
     final appSupport = await getApplicationSupportDirectory();
@@ -76,7 +78,9 @@ class ImportNotifier extends _$ImportNotifier {
   }
 
   double get progress {
-    if (state.totalFiles == 0) return 0;
+    if (state.totalFiles == 0) {
+      return 0;
+    }
     return state.processedFiles / state.totalFiles;
   }
 }

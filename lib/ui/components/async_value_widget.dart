@@ -10,9 +10,9 @@ class AsyncValueWidget<T> extends StatelessWidget {
   final VoidCallback? onRetry;
 
   const AsyncValueWidget({
-    super.key,
     required this.asyncValue,
     required this.data,
+    super.key,
     this.loading,
     this.error,
     this.onRetry,

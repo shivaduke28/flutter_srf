@@ -25,42 +25,29 @@ import 'package:mockito/mockito.dart' as _i1;
 /// A class which mocks [AudioPlayerService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockAudioPlayerService extends _i1.Mock
-    implements _i2.AudioPlayerService {
+class MockAudioPlayerService extends _i1.Mock implements _i2.AudioPlayerService {
   MockAudioPlayerService() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
   _i3.Stream<_i2.PlaybackStatus> get statusStream =>
-      (super.noSuchMethod(
-            Invocation.getter(#statusStream),
-            returnValue: _i3.Stream<_i2.PlaybackStatus>.empty(),
-          )
+      (super.noSuchMethod(Invocation.getter(#statusStream), returnValue: _i3.Stream<_i2.PlaybackStatus>.empty())
           as _i3.Stream<_i2.PlaybackStatus>);
 
   @override
   _i3.Stream<Duration> get positionStream =>
-      (super.noSuchMethod(
-            Invocation.getter(#positionStream),
-            returnValue: _i3.Stream<Duration>.empty(),
-          )
+      (super.noSuchMethod(Invocation.getter(#positionStream), returnValue: _i3.Stream<Duration>.empty())
           as _i3.Stream<Duration>);
 
   @override
   _i3.Stream<Duration?> get durationStream =>
-      (super.noSuchMethod(
-            Invocation.getter(#durationStream),
-            returnValue: _i3.Stream<Duration?>.empty(),
-          )
+      (super.noSuchMethod(Invocation.getter(#durationStream), returnValue: _i3.Stream<Duration?>.empty())
           as _i3.Stream<Duration?>);
 
   @override
   _i3.Stream<double> get volumeStream =>
-      (super.noSuchMethod(
-            Invocation.getter(#volumeStream),
-            returnValue: _i3.Stream<double>.empty(),
-          )
+      (super.noSuchMethod(Invocation.getter(#volumeStream), returnValue: _i3.Stream<double>.empty())
           as _i3.Stream<double>);
 
   @override
@@ -72,9 +59,7 @@ class MockAudioPlayerService extends _i1.Mock
           as _i3.Stream<_i2.AudioProcessingState>);
 
   @override
-  double get volume =>
-      (super.noSuchMethod(Invocation.getter(#volume), returnValue: 0.0)
-          as double);
+  double get volume => (super.noSuchMethod(Invocation.getter(#volume), returnValue: 0.0) as double);
 
   @override
   _i3.Future<void> playFile(String? filePath) =>
@@ -131,8 +116,5 @@ class MockAudioPlayerService extends _i1.Mock
           as _i3.Future<void>);
 
   @override
-  void dispose() => super.noSuchMethod(
-    Invocation.method(#dispose, []),
-    returnValueForMissingStub: null,
-  );
+  void dispose() => super.noSuchMethod(Invocation.method(#dispose, []), returnValueForMissingStub: null);
 }

@@ -9,7 +9,7 @@ class MetadataExtractorService {
   static Future<SrfMetadata?> extractMetadata(String filePath) async {
     try {
       final file = File(filePath);
-      if (!await file.exists()) {
+      if (!file.existsSync()) {
         return null;
       }
 
@@ -38,7 +38,7 @@ class MetadataExtractorService {
         dateAdded: DateTime.now(),
         lastModified: DateTime.now(),
       );
-    } catch (e, stackTrace) {
+    } on Exception catch (e, stackTrace) {
       // デバッグビルドではログ出力
       assert(() {
         debugPrint('Error extracting metadata from $filePath: $e');

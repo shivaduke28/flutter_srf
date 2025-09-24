@@ -25,12 +25,10 @@ class HomeScreen extends ConsumerWidget {
             ],
           ),
         ),
-        body: Column(
+        body: const Column(
           children: [
-            const Expanded(
-              child: TabBarView(children: [TracksScreen(), ArtistsScreen(), AlbumsScreen(), SettingsScreen()]),
-            ),
-            const AudioPlayerView(),
+            Expanded(child: TabBarView(children: [TracksScreen(), ArtistsScreen(), AlbumsScreen(), SettingsScreen()])),
+            AudioPlayerView(),
           ],
         ),
       ),

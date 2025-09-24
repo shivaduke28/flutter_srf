@@ -36,9 +36,7 @@ class MockLibraryService extends _i1.Mock implements _i2.LibraryService {
   _i3.Future<String> get libraryPath =>
       (super.noSuchMethod(
             Invocation.getter(#libraryPath),
-            returnValue: _i3.Future<String>.value(
-              _i4.dummyValue<String>(this, Invocation.getter(#libraryPath)),
-            ),
+            returnValue: _i3.Future<String>.value(_i4.dummyValue<String>(this, Invocation.getter(#libraryPath))),
           )
           as _i3.Future<String>);
 

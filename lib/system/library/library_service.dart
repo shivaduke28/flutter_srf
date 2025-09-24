@@ -23,7 +23,7 @@ class LibraryService {
       final appSupport = await getApplicationSupportDirectory();
       final libraryDir = Directory(path.join(appSupport.path, 'library'));
 
-      if (!await libraryDir.exists()) {
+      if (!libraryDir.existsSync()) {
         await libraryDir.create(recursive: true);
       }
 
@@ -40,7 +40,7 @@ class LibraryService {
       final libPath = await libraryPath;
       final dir = Directory(libPath);
 
-      if (!await dir.exists()) {
+      if (!dir.existsSync()) {
         return [];
       }
 
@@ -53,7 +53,7 @@ class LibraryService {
             final tracks = await _loadTracksFromContainer(entity);
             final containerName = path.basename(entity.path);
             srfFiles.add(SrfFile(path: entity.path, name: containerName, tracks: tracks));
-          } catch (e) {
+          } on Exception catch (e) {
             // 単一のコンテナの読み込みエラーはスキップして続行
             debugPrint('コンテナの読み込みに失敗: ${entity.path}: $e');
             continue;
@@ -78,14 +78,14 @@ class LibraryService {
     final metadataFile = File(path.join(containerDir.path, 'meta.json'));
     Map<String, dynamic>? metadata;
 
-    if (await metadataFile.exists()) {
+    if (metadataFile.existsSync()) {
       try {
         final content = await metadataFile.readAsString();
         metadata = json.decode(content) as Map<String, dynamic>?;
       } on FormatException catch (e) {
         // JSONパースエラーはログ出力して続行
         debugPrint('メタデータのJSONパースエラー: $e');
-      } catch (e) {
+      } on Exception catch (e) {
         // その他のメタデータ読み込みエラーもログ出力して続行
         debugPrint('メタデータ読み込みエラー: $e');
       }

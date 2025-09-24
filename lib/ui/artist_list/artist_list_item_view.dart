@@ -5,7 +5,7 @@ import 'package:flutter_srf/ui/artist_list/artist_detail_screen.dart';
 class ArtistListItemView extends StatelessWidget {
   final Artist artist;
 
-  const ArtistListItemView({super.key, required this.artist});
+  const ArtistListItemView({required this.artist, super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -57,7 +57,7 @@ class AlbumDetailScreen extends ConsumerWidget {
               itemCount: album.srfContainerIds.length,
               itemBuilder: (context, index) {
                 // TODO: Get track by index from repository
-                final Track? track = null;
+                const Track? track = null;
                 final isPlaying =
                     track != null &&
                     currentContainer?.filePath == track.filePath &&
